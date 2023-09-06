@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title: α-β-(γ) 滤波
 ---
 
