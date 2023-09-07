@@ -1,25 +1,20 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8"/>
-        <title>路上的骑士</title>
-        <link rel="stylesheet" href="/css/home.css" type="text/css" media="screen, projection" />
-    </head>
-    <body>
-      <nav class="navbar navbar-default">
-        <div class="navbar-header">
-          <button class="navbar-toggle collapsed" type="button"></button>
-        </div>
-      </nav>
-      <div class="outer">
-        <ul class="list-group">
-            {% for post in site.posts %}
-              <li class="list-group-item title">
-                <div class="date">{{ post.date | date_to_string }}</div>
-                <a href="{{ post.url }}">{{ post.title }}</a>
-              </li>
-            {% endfor %}
-        </ul>
-      </div>
-    </body>
-</html>
+---
+layout: home
+title: 路上的骑士
+---
+
+<nav class="navbar navbar-default">
+  <div class="navbar-header">
+    <button class="navbar-toggle collapsed" type="button"></button>
+  </div>
+</nav>
+<div class="outer">
+  <ul class="list-group">
+      {% for post in site.posts %}
+        <li class="list-group-item title">
+          <div class="date">{{ post.date | date_to_string }}</div>
+          <a href="{{ post.url }}">{{ post.title }}</a>
+        </li>
+      {% endfor %}
+  </ul>
+</div>
