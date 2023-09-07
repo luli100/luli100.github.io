@@ -15,8 +15,25 @@ html, body{
 body {
     background-color: white;
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 22px;
 }
 
 a:visited {
     color: #a0a;
+}
+
+ul.posts {
+    list-style-type: none;
+    margin-bottom: 2em;
+}
+
+ul.posts li {
+    line-height: 1.75em;
+}
+
+ul.posts span {
+    color: #aaa;
+    font-family: Monaco, "Courier New", monospace;
+    font-size: 80%;
 }
