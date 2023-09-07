@@ -62,3 +62,17 @@ div.date {
     background-color: #fff;
     border: 1px solid #ddd;
 }
+
+.navbar-default {
+    background-image: none;
+    background-color: #fff;
+    box-shadow: none;
+    font-size: 100%;
+}
+
+.navbar {
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
