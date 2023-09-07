@@ -8,6 +8,10 @@ html, body{
 }
 
 body {
-    background-color: antiquewhite;
+    background-color:orangered;
     text-align: center;
+}
+
+a:visited {
+    color: #a0a;
 }
