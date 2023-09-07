@@ -37,3 +37,16 @@ ul.posts span {
     font-family: Monaco, "Courier New", monospace;
     font-size: 80%;
 }
+
+div.outer {
+    margin: 50px 10% 70px 10%;
+}
+
+.list-group {
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+}
+
+div.date {
+    font-size: 80%;
+    color: darkgray;
+}
