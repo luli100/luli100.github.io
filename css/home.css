@@ -79,3 +79,7 @@ div.date {
 body.mobile div.outer {
     margin: 4% 2% 2% 2%;
 }
+
+a:visited {
+    color: #a0a;
+}
