@@ -5,6 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=0.5">
         <title>{{ page.title }}</title>
         <link rel="stylesheet" href="/css/post.css" type="text/css" media="screen, projection" />
+        {% if page.use_math %}
+            {% include mathjax_support.html %}
+        {% endif %}
     </head>
     <body>
         <script>
