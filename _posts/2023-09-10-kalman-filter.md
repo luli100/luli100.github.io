@@ -93,7 +93,7 @@ $$\hat x_{n,n} = w_1 \cdot z_n + (1-w_1) \cdot \hat x_{n,n-1}$$
 
 可以将估计值的方差与测量值的方差之间的关系记为：
 
-$p_{n,n} = w^2_1 \cdot r_n + (1-w_1)^2 \cdot p_{n,n-1}$
+$p_{n,n} = w_{1}^{2} \cdot r_n + (1- w_1)^2 \cdot p_{n,n-1}$
 
 $p_{n,n}$ 是最优估计值 $\hat x_{n,n}$ 的方差
 
