@@ -9,9 +9,9 @@ title: 如何在 Jekyll 生成的 Github 页面中使用 MathJax
 
 1. 使用正确的 Markdown 解释器
    
-   在<code>_config.yml</code>使用 kramdown
+   在 _config.yml 使用 kramdown
 
-2. 修改页面模板
+2. 添加页面模板
 
    现在我们必须修改页面模板以添加 MathJax 的支持。
 
@@ -41,15 +41,13 @@ title: 如何在 Jekyll 生成的 Github 页面中使用 MathJax
    以布局模板 post.html 为例，在 <head> 标签里添加以下内容：
    
    ```
-   {% raw %}
-   <head>
+   {% raw %}<head>
       ...
       {% if page.use_math %}
          {% include mathjax_support.html %}
       {% endif %}
       ...
-   </head>
-   {% endraw %}
+   </head>{% endraw %}
    ```
 
 4. 页面配置设置
