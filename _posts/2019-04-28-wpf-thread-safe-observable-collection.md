@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 线程安全的 SafeObservableCollection<T>
+title: 线程安全的 SafeObservableCollection&lt;T&gt;
 ---
 
 如果你使用过 WPF 框架开发应用程序，我想你一定使用过 ObservableCollection&lt;T&gt;。但 ObservableCollection&lt;T&gt; 的问题在于：它仅能在 Dispacher 线程「这里可以理解为 UI 线程」更新数据。如果你想从另外一个线程更新数据到 ObservableCollection&lt;T&gt; 中时，你需要编写类似于下面的代码：
@@ -8,38 +8,38 @@ title: 线程安全的 SafeObservableCollection<T>
 ```
 this.Dispatcher.BeginInvoke(new Action(() =>
 {
-    // 操作 ObservableCollection&lt;T&gt; 对象逻辑
+    // 操作 ObservableCollection<T> 对象逻辑
 }));
 ```
 
-为了不让代码到处充斥着 Dispatcher.BeginInvoke，可以封装了一个 SafeObservableCollection<T>：
+为了不让代码到处充斥着 Dispatcher.BeginInvoke，可以封装了一个 SafeObservableCollection&lt;T&gt;：
 
 ```
 [DebuggerDisplay("Count = {Count}")]
 [ComVisible(false)]
-public class SafeObservableCollection&lt;T&gt; : ObservableCollection&lt;T&gt;
+public class SafeObservableCollection<T> : ObservableCollection<T>
 {
     private readonly Dispatcher dispatcher;
 
     public SafeObservableCollection() : 
-        this(Enumerable.Empty&lt;T&gt;())
+        this(Enumerable.Empty<T>())
     {
 
     }
 
     public SafeObservableCollection(Dispatcher dispatcher) : 
-        this(Enumerable.Empty&lt;T&gt;(),dispatcher)
+        this(Enumerable.Empty<T>(),dispatcher)
     {
 
     }
 
-    public SafeObservableCollection(IEnumerable&lt;T&gt; collection) : 
+    public SafeObservableCollection(IEnumerable<T> collection) : 
         this(collection, Dispatcher.CurrentDispatcher)
     {
 
     }
 
-    public SafeObservableCollection(IEnumerable&lt;T&gt; collection, Dispatcher currentDispatcher)
+    public SafeObservableCollection(IEnumerable<T> collection, Dispatcher currentDispatcher)
     {
         this.dispatcher = currentDispatcher;
         foreach (var item in collection)
@@ -112,4 +112,4 @@ public class SafeObservableCollection&lt;T&gt; : ObservableCollection&lt;T&gt;
 }
 ```
 
-当然，在使用 SafeObservableCollection<T> 时，你应该在 UI 线程创建这个集合对象，不然 UI 也无法更新数据。
+当然，在使用 SafeObservableCollection&lt;T&gt; 时，你应该在 UI 线程创建这个集合对象，不然 UI 也无法更新数据。
