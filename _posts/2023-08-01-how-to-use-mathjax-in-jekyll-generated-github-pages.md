@@ -10,7 +10,7 @@ use_math: true
 
 1. 使用正确的 Markdown 解释器
    
-   在<code>-config.yml</code>使用 kramdown
+   在<code>_config.yml</code>使用 kramdown
 
 2. 修改页面模板
 
@@ -40,17 +40,15 @@ use_math: true
 3. 修改页面布局模板
    
    以布局模板 post.html 为例，在 <head> 标签里添加以下内容：
+   
    ```
    <head>
-      ...
-
       {% if page.use_math %}
-      {% include mathjax_support.html %}
+         {% include mathjax_support.html %}
       {% endif %}
-
-      ...
    </head>
    ```
+
 4. 页面配置设置
    
    在有数学公式的页面配置中，添加 use_math: true。
@@ -63,5 +61,6 @@ use_math: true
    ---
    ```
 
-
-参考资料：[How to use MathJax in Jekyll generated Github pages](https://haixing-hu.github.io/programming/2013/09/20/how-to-use-mathjax-in-jekyll-generated-github-pages/)
+参考资料：
+1. [How to use MathJax in Jekyll generated Github pages](https://haixing-hu.github.io/programming/2013/09/20/how-to-use-mathjax-in-jekyll-generated-github-pages/)
+2. [Jekyll and Mathjax](https://talk.jekyllrb.com/t/jekyll-and-mathjax/5514)
