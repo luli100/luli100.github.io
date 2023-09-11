@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 卡尔曼滤波
+use_math: true
 ---
 
 ### 为什么要使用跟踪预测算法
@@ -9,7 +10,7 @@ title: 卡尔曼滤波
 
 为了说明这一点，让我们以一个雷达跟踪目标为例。
 
-![雷达测距](https://github-am.geo.conti.de/ADAS/adas_am_toolchain/blob/master/images/radar_vehicle_distance.png)
+![雷达测距](/images/radar_vehicle_distance.png)
 
 假设雷达每隔 1 s 对目标进行采样，进而估计目标当前的位置和速度。雷达同时还能根据牛顿运动方程估计（或预测）目标下一个测量周期的位置和速度。
 
@@ -240,7 +241,7 @@ $$\hat x_{n,n} = \hat x_{n,n-1} + K_n \cdot (z_n - \hat x_{n,n-1}) = K_n \cdot z
 
 卡尔曼滤波可以由“测量，更新，预测”三个核心步骤来描述。下图给出了卡尔曼滤波的详细框图描述：
 
-![卡尔曼滤波底层结构](https://github-am.geo.conti.de/ADAS/adas_am_toolchain/blob/master/images/detailed_kalman_filter_algorithm.png)
+![卡尔曼滤波底层结构](/images/detailed_kalman_filter_algorithm.png)
 
 ### 示例-雷达跟踪直线匀速运动的目标车
 
