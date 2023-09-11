@@ -1,6 +1,7 @@
 ---
 layout: post
 title: α-β-(γ) 滤波
+use_math: true
 ---
 
 ### α 滤波参数选择
