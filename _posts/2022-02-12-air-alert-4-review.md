@@ -3,8 +3,6 @@ layout: post
 title: Air Alert『空中预警』程序审查 - 警告！远离
 ---
 
-## Air Alert『空中预警』程序审查—警告！远离
-
 本文翻译自 BASKETBALL WORKOUT TIPS 上的一篇文章，<a href="https://www.basketballworkouttips.com/air-alert-review/">原文地址</a>。
 
 如果你一直在网上搜索增加垂直跳跃的方法，那么毫无疑问你会遇到空中预警。
@@ -83,7 +81,7 @@ title: Air Alert『空中预警』程序审查 - 警告！远离
 
 据节目制作人说:**这6种独特的跳跃训练是专门为从不同角度攻击你的腿而设计的，隔离了专门为跳跃而设计的肌肉。**这些练习围绕着前面提到的“习惯跳跃训练”的概念展开。据说它使你的腿非常习惯于跳跃动作，变得毫不费力，从而使你跳得更高。然而，有大量的科学数据明确表明这是完全错误的。事实上，这正是你不应该做的。
 
-<a href="https://youtu.be/1FIPiqxeXus">这个视频解释了为什么?</a>
+[这个视频解释了为什么?](https://youtu.be/1FIPiqxeXus)
 
 问问任何一个专业的教练如何提高你的垂直跳，他们会告诉你：**强度 x 速度 = 爆炸**，你的垂直跳跃高度取决于你能产生多大的力量，以及你能多快地产生这种力量。
 
@@ -157,7 +155,7 @@ title: Air Alert『空中预警』程序审查 - 警告！远离
 
 Vert Shock 已经帮助成千上万的运动员跳得更高，如果你正在寻找一个低成本、高冲击力、不需要太多时间或不需要去健身房的项目，它是一个不错的选择。
 
-<a href="https://www.basketballworkouttips.com/vert-shock-program-review-and-results/">你可以在这里找到我对这个项目的评论。</a>
+[你可以在这里找到我对这个项目的评论](https://www.basketballworkouttips.com/vert-shock-program-review-and-results/)
 
 - The Jump Manual
 
