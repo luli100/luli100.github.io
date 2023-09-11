@@ -43,4 +43,4 @@ Task DoWorkAsync();
 Task DoWorkAsync();
 ```
 
-下一篇：<a href="/blogs/2019/04/14/task-run-proper-usage-2.html">Task.Run 的正确使用方式（2）</a>
+下一篇：<a href="/task-run-proper-usage-two">Task.Run 的正确使用方式（2）</a>
