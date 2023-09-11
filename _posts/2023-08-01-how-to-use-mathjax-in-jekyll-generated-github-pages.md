@@ -40,10 +40,16 @@ title: 如何在 Jekyll 生成的 Github 页面中使用 MathJax
    
    以布局模板 post.html 为例，在 <head> 标签里添加以下内容：
    
-   ```html
-   {% if page.use_math %}
-      {% include mathjax_support.html %}
-   {% endif %}
+   ```
+   {% raw %}
+   <head>
+      ...
+      {% if page.use_math %}
+         {% include mathjax_support.html %}
+      {% endif %}
+      ...
+   </head>
+   {% endraw %}
    ```
 
 4. 页面配置设置
