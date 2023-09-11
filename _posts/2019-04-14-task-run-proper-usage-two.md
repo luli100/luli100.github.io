@@ -85,4 +85,4 @@ private async void MyButton_Click(object sender, EVentArgs e)
 
 结论：<strong>不要在方法实现中使用 Task.Run；而是使用 Task.Run 来调用方法。</strong>
 
-下一篇：<a href="/task-run-proper-usage-two">Task.Run 的正确使用方式（3）</a>
+下一篇：<a href="/task-run-proper-usage-three">Task.Run 的正确使用方式（3）</a>
