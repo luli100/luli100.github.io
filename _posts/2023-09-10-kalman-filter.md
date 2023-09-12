@@ -2,6 +2,7 @@
 layout: post
 title: 卡尔曼滤波
 use_math: true
+enable: true
 ---
 
 ### 为什么要使用跟踪预测算法
@@ -283,6 +284,7 @@ $$p^x_{n,n} = (1 - K^x_n) \cdot p^x_{n,n-1} = {0.01 \cdot p^x_{n,n-1} \over p^x_
 $$p^v_{n,n} = (1 - K^v_n) \cdot p^v_{n,n-1} = {0.04 \cdot p^v_{n,n-1} \over p^v_{n,n-1} + 0.04}$$
 
 下面是 10 次迭代各状态的值：
+
 | 第 $n$ 次迭代 | $z_n$ | 当前状态估计( $\hat x_{n,n}$, $\hat v_{n,n}$, $K_n$, $p_{n,n}$ ) | 未来状态预测( $\hat x_{n+1,n}$, $\hat v_{n+1,n}$, $p_{n+1, n}$ ) |
 |:--------:|:--------:|:--------:|:--------:|
 | $0$ | - | $\hat x_{0,0} = 10 \space m$ <br> $\hat v_{0,0} = 20 \space m/s$ <br> $p^x_{0,0} = 0.01$ <br> $p^v_{0,0} = 0.09$ | $\hat x_{1,0} = 30 \space m$ <br> $\hat v_{1,0} = 20 \space m/s$ <br> $p^x_{1,0} = 0.1$ <br> $p^v_{1,0} = 0.09$ | 

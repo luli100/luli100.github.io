@@ -34,10 +34,12 @@ title: 路上的骑士
 <div class="outer">
   <ul class="list-group">
       {% for post in site.posts %}
-        <li class="list-group-item title">
-          <div class="date">{{ post.date | date: "%Y 年 %-m 月%-d 日" }}</div>
-          <a href="{{ post.url }}">{{ post.title }}</a>
-        </li>
+        {% if post.enable %}
+          <li class="list-group-item title">
+            <div class="date">{{ post.date | date: "%Y 年 %-m 月%-d 日" }}</div>
+            <a href="{{ post.url }}">{{ post.title }}</a>
+          </li>
+        {% endif %}
       {% endfor %}
   </ul>
 </div>

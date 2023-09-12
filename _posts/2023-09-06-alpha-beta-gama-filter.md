@@ -2,6 +2,7 @@
 layout: post
 title: 选择 α-β-(γ) 滤波参数
 use_math: true
+enable: true
 ---
 
 ### α 滤波参数选择
