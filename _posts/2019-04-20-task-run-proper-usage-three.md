@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Task.Run 的正确使用方式（3）
+enable: true
 ---
 
 在<a href="/blogs/2019/04/14/task-run-proper-usage-2.html"> Task.Run 正确使用方式（2）</a>里，研究了为什么不应该在 CPU-bound 方法实现里使用 Task.Run。相反，我们应该使用 Task.Run 调用该方法。

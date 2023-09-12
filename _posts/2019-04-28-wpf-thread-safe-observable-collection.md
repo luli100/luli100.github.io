@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 线程安全的 SafeObservableCollection&lt;T&gt;
+enable: true
 ---
 
 如果你使用过 WPF 框架开发应用程序，我想你一定使用过 ObservableCollection&lt;T&gt;。但 ObservableCollection&lt;T&gt; 的问题在于：它仅能在 Dispacher 线程「这里可以理解为 UI 线程」更新数据。如果你想从另外一个线程更新数据到 ObservableCollection&lt;T&gt; 中时，你需要编写类似于下面的代码：

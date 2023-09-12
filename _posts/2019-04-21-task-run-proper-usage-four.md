@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Task.Run 的正确使用方式（4）
+enable: true
 ---
 
 在 WPF 事件处理器中使用 Task.Run 的方式，是否适用于 ASP.NET MVC 控制器呢，答案是否定的。

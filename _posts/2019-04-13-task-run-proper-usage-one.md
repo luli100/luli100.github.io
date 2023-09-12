@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Task.Run 的正确使用方式（1）
+enable: true
 ---
 
 要想正确使用 Task.Run，我们得先搞清楚 Task.Run 存在的意义是什么？ <strong>Task.Run 的真正目的是以异步方式执行 CPU-bound 代码。</strong> 为了做到这一点，Task.Run 通过在线程池线程上执行一个方法，该方法执行完后，会返回一个 Task 对象。

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Task.Run 的正确使用方式（2）
+enable: true
 ---
 
 我们从一些现有的代码开始，它们以同步方式执行一些复杂计算。
