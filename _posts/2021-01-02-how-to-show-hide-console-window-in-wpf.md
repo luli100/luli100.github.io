@@ -8,13 +8,13 @@ enable: true
 
 下面的方法应该可以满足你的需求：
 
-1. 将 WPF 应用程序输出类型设置为<strong>控制台应用程序</strong>，在 *.csproj 文件里可以看到如下配置。
+- 将 WPF 应用程序输出类型设置为<strong>控制台应用程序</strong>，在 *.csproj 文件里可以看到如下配置。
 
 ```
 <OutputType>Exe</OutputType>
 ```
 
-2. 添加 NativeConsole 类公开 C++ 函数。
+- 添加 NativeConsole 类公开 C++ 函数。
 
 ```
 public static class NativeConsole
@@ -42,7 +42,7 @@ public static class NativeConsole
 }
 ```
 
-3. 为了让 WPF 应用程序启动时，默认<strong>隐藏</strong>控制台窗口，可以在 App.xaml.cs 里重写 OnStartup 方法。
+- 为了让 WPF 应用程序启动时，默认<strong>隐藏</strong>控制台窗口，可以在 App.xaml.cs 里重写 OnStartup 方法。
 
 ```
 public partial class App : Application
@@ -57,7 +57,7 @@ public partial class App : Application
 }
 ```
 
-4. 在你想<strong>显示/隐藏</strong>控制台窗口的地方调用下面的方法。
+- 在你想<strong>显示/隐藏</strong>控制台窗口的地方调用下面的方法。
 
 <strong>显示</strong>控制台窗口方法：
 
