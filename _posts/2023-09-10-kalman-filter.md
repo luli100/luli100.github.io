@@ -246,7 +246,7 @@ $$\hat x_{n,n} = \hat x_{n,n-1} + K_n \cdot (z_n - \hat x_{n,n-1}) = K_n \cdot z
 
 卡尔曼滤波可以由“测量，更新，预测”三个核心步骤来描述。下图给出了卡尔曼滤波的详细框图描述：
 
-<img src="/images/detailed_kalman_filter_algorithm.png" width=80%/>
+<img src="/images/detailed_kalman_filter_algorithm.png" width="80%" />
 
 ### 示例-雷达跟踪直线匀速运动的目标车
 
