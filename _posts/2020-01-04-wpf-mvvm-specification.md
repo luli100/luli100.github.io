@@ -126,7 +126,7 @@ public class UserViewModel : INotifyPropertyChanged
 ```
 public class MultiUserViewModel
 {
-    public ObservableCollection&lt;User&gt; Users { get; private set; } = new ObservableCollection&lt;User&gt;();
+    public ObservableCollection<User> Users { get; private set; } = new ObservableCollection<User>();
 }
 ```
 
@@ -135,7 +135,7 @@ public class MultiUserViewModel
 ```
 public class MultiUserViewModel
 {
-    public ObservableCollection&lt;UserViewModel&gt; Users { get; private set; } = new ObservableCollection&lt;UserViewModel&gt;();
+    public ObservableCollection<UserViewModel> Users { get; private set; } = new ObservableCollection<UserViewModel>();
 }
 ```
 
