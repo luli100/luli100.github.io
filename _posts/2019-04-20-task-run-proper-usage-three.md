@@ -4,7 +4,7 @@ title: Task.Run 的正确使用方式（3）
 enable: true
 ---
 
-在<a href="/blogs/2019/04/14/task-run-proper-usage-2.html"> Task.Run 正确使用方式（2）</a>里，研究了为什么不应该在 CPU-bound 方法实现里使用 Task.Run。相反，我们应该使用 Task.Run 调用该方法。
+在<a href="/task-run-proper-usage-two"> Task.Run 正确使用方式（2）</a>里，研究了为什么不应该在 CPU-bound 方法实现里使用 Task.Run。相反，我们应该使用 Task.Run 调用该方法。
 
 让我们考虑一个更复杂的场景：<strong>服务 API 包括获取数据（I/O-bound）和分析处理数据（CPU-bound）两部分。</strong>
 
