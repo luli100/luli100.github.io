@@ -6,12 +6,6 @@ html {
     -webkit-text-size-adjust: none;
 }
 
-/* reset CSS */
-table {
-    font-size: 100%;
-}
-/* end reset CSS */
-
 body {
     font-family:"lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     font-size: 18px;
