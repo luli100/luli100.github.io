@@ -61,13 +61,13 @@ Invoke 方法采用 Action 或委托并同步执行该方法。这意味着在 D
 
 这里是 Invoke 的一个例子：
 
-```
+```C#
 public partial class MainWindow : Window
 {
     public MainWindow()
     {
         InitializeComponent();
-        Task.Factory.StartNew(() =&gt;
+        Task.Factory.StartNew(() =>
         {
             InvokeMethodExample();
         });
@@ -76,9 +76,9 @@ public partial class MainWindow : Window
     private void InvokeMethodExample()
     {
         Thread.Sleep(2000);
-        Dispatcher.Invoke(() =&gt;
+        Dispatcher.Invoke(() =>
         {
-            btn1.Content = &quot;By Invoke&quot;;
+            btn1.Content = "By Invoke";
         });
     }
 }
@@ -89,13 +89,13 @@ public partial class MainWindow : Window
 
 BeginInvoke 方法接受一个 Delegate，但它以异步方式执行该方法。这意味着它在调用方法之前理解返回。
 
-```
+```C#
 public partial class MainWindow : Window
 {
     public MainWindow()
     {
         InitializeComponent();
-        Task.Factory.StartNew(() =&gt;
+        Task.Factory.StartNew(() =>
         {
             BeginInvokeExample();
         });
@@ -103,10 +103,10 @@ public partial class MainWindow : Window
 
     private void BeginInvokeExample()
     {
-        DispatcherOperation op = Dispatcher.BeginInvoke((Action)(() =&gt; 
+        DispatcherOperation op = Dispatcher.BeginInvoke(() =>
         {
-            btn1.Content = &quot;By BeginInvoke&quot;;
-        }));
+            btn1.Content = "By BeginInvoke";
+        });
     }
 }
 ```
