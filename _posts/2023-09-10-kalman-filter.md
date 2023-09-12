@@ -151,14 +151,14 @@ $$\hat x_{n,n} = \hat x_{n,n-1} + K_n \cdot (z_n - \hat x_{n,n-1}) = K_n \cdot z
 
 ### 协方差更新方程推导
 
-前文的 $w_1$ 就是卡尔曼增益 $K_n$，因此可以根据估计值的方差于测量值得方差关系方程 $p_{n,n} = w^2_1 \cdot r_n + (1-w_1)^2 \cdot p_{n,n-1}$ 进行如下推导：
+前文的 $w_1$ 就是卡尔曼增益 $K_n$，因此可以根据估计值的方差于测量值得方差关系方程 $p_{n,n} = w_{1}^{2} \cdot r_n + (1-w_1)^2 \cdot p_{n,n-1}$ 进行如下推导：
 
 |推导|注解|
 |--------|--------|
-|$p_{n,n} = w^2_1 \cdot r_n + (1-w_1)^2 \cdot p_{n,n-1}$|将 $K_n$ 替换掉 $w_1$|
-| $p_{n,n} = K^2_nr_n + (1-K_n)^2P_{n,n-1}$ | 将卡尔曼增益 $K_n$ 代入 |
+|$p_{n,n} = w_{1}^{2} \cdot r_n + (1-w_1)^2 \cdot p_{n,n-1}$|将 $K_n$ 替换掉 $w_1$|
+| $p_{n,n} = K_{n}^{2}r_n + (1-K_n)^2P_{n,n-1}$ | 将卡尔曼增益 $K_n$ 代入 |
 | $p_{n,n} = ({p_{n,n-1} \over p_{n,n-1} + r_n})^2r_n + ({r_n \over p_{n,n-1} + r_n})^2P_{n,n-1}$ | 把展开后的 $K_n$ 和 $(1 - K_n)$ 代入 |
-| $p_{n,n} = { p^2_{n,n-1}r_n \over (p_{n,n-1} + r_n)^2} + {r^2_n p_{n,n-1} \over (p_{n,n-1} + r_n)^2}$ | 展开平方 |
+| $p_{n,n} = { p_{n,n-1}^{2}r_n \over (p_{n,n-1} + r_n)^2} + {r_{n}^{2} p_{n,n-1} \over (p_{n,n-1} + r_n)^2}$ | 展开平方 |
 | $p_{n,n} = {p_{n,n-1}r_n \over p_{n,n-1}+r_n}({p_{n,n-1} \over p_{n,n-1} + r_n} + {r_n \over p_{n,n-1} + r_n})$ | 提出共有项 |
 | $p_{n,n} = (1 - K_n)p_{n,n-1}(K_n + (1 - K_n))$ | 再代入 $K_n$ 和 $(1 - K_n)$ |
 | $p_{n,n} = (1 - K_n)p_{n,n-1}$ | $K_n$ 抵消 |
@@ -246,7 +246,7 @@ $$\hat x_{n,n} = \hat x_{n,n-1} + K_n \cdot (z_n - \hat x_{n,n-1}) = K_n \cdot z
 
 卡尔曼滤波可以由“测量，更新，预测”三个核心步骤来描述。下图给出了卡尔曼滤波的详细框图描述：
 
-![卡尔曼滤波底层结构](/images/detailed_kalman_filter_algorithm.png)
+<img src="/images/detailed_kalman_filter_algorithm.png" width=80%/>
 
 ### 示例-雷达跟踪直线匀速运动的目标车
 
