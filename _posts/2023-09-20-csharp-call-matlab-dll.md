@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 生成 .NET 程序集和 构建 .NET 应用程序
+title: C# 应用程序调用 MATLAB 创建的 .NET 程序集
 enable: true
 ---
 
