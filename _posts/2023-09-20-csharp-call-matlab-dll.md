@@ -43,3 +43,9 @@ enable: true
 ### 总结
 
 init 空函数主要是用来解决 C# 首次调用 MATLAB 函数存在延迟问题，具体操作：在 .NET 应用程序启动时，主动调用一次 init 函数。
+
+### 参考资料
+
+1. [https://ww2.mathworks.cn/help/compiler_sdk/gs/create-a-dotnet-application-with-matlab-code.html](https://ww2.mathworks.cn/help/compiler_sdk/gs/create-a-dotnet-application-with-matlab-code.html)
+2. [https://www.cnblogs.com/yuanshuo/p/13477641.html](https://www.cnblogs.com/yuanshuo/p/13477641.html)
+3. [https://zhuanlan.zhihu.com/p/401106292](https://zhuanlan.zhihu.com/p/401106292)
