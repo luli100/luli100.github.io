@@ -19,4 +19,19 @@ $w_{1}^{2}$
 >> clc
 ```
 
+### 在 WPF XAML中，EventTrigger 如何 Binding 命令
+
+1. 安装 Microsoft.Xaml.Behaviors.Wpf 包
+2. 在需要的窗体或控件处引入包, 格式： xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+3. 编写事件触发器命令调用，例如：
+   ```
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding VM.LoadedCommand}" 
+                                   CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+   ```
+
+
 
