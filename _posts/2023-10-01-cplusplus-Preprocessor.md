@@ -10,7 +10,7 @@ enable: true
 
 **#include** 实际上很简单，预处理会将你指定的那个文件复制粘贴到你写的 .cpp 文件中。我们一起来验证一下。
 
-新建一个 math.cpp， 输入下面代码：
+用 visual studio 新建一个空的 C++ 项目，然后新建一个 math.cpp， 输入下面代码：
 
 ```
 int add(int x, int y)
@@ -44,8 +44,24 @@ int add(int x, int y)
 
 按 Ctrl + F7 进行编译，也会编译成功。因为所有编译器此时做的工作就是：复制所有 endbrace.h 内容，替换掉 #include "endbrace.h"。
 
+实际上，我们有一种方法可以告诉编译器输出一个文件，其中包含预处理器输出的结果。
 
+打开项目属性页，设置 Preprocess to a File 为 Yes，如下图所示：
 
+![project property pages](/images/project1-property-pages.png)
+
+再按 Ctrl + F7 编译文件，打开 Debug 输出目录，可以看到一个 math.i 文件，使用文本编译器打开 math.i，可以看到如下内容：
+
+```
+#line 1 "D:\\gitee\\practice\\Project1\\Project1\\math.cpp"
+int add(int x, int y)
+{
+	int result = x + y;
+	return result;
+#line 1 "D:\\gitee\\practice\\Project1\\Project1\\endbrace.h"
+}
+#line 6 "D:\\gitee\\practice\\Project1\\Project1\\math.cpp"
+```
 
 ### 宏替换
 
