@@ -4,7 +4,7 @@ title: C++ 编译器 - 预处理
 enable: true
 ---
 
-预处理器是在程序源文件被编译之前根据预处理指令对程序源文件进行处理的程序。预处理器指令以#号开头标识，末尾不包含分号。预处理命令不是C/C++语言本身的组成部分，不能直接对它们进行编译和链接。C/C++语言的一个重要功能是可以使用预处理指令和具有预处理的功能。C/C++提供的预处理功能主要有文件包含（#include）、宏替换(#define)、条件编译(if, #ifdef)等。
+预处理器是在程序源文件被编译之前根据预处理指令对程序源文件进行处理的程序。预处理器指令以 # 号开头标识，末尾不包含分号。预处理命令不是C/C++语言本身的组成部分，不能直接对它们进行编译和链接。C/C++提供的预处理功能主要有文件包含（#include）、宏替换(#define)、条件编译(if, #ifdef)等。
 
 ### 头文件包含
 
@@ -64,6 +64,33 @@ int add(int x, int y)
 ```
 
 ### 宏替换
+
+回到 math.cpp 文件中，定义一个宏，进行如下修改：
+
+```
+#define INTEGER int
+
+INTEGER add(INTEGER x, INTEGER y)
+{
+	INTEGER result = x + y;
+	return result;
+}
+```
+
+然后按 Ctrl + F7 编译文件，再次查看 math.i 输出文件，可以看到如下内容：
+
+```
+#line 1 "D:\\gitee\\practice\\Project1\\Project1\\math.cpp"
+
+
+int add(int x, int y)
+{
+	int result = x + y;
+	return result;
+}
+```
+
+**#define 预处理语句基本上的作用，就是搜索 INTEGER，并将 INTEGRER 替换为 int。**
 
 ### 条件编译
 
