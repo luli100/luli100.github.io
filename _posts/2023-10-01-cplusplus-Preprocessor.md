@@ -48,7 +48,7 @@ int add(int x, int y)
 
 打开项目属性页，设置 Preprocess to a File 为 Yes，如下图所示：
 
-![project property pages](/images/project1-property-pages.png)
+<img src="/images/project1-property-pages.png" width="80%">
 
 再按 Ctrl + F7 编译文件，打开 Debug 输出目录，可以看到一个 math.i 文件，使用文本编译器打开 math.i，可以看到如下内容：
 
@@ -94,4 +94,86 @@ int add(int x, int y)
 
 ### 条件编译
 
+**if 预处理语句可以让我们基于给定条件的代码包含或排除。**
 
+```
+#if 1
+
+int add(int x, int y)
+{
+	int result = x + y;
+	return result;
+}
+
+#endif
+```
+
+以上代码编译会得到如下内容：
+
+```
+#line 1 "D:\\gitee\\practice\\Project1\\Project1\\math.cpp"
+
+
+int add(int x, int y)
+{
+	int result = x + y;
+	return result;
+}
+
+#line 10 "D:\\gitee\\practice\\Project1\\Project1\\math.cpp"
+```
+
+基本上和源代码函数没有区别。
+
+同理，将条件修改为 0 ：
+
+```
+#if 0
+
+int add(int x, int y)
+{
+	int result = x + y;
+	return result;
+}
+
+#endif
+```
+
+再次编译可以得到如下内容：
+
+```
+#line 1 "D:\\gitee\\practice\\Project1\\Project1\\math.cpp"
+
+
+
+
+
+
+
+
+#line 10 "D:\\gitee\\practice\\Project1\\Project1\\math.cpp"
+```
+
+没有看到函数代码，这验证了我们的想法。
+
+我们再看一下添加 #include iostream，会是一番什么景象：
+
+```
+#include <iostream>
+
+int add(int x, int y)
+{
+	int result = x + y;
+	return result;
+}
+```
+
+按 Ctrl + F7 编译，可以看到 math.i 文件变得很大了：
+
+<img src="/images/include-iostream.png" width="80%">
+
+这是因为 iostream 也包含了其它文件，而它本身也包含了大量的代码。
+
+### 总结
+
+以上内容就是预处理器所做的工作，一旦这个阶段结束，我们就可以将 C++ 代码编译成机器代码。
