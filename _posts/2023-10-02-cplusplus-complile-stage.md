@@ -50,7 +50,7 @@ int add(int x, int y)
 ```
 int add(int x, int y)
 {
-  return 10 * 10;
+    return 10 * 10;
 }
 ```
 
@@ -67,13 +67,13 @@ int add(int x, int y)
 ```
 const char* log(const char* message)
 {
-  return message;
+    return message;
 }
 
 int add(int x, int y)
 {
-  log("add");
-  return x * y;
+    log("add");
+    return x * y;
 }
 ```
 
