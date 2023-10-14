@@ -133,3 +133,22 @@ int main()
 ```
 
 继续 build 项目，也成功了。
+
+### 其它错误
+
+回到 log.cpp 文件里，做如下代码修改：
+
+```
+#include <iostream>
+
+void logr(const char* message)
+{
+	std::cout << message << std::endl;
+}
+```
+
+如果我们现在 build 整个项目，你会得到一个链接错误 - 无法解析的外部符号：
+
+<img src="/images/project1-link-error2.png" width="80%">
+
+这是因为调用 multiply 函数中调用了 log 函数，编译器在链接的时候，却找不到 log 函数的定义。
