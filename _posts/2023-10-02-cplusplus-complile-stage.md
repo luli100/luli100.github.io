@@ -18,16 +18,16 @@ enable: true
 ```
 int add(int x, int y)
 {
-	int result = x + y;
-	return result;
+  int result = x + y;
+  return result;
 }
 ```
 
-按 Ctrl + F7，构建我们的 math.cpp 文件。你会看到得到一个 math.obj 文件，用编辑器打开 math.obj 文件，大概是下面这个样子：
+按 Ctrl + F7，编译 math.cpp 文件。你会得到一个 math.obj 文件，用编辑器打开 math.obj 文件，内容大概是下面这个样子：
 
 <img src="/images/project1-mathobj.png" width="80%">
 
-基本没有可读性，当这就是当我们调用这个加法函数时，CPU 将运行的机器码。让我们把它转换成更容易读懂的方式，将项目属性页设置为：
+基本没有可读性，但这就是调用 add 函数时，CPU 运行的机器码。让我们把它转换成更容易读懂的方式，将项目属性页设置为如下：
 
 <img src="/images/project1-property-pages3.png" width="80%">
 
@@ -45,12 +45,12 @@ int add(int x, int y)
 
 <img src="/images/project1-math-asm2.png" width="80%">
 
-你现在应该有一个基本的概念，当你告诉编译器优化时，编译器实际上会做很多事情。让我们再看一个高级的东西，将 math.cpp 的内容改为：
+你现在应该有一个基本的概念，当你告诉编译器优化时，编译器实际上会做很多事情。让我们再看一个高级点的东西，将 math.cpp 的内容改为：
 
 ```
 int add(int x, int y)
 {
-	return 10 * 10;
+  return 10 * 10;
 }
 ```
 
@@ -67,14 +67,13 @@ int add(int x, int y)
 ```
 const char* log(const char* message)
 {
-	return message;
+  return message;
 }
 
 int add(int x, int y)
 {
-	log("Hello");
-
-	return x * y;
+  log("add");
+  return x * y;
 }
 ```
 
@@ -91,5 +90,3 @@ log 函数名像是被一堆随机字符装饰了，这实际上是函数的签�
 编译器将获取源文件并输出一个 obj 文件，obj 文件是包含机器代码的文件，以及其它我们定义的常数数据。
 
 我们可以将这些 obj 文件链接成一个包含所有内容的可执行文件，可执行文件包含了运行的及其代码，就是我们就可以让 C++ 程序跑起来了。
-
-
