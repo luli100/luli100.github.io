@@ -177,5 +177,143 @@ Build 项目，仍然得到一个链接错误，为什么会这样呢？你可�
 
 这是因为在 math.cpp 中，我们声明的 log 函数是一个返回值是 void，所以要寻找名为 log 函数，它返回 void 以及同样的参数。
 
-还有一种常见错误 - 重复的符号，换句话说，我们有两个名字相同的函数且有相同的返回值和相同的参数，如果发生这种情况，链接器就会不知道连接至哪一个：
+还有一种常见错误 - 重复的符号，换句话说，我们有两个名字相同的函数且有相同的返回值和相同的参数，如果发生这种情况，链接器就会不知道链接到哪一个。现在，我们在 math.cpp 里也加一个 log 函数的定义，Build 项目，看会出现什么情况：
+
+<img src="/images/project1-build-error3.png" width="80%">
+
+你可能认为这种类型的错误不会经常发生，然而，这可能会悄悄发生在你身上。
+
+### 三个解决方案
+
+为了 Build 项目成功，我们先创建一个 log.h 头文件。
+
+现在 log.h 头文件的代码如下：
+
+```
+void log(const char* message)
+{
+	std::cout << message << std::endl;
+}
+```
+
+log.cpp 文件的代码如下：
+
+```
+#include <iostream>
+#include "log.h"
+
+void InitLog()
+{
+	log("Init Log");
+}
+```
+
+math.cpp 文件的代码如下：
+
+```
+#include <iostream>
+#include "log.h"
+
+void log(const char* message);
+
+static int multiply(int x, int y)
+{
+	log("add");
+
+	return x * y;
+}
+
+int main()
+{
+	std::cout << multiply(10, 10) << std::endl;
+	std::cin.get();
+
+	return 0;
+}
+```
+
+还记得 #include 语句的工作原理吗？当我们包含头文件时，编译器会取头文件的内容，把它放在 #include 语句的地方。现在 Build 项目，会出现什么情况呢？
+
+<img src="/images/project1-build-error4.png" width="80%">
+
+同样会出现链接错误，跟上面的情况是一样的。有三种方案可以解决这个问题：
+
+1、 static
+
+在 log.h 中做如下修改：
+
+```
+static void log(const char* message)
+{
+	std::cout << message << std::endl;
+}
+```
+
+这时 Build 项目，不会得到任何链接错误。
+
+2、 inline
+
+inline 的意思是，获取实际的函数体并将函数调用替换为函数本身：
+
+```
+inline void log(const char* message)
+{
+	std::cout << message << std::endl;
+}
+```
+
+同样的，Build 项目，也不会得到任何链接错误。
+
+3、分离函数声明和定义
+
+将 log.h 头文件的代码修改如下：
+
+```
+void log(const char* message);
+```
+
+log.cpp 文件的代码修改如下：
+
+```
+#include <iostream>
+#include "log.h"
+
+void InitLog()
+{
+	log("Init Log");
+}
+
+void log(const char* message)
+{
+	std::cout << message << std::endl;
+}
+```
+
+math.cpp 文件的代码修改如下：
+
+```
+#include <iostream>
+#include "log.h"
+
+static int multiply(int x, int y)
+{
+	log("add");
+	return x * y;
+}
+
+int main()
+{
+	std::cout << multiply(10, 10) << std::endl;
+	std::cin.get();
+
+	return 0;
+}
+```
+
+此时，Build 项目，也不会出现链接错误。
+
+### 总结
+
+链接器最终会将 obj 文件链接在一起，它也会将程序使用的其他库的链接起来，例如 C 运行时库。如果有必要，C++ 标准库，平台 API，还有很多其它的东西，从不同地方链接时很常见的操作，甚至还有不同类型的链接，比如静态链接和动态链接等待。
+
 
