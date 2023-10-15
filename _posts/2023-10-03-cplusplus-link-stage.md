@@ -152,3 +152,30 @@ void logr(const char* message)
 <img src="/images/project1-link-error2.png" width="80%">
 
 这是因为调用 multiply 函数中调用了 log 函数，编译器在链接的时候，却找不到 log 函数的定义。
+
+另一个有趣的情况，注释掉 multiply 函数中的 log 函数调用，再 Build 项目，你会发现错误消失了。
+
+<img src="/images/project1-build-right.png" width="80%">
+
+发生这种情况的原因是，我们从来没有调用过 log 函数，所以链接器不需要去链接这个 log 函数。
+
+那我们恢复 multiply 函数中的 log 函数调用，然后注释掉 main 函数中的 multiply 函数调用，会发生什么情况呢？
+
+<img src="/images/project1-build-error.png" width="80%">
+
+Build 项目，仍然得到一个链接错误，为什么会这样呢？你可能会问，我没有在任何地方调用 multiply 函数，为什么它会产生链接错误呢？我们可不可以说这些没有被调用的代码没有意义呢？
+
+大错特错，虽然在 math.cpp 文件中没有调用 multiply 函数，但技术上讲，我们可能在另一个文件中使用它，所以连接器确实需要链接它。
+
+如果我们能告诉编译器 multiply 函数只在 math.cpp 文件中使用，就可以去掉这种链接的必要性了。下面是一种可以做到的方法：
+
+<img src="/images/project1-build-right2.png" width="80%">
+
+在本例中，我们实际上修改了函数定义的名字，我们把函数的名字改从 logr 改回 log，然后将 void 返回参数改为 int，再 Build 项目，你仍会看到一个链接错误：
+
+<img src="/images/project1-build-error2.png" width="80%">
+
+这是因为在 math.cpp 中，我们声明的 log 函数是一个返回值是 void，所以要寻找名为 log 函数，它返回 void 以及同样的参数。
+
+还有一种常见错误 - 重复的符号，换句话说，我们有两个名字相同的函数且有相同的返回值和相同的参数，如果发生这种情况，链接器就会不知道连接至哪一个：
+
