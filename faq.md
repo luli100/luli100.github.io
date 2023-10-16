@@ -21,9 +21,9 @@ $w_{1}^{2}$
 
 ### 在 WPF XAML中，EventTrigger 如何 Binding 命令
 
-1. 安装 Microsoft.Xaml.Behaviors.Wpf 包
-2. 在需要的窗体或控件处引入包, 格式： xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
-3. 编写事件触发器命令调用，例如：
+1、安装 Microsoft.Xaml.Behaviors.Wpf 包
+2、在需要的窗体或控件处引入包, 格式： xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+3、编写事件触发器命令调用，例如：
    ```
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -33,5 +33,12 @@ $w_{1}^{2}$
     </i:Interaction.Triggers>
    ```
 
+### 如何计算雷达车的 Orientation
 
+已知雷达车的 yawrate(单位：rad/s)，cycleTime(单位：s)，如何计算雷达车当前的 Orientation。
+
+```
+orientation += yawrate * cycleTime;
+orientation -= 2 * Math.PI * Math.Floor((orientation + Math.PI) / (2* Math.PI));
+```
 
