@@ -4,7 +4,7 @@ title: C++ 编译器 - 链接
 enable: true
 ---
 
-.cpp 文件编译成 obj 文件后，还需要经过一个称为“链接”的过程。链接的主要内容就是找到每个符号和函数的位置以及将每个单独的 obj 文件链接在一起，生成可执行文件。单个 obj 文件没有任何关系，这些文件不能交互，所以，如果我们决定把程序分割成多个文件，我们需要一种方法把这些文件链接起来形成一个程序，这就是连接器的目的。
+.cpp 文件编译成 obj 文件后，还需要经过一个称为“链接”的过程。链接的主要内容就是找到每个符号和函数的位置以及将每个单独的 obj 文件链接在一起，生成可执行文件。单个 obj 文件没有任何关系，这些文件不能交互，所以，如果我们决定把程序分割成多个文件，我们需要一种方法把这些文件链接起来形成一个程序，这就是链接器的作用。
 
 ### main 函数
 
@@ -12,7 +12,7 @@ enable: true
 
 <img src="/images/project1-link-error.png" width="80%">
 
-这是因为 build 项目时，会先后经历编译和链接两个阶段，不同阶段的错误类型是不一样的。修改程序，故意删除分号，按 Ctrl + F7，看一下编译错误是什么样子的：
+这是因为在 build 项目时，会先后经历编译和链接两个阶段，不同阶段的错误类型是不一样的。修改程序，故意删除分号，按 Ctrl + F7，看一下编译错误是什么样子的：
 
 <img src="/images/project1-compile-error.png" width="80%">
 
@@ -32,8 +32,7 @@ const char* log(const char* message)
 
 int add(int x, int y)
 {
-    log("add");
-
+    log("multiply");
     return x * y;
 }
 
@@ -54,22 +53,21 @@ build 项目，也会成功地生成了 EXE 文件。
 
 void log(const char* message)
 {
-	std::cout << message << std::endl;
+    std::cout << message << std::endl;
 }
 
 int multiply(int x, int y)
 {
-	log("add");
-
-	return x * y;
+    log("multiply");
+    return x * y;
 }
 
 int main()
 {
-	std::cout << multiply(10, 10) << std::endl;
-	std::cin.get();
+    std::cout << multiply(10, 10) << std::endl;
+    std::cin.get();
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -80,7 +78,7 @@ int main()
 
 void log(const char* message)
 {
-	std::cout << message << std::endl;
+    std::cout << message << std::endl;
 }
 ```
 
@@ -91,17 +89,16 @@ void log(const char* message)
 
 int multiply(int x, int y)
 {
-	log("add");
-
-	return x * y;
+    log("multiply");
+    return x * y;
 }
 
 int main()
 {
-	std::cout << multiply(10, 10) << std::endl;
-	std::cin.get();
+    std::cout << multiply(10, 10) << std::endl;
+    std::cin.get();
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -118,17 +115,16 @@ void log(const char* message);
 
 int multiply(int x, int y)
 {
-	log("add");
-
-	return x * y;
+    log("multiply");
+    return x * y;
 }
 
 int main()
 {
-	std::cout << multiply(10, 10) << std::endl;
-	std::cin.get();
+    std::cout << multiply(10, 10) << std::endl;
+    std::cin.get();
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -143,7 +139,7 @@ int main()
 
 void logr(const char* message)
 {
-	std::cout << message << std::endl;
+    std::cout << message << std::endl;
 }
 ```
 
@@ -192,7 +188,7 @@ Build 项目，仍然得到一个链接错误，为什么会这样呢？你可�
 ```
 void log(const char* message)
 {
-	std::cout << message << std::endl;
+    std::cout << message << std::endl;
 }
 ```
 
@@ -204,7 +200,7 @@ log.cpp 文件的代码如下：
 
 void InitLog()
 {
-	log("Init Log");
+    log("Init Log");
 }
 ```
 
@@ -218,17 +214,16 @@ void log(const char* message);
 
 static int multiply(int x, int y)
 {
-	log("add");
-
-	return x * y;
+    log("multiply");
+    return x * y;
 }
 
 int main()
 {
-	std::cout << multiply(10, 10) << std::endl;
-	std::cin.get();
+    std::cout << multiply(10, 10) << std::endl;
+    std::cin.get();
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -245,7 +240,7 @@ int main()
 ```
 static void log(const char* message)
 {
-	std::cout << message << std::endl;
+    std::cout << message << std::endl;
 }
 ```
 
@@ -258,7 +253,7 @@ inline 的意思是，获取实际的函数体并将函数调用替换为函数�
 ```
 inline void log(const char* message)
 {
-	std::cout << message << std::endl;
+    std::cout << message << std::endl;
 }
 ```
 
@@ -272,7 +267,7 @@ inline void log(const char* message)
 void log(const char* message);
 ```
 
-log.cpp 文件的代码修改如下：
+将 log.cpp 文件的代码修改如下：
 
 ```
 #include <iostream>
@@ -280,16 +275,16 @@ log.cpp 文件的代码修改如下：
 
 void InitLog()
 {
-	log("Init Log");
+    log("Init Log");
 }
 
 void log(const char* message)
 {
-	std::cout << message << std::endl;
+    std::cout << message << std::endl;
 }
 ```
 
-math.cpp 文件的代码修改如下：
+将 math.cpp 文件的代码修改如下：
 
 ```
 #include <iostream>
@@ -297,16 +292,16 @@ math.cpp 文件的代码修改如下：
 
 static int multiply(int x, int y)
 {
-	log("add");
-	return x * y;
+    log("multiply");
+    return x * y;
 }
 
 int main()
 {
-	std::cout << multiply(10, 10) << std::endl;
-	std::cin.get();
+    std::cout << multiply(10, 10) << std::endl;
+    std::cin.get();
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -314,6 +309,4 @@ int main()
 
 ### 总结
 
-链接器最终会将 obj 文件链接在一起，它也会将程序使用的其他库的链接起来，例如 C 运行时库。如果有必要，C++ 标准库，平台 API，还有很多其它的东西，从不同地方链接时很常见的操作，甚至还有不同类型的链接，比如静态链接和动态链接等待。
-
-
+链接器最终会将 obj 文件链接在一起，它也会将程序使用的其他库链接起来，例如 C 运行时库。如果有必要，C++ 标准库，平台 API，还有很多其它的东西，从不同地方链接是很常见的操作，甚至还有不同类型的链接，比如静态链接和动态链接。
