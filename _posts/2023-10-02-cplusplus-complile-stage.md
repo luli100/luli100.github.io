@@ -1,6 +1,6 @@
 ---
 layout: post
-title: c++ 编译器 - 编译和汇编
+title: C/C++ 编译器 - 编译和汇编
 enable: true
 ---
 

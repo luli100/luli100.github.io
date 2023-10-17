@@ -1,6 +1,6 @@
 ---
 layout: post
-title: C++ 编译器 - 预处理
+title: C/C++ 编译器 - 预处理
 enable: true
 ---
 
