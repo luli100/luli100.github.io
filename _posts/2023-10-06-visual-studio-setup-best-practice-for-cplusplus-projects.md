@@ -6,11 +6,11 @@ enable: true
 
 今天，我将谈论在 Visual Studio 中，配置项目的最佳实践。
 
-这是我使用的最佳实践，可能不是你的最佳实践。
+这是我的最佳实践，可能不是你的最佳实践。
 
 ### 创建一个 Calculator 项目
 
-尝试这点一下 "Solution Explorer" 下的 "Show All Files"：
+尝试点一下 "Solution Explorer" 下的 "Show All Files"：
 
 <img src="/images/project-setup1.png" width="80%">
 
