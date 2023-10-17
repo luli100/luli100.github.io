@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 在 Visual Studio 中配置 C/C++ 项目最佳实践
+title: 在 Visual Studio 中配置 C/C++ 项目的最佳实践
 enable: true
 ---
 
