@@ -45,3 +45,7 @@ orientation -= 2 * Math.PI * Math.Floor((orientation + Math.PI) / (2* Math.PI));
 ### Visual Studio 中解决方案和项目的关系
 
 在 Visual Studio 中，解决方案不是“答案”。解决方案仅仅是 Visual Studio 用来组织一个或多个相关项目的容器。打开某个解决方案时，Visual Studio 会自动加载该解决方案包含的所有项目。
+
+### 灯火阑珊处指什么地方
+
+灯火稀疏的地方
