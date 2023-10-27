@@ -49,3 +49,11 @@ orientation -= 2 * Math.PI * Math.Floor((orientation + Math.PI) / (2* Math.PI));
 ### 灯火阑珊处指什么地方
 
 灯火稀疏的地方
+
+### 在 Visual Studio 下，如何格式化 XAML 代码
+
+去 Tools -> Options -> Text Editor -> XAML -> Formating -> Spacing 进行如下设置：
+
+<img src="/images/how-to-format-xaml-code.png" width="80%">
+
+然后尝试按：Ctrl + K + D。
