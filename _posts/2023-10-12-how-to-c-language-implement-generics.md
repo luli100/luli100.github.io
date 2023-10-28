@@ -15,9 +15,9 @@ C 语言是过程式编程语言，C 语言设计的目标是提供一种能以�
 ```C
 int swap(int* x, int* y)
 {
-	int temp = *x;
-	*x = *y;
-	*y = temp;
+    int temp = *x;
+    *x = *y;
+    *y = temp;
 }
 ```
 
@@ -26,9 +26,9 @@ int swap(int* x, int* y)
 ```C
 double swap(double* x, double* y)
 {
-	double temp = *x;
-	*x = *y;
-	*y = temp;
+    double temp = *x;
+    *x = *y;
+    *y = temp;
 }
 ```
 
@@ -41,10 +41,10 @@ float、struct 等类型，该如何是好？利用泛型对数据类型进行�
 ```C
 void swap(void* x, void* y, const int size)
 {
-	char* temp = malloc(size);
-	memcpy(temp, y, size);
-	memcpy(y, x, size);
-	memcpy(x, temp, size);
+    char* temp = malloc(size);
+    memcpy(temp, y, size);
+    memcpy(y, x, size);
+    memcpy(x, temp, size);
 }
 ```
 
@@ -65,10 +65,10 @@ void swap(void* x, void* y, const int size)
 ```C
 #define swap(x,y,size) \
 {\
-	char p = malloc(size); \
-	memcpy(temp, &x, size); \
-	memcpy(&x, &y, size); \
-	memcpy(&y, temp, size); \
+    char p = malloc(size); \
+    memcpy(temp, &x, size); \
+    memcpy(&x, &y, size); \
+    memcpy(&y, temp, size); \
 }
 ```
 
@@ -100,15 +100,15 @@ void swap(void* x, void* y, const int size)
 int search(void* x, int len, void* target, 
 	int elem_size, int (*cmpFn)(void*, void*))
 {
-	for (int i = 0; i < len; i++)
-	{
-		if (cmpFn((unsigned char*)x + elem_size * i, target) == 0)
-		{
-			return i;
-		}
-	}
+    for (int i = 0; i < len; i++)
+    {
+        if (cmpFn((unsigned char*)x + elem_size * i, target) == 0)
+        {
+            return i;
+        }
+    }
 
-	return -1;
+    return -1;
 }
 ```
 
@@ -123,12 +123,12 @@ int search(void* x, int len, void* target,
 ```C
 int int_cmp(int* x, int* y)
 {
-	return *x - *y;
+    return *x - *y;
 }
 
 int string_cmp(char* x, char* y)
 {
-	return strcmp(x, y);
+    return strcmp(x, y);
 }
 ```
 
@@ -137,21 +137,21 @@ int string_cmp(char* x, char* y)
 ```C
 typedef struct _account 
 {
-	char name[10];
-	char id[20];
+    char name[10];
+    char id[20];
 } Account;
 
 int account_cmp(Account* x, Account* y)
 {
-	int n = strcmp(x->name, y->name);
-	if (n != 0)
-	{
-		return n;
-	}
-	else
-	{
-		return strcmp(x->id, y->id);
-	}
+    int n = strcmp(x->name, y->name);
+    if (n != 0)
+    {
+        return n;
+    }
+    else
+    {
+        return strcmp(x->id, y->id);
+    }
 }
 ```
 
