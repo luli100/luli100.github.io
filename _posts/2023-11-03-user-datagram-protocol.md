@@ -4,6 +4,12 @@ title: UDP 报文数据包长度
 enable: true
 ---
 
+不知道你在使用 C# 进行 UDP 网络编程时，是否遇到过下面的错误：
+
+<img src="/images/udp_send_to_error.png" width="80%">
+
+运行下面的代码会复现上面的错误信息：
+
 ```C#
 try
 {
@@ -17,7 +23,7 @@ catch (Exception ex)
 }
 ```
 
-<img src="/images/udp_send_to_error.png" width="80%">
+其实，上面的问题在于，UDP 一次性最多只能发送 65507 字节的数据。
 
 ### UDP 最大数据包长度
 
