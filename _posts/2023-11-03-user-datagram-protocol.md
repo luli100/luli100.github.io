@@ -27,17 +27,13 @@ catch (Exception ex)
 
 ### UDP 最大数据包长度
 
-IP 数据报格式：
+IP 数据报格式，[图片来源](http://www.tcpipguide.com/free/t_IPDatagramGeneralFormat.htm)：
 
 <img src="/images/internet_protocol_datagram_format.png" width="80%">
 
-![图片来源](http://www.tcpipguide.com/free/t_IPDatagramGeneralFormat.htm)
-
-UDP 消息格式：
+UDP 消息格式，[图片来源](http://www.tcpipguide.com/free/t_UDPMessageFormat.htm)：
 
 <img src="/images/udp_message_format.png" width="80%">
-
-![图片来源](http://www.tcpipguide.com/free/t_UDPMessageFormat.htm)
 
 UDP 数据包最大长度不是由 UDP 头部的 Length 字段所决定，而是由 IP 头部的 Total Length 字段限制。
 
