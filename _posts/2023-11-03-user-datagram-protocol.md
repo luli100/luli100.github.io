@@ -23,9 +23,21 @@ catch (Exception ex)
 }
 ```
 
-其实，上面的问题在于，UDP 一次性最多只能发送 65507 字节的数据。
+其实，上面的问题在于，UDP 一次性发送了 65535 字节的数据，超过了 UDP 最大数据包长度 65507 字节。
 
 ### UDP 最大数据包长度
+
+IP 数据报格式：
+
+<img src="/images/internet_protocol_datagram_format.png" width="80%">
+
+![图片来源](http://www.tcpipguide.com/free/t_IPDatagramGeneralFormat.htm)
+
+UDP 消息格式：
+
+<img src="/images/udp_message_format.png" width="80%">
+
+![图片来源](http://www.tcpipguide.com/free/t_UDPMessageFormat.htm)
 
 UDP 数据包最大长度不是由 UDP 头部的 Length 字段所决定，而是由 IP 头部的 Total Length 字段限制。
 
