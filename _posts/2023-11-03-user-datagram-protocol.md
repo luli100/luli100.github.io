@@ -37,7 +37,7 @@ UDP 消息格式，[图片来源](http://www.tcpipguide.com/free/t_UDPMessageFor
 
 UDP 数据包最大长度不是由 UDP 头部的 Length 字段所决定，而是由 IP 头部的 Total Length 字段限制。
 
-Total Length 字段为 16 位长度，因此其最大值为 65535，除去 20 字节的 IP 首部和 8 字节的 UDP 首部，UDP 数据报中用户数据的最大长度为 **65535 - 8 - 20 = 65507** 字节。
+Total Length 字段为 16 位长度，最大值为 65535，除去 20 字节的 IP 首部和 8 字节的 UDP 首部，UDP 数据报中用户数据的最大长度为 **65535 - 8 - 20 = 65507** 字节。
 
 ### 单包 UDP 数据包长度
 
