@@ -4,6 +4,21 @@ title: UDP 报文数据包长度
 enable: true
 ---
 
+```C#
+try
+{
+    Byte[] datas = new Byte[UInt16.MaxValue];
+    var client = new Socket(SocketType.Dgram, ProtocolType.Udp);
+    client.SendTo(datas, datas.Length, SocketFlags.None, new IPEndPoint(IPAddress.Parse("127.0.0.1"), 4099));
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+}
+```
+
+<img src="/images/udp_send_to_error.png" width="80%">
+
 ### UDP 最大数据包长度
 
 UDP 数据包最大长度不是由 UDP 头部的 Length 字段所决定，而是由 IP 头部的 Total Length 字段限制。
