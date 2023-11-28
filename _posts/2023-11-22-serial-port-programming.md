@@ -44,4 +44,8 @@ UART 数据帧格式包含了起始位，数据，奇偶校验位，还有停止
 ### 参考资料
 
 https://www.youtube.com/@FoolishEngineer
+
+http://m.blog.chinaunix.net/uid-9688646-id-3275789.html
+
+
 -->
