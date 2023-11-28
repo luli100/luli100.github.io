@@ -1,15 +1,14 @@
 ---
 layout: post
-title: 使用 Monitor 简单实现生产者-消费者模式
+title: 使用 Monitor 类实现生产者-消费者模式
 enable: true
 ---
 
-如果仔细看了 Monitor 类的 API，除了用于同步访问共享数据的 Monitor.Enter，Monitor.Exit 方法外，还有 Monitor.Wait 和 Monitor.Pulse 方法，它们可以用于线程间通信。
+如果你仔细看了 Monitor 类的 API，除了用于同步访问共享数据的 Monitor.Enter 和 Monitor.Exit 方法外，还有 Monitor.Wait，Monitor.Pulse 和 Monitor.PulseAll 方法，它们可以用于线程间通信。
 
 ### 生产者-消费者的简单实现
 
-Monitor.Wait 和 Monitor.Pulse 方法最常见的用法是实现生产者-消费者模式，其中一个线程将工作项放在队列中，另一个线程将工作项取来处理。
-消费者线程通常会将工作项从队列中移除，直到队列为空，然后等待。当生产者向队列中添加一个工作项后，它会发送一个信号告诉消费者有新的工作项了。下面是一个例子：
+Monitor.Wait 和 Monitor.Pulse 方法最常见的用法是实现生产者--消费者模式，其中生产者线程会将工作项放在队列中，消费者线程将工作项取来处理。消费者线程通常会将工作项从队列中移除，直到队列为空，然后等待。当生产者线程向队列中添加一个工作项后，它会发送一个信号告诉消费者线程有新的工作项了。下面是一个例子：
 
 ```C#
 internal class Program
