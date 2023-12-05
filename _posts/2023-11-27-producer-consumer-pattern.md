@@ -10,7 +10,7 @@ enable: true
 
 Monitor.Wait 和 Monitor.Pulse 方法最常见的用法是实现生产者--消费者模式，其中生产者线程会将工作项放在队列中，消费者线程将工作项取来处理。消费者线程通常会将工作项从队列中移除，直到队列为空，然后等待。当生产者线程向队列中添加一个工作项后，它会发送一个信号告诉消费者线程有新的工作项了。下面是一个例子：
 
-```C#
+```c#
 internal class Program
 {
     private static Int32 PRODUCT_NUMBER = 10;
@@ -79,7 +79,7 @@ public class ProductContainer
 
 由于 lock 关键字是 Monitor.Enter 和 Monitor.Exit 方法的语法糖，因此上述代码可以简化为：
 
-```C#
+```c#
 internal class Program
 {
     private static Int32 PRODUCT_NUMBER = 10;

@@ -10,7 +10,7 @@ enable: true
 
 刚开始你可能会写出如下代码：
 
-```C#
+```c#
 private static Int32 locker;
 public void Write()
 {
@@ -23,7 +23,7 @@ public void Write()
 
 幸运的是，C# 编译器会提醒你，"lock 语句需要一个引用类型，int 不是一个引用类型"。如果你知道 lock 语句是 try/finally 使用 Monitor.Enter 和 Monitor.Exit 封装语法糖的话，你可能会思考下面的代码为什么编译器不会报错：
 
-```C#
+```c#
 private static Int32 locker;
 public void Write()
 {
@@ -50,7 +50,7 @@ public void Write()
 
 为了让事情更简单，强烈推荐你使用如下代码创建锁对象。
 
-```C#
+```c#
 private static Object objLocker = new Object();
 ```
 
@@ -58,7 +58,7 @@ private static Object objLocker = new Object();
 
 你是否想过为什么锁对象的访问权限总是优先设为 private？你是否认为与 lock 语句一起使用的锁对象没有做其它的事情，从而选择一个已存在的对象做为锁对象？嗯，这样的方案确实很诱人。但你必须要认真思考这个已存在的对象的访问权限是什么？如果是 public 级别的访问，那么你就要注意了。例如：
 
-```C#
+```c#
 public class Container
 {
     public static readonly Queue<Object> datas = new Queue<Object>();
@@ -76,7 +76,7 @@ public class Container
 
 同理，下面的代码也存在类似的问题：
 
-```C#
+```c#
 public class Container
 {
     public void Produce(Object obj)
@@ -91,13 +91,13 @@ public class Container
 
 因为使用者可能创建一个 Container 对象做为锁对象，然而他们并不知道 Container 内部的某个地方也使用这个对象作为锁对象。导致的结果就是，应用程序的不相关的代码块正在使用相同的对象进行锁定。这是因为实例是可公开访问的，至少声明者可以访问。所以你应该避免把 this 做为锁对象。此外，锁对象应该仅用于锁定用途，不要用来干其它任何事情。因此，再次强烈建议你使用如下代码创建锁对象：
 
-```C#
+```c#
 private static Object objLocker = new Object();
 ```
 
 ### 锁定开始前后检查状态
 
-```C#
+```c#
 private static Object objLocker = new Object();
 private static Boolean initialized = false;
 
@@ -121,7 +121,7 @@ public static void Init()
 
 ### 避免过度锁定
 
-```C#
+```c#
 private static Object objLocker = new Object();
 private static ConcurrentDictionary<Int32, String> datas = new ConcurrentDictionary<Int32, String>();
 

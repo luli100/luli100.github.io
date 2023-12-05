@@ -6,7 +6,7 @@ enable: true
 
 为了理解同步访问共享资源，我们来看一个例子：2 个线程向 Dictionary 添加数据。
 
-```C#
+```CSharp
 internal class Program
 {
     private static Int32 PRODUCT_NUMBER = 100;
@@ -41,7 +41,7 @@ internal class Program
 
 上面的代码出现了竞态条件，会出现类似于下面的错误：
 
-```C#
+```CSharp
 System.ArgumentException
   HResult=0x80070057
   Message=An item with the same key has already been added. Key: 5
@@ -63,7 +63,7 @@ System.ArgumentException
 
 Monitor 类可以通过调用 Monitor.Enter, Monitor.TryEnter, 以及 Monitor.Exit 方法来获取和释放对象锁，从而对代码区域进行同步访问。
 
-```C#
+```CSharp
 internal class Program
 {
     private static Int32 PRODUCT_NUMBER = 100;
@@ -106,7 +106,7 @@ internal class Program
 
 使用 lock 关键字也可以达到同步访问共享资源的目的，它的语法也相当简单：
 
-```C#
+```c#
 internal class Program
 {
     private static Int32 PRODUCT_NUMBER = 100;
@@ -149,7 +149,7 @@ internal class Program
 
 事实上，lock 语句的存在只是为了方便，就像 C# 的 using 语句一样。
 
-```C#
+```c#
 lock(objLocker)
 {
     // your code
@@ -158,7 +158,7 @@ lock(objLocker)
 
 会被 C# 编译器翻译成等效于下面的代码块
 
-```C#
+```c#
 Boolean lockAcquired = false;
 try 
 {
@@ -179,5 +179,3 @@ finally
 如果仅仅是为了对代码块的同步访问，直接使用 lock 关键字即可，无需自己再去封装 Monitor.Enter 和 Monitor.Exit 方法。
 
 由于 lock 语句是 Monitor 类中 Enter/Exit 方法的语法糖，因此 lock 还可以与 Monitor 类中的 Monitor.Wait 和 Monitor.Pulse 方法一起使用，以实现更高级的线程协调或通信。
-
-
