@@ -148,7 +148,7 @@ async/await 使用当前线程的 SynchronizationContext 来知道在哪里执�
 
 你可以有三种方法解决 SynchronizationContext 死锁问题：
 
-#### 方案 #1 - ConfigureAwait(false)
+#### #1 - ConfigureAwait(false)
 
 你可以使用 .ConfigureAwait() 方法配置是否捕获 SynchronizationContext。例如：await Task.Delay(1000).ConfigureAwait(false) - 意味着使用默认的 SynchronizationContext，它通常会在 ThreadPool 线程上继续，即使从 UI 线程调用也是如此。
 
@@ -183,7 +183,7 @@ private async Task<Int32> Do()
 }
 ```
 
-#### async 调用
+#### #2 - async 调用
 
 将 OnButtonClick 事件处理器改为 async 调用：
 
@@ -203,7 +203,7 @@ private async Task<Int32> Do()
 
 为什么这种方法有效？因为在调用 await Do() 时，UI 线程将被释放，等待方法完成后，this.Title = x.ToString(); 部分才会被添加到 UI 队列里。
 
-#### 从非 UI 线程中调用
+#### #3 - 从非 UI 线程中调用
 
 有时候，将整个调用堆栈改为异步方法调用是不可能的，因此可以从非 UI 线程调用 Do 方法：
 
