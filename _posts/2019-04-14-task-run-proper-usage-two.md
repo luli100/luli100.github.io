@@ -6,7 +6,7 @@ enable: true
 
 我们从一些现有的代码开始，它们以同步方式执行一些复杂计算。
 
-```
+```c#
 class MyService
 {
     public int CalculateMandelbrot()
@@ -19,7 +19,7 @@ class MyService
         return 100;
     }
 }
-...
+
 private void MyButton_Click(object sender, EVentArgs e)
 {
     // 会堵塞 UI 线程
@@ -33,7 +33,7 @@ private void MyButton_Click(object sender, EVentArgs e)
 
 为了不会堵塞 UI 线程，很多新手可能会以下面的方式使用 Task.Run
 
-```
+```c#
 class MyService
 {
     public Task&lt;int&gt; CalculateMandelbrotAsync()
@@ -49,7 +49,7 @@ class MyService
         })
     }
 }
-...
+
 private async void MyButton_Click(object sender, EVentArgs e)
 {
     // 不会堵塞 UI 线程
@@ -61,7 +61,7 @@ private async void MyButton_Click(object sender, EVentArgs e)
 
 ### 用 Task.Run 调用方法的正确方式
 
-```
+```c#
 class MyService
 {
     public int CalculateMandelbrotAsync()
@@ -74,7 +74,7 @@ class MyService
         return 100;
     }
 }
-...
+
 private async void MyButton_Click(object sender, EVentArgs e)
 {
     // 不会堵塞 UI 线程

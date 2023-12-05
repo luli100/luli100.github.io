@@ -10,7 +10,7 @@ enable: true
 
 ### 不理想的同步代码
 
-```
+```c#
 class MyService
 {
     public int PredictStockMarket()
@@ -44,7 +44,7 @@ class MyService
 
 ### 别在方法实现中使用 Task.Run
 
-```
+```c#
 class MyService
 {
     public async Task&lt;int&gt; PredictStockMarketAsync()
@@ -86,7 +86,7 @@ class MyService
 
 目前，最好的解决方案是使用异步签名，但要清楚地记录该方法是 CPU-bound 的异步方法，这样它的性质就不会令人惊讶。
 
-```
+```c#
 class MyService
 {
     /// <summary>
@@ -119,7 +119,7 @@ class MyService
 
 这允许基于 UI 的客户端正确使用 Task.Run 来调用服务 API，而基于 ASP.NET 客户端将直接调用该方法。
 
-```
+```c#
 private async void MyButton_Click(object sender, EventArgs e)
 {
     await Task.Run(() => myService.PredictStockMarketAsync());

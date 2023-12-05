@@ -8,7 +8,7 @@ enable: true
 
 ### ASP.NET MVC 控制器更喜欢 CPU-bound 的同步方法
 
-```
+```c#
 class MyService
 {
     public int CalculateMandelbrot()
@@ -21,8 +21,6 @@ class MyService
         return 100;
     }
 }
-    
-...
     
 public class MandelbrotController: Controller
 {
@@ -38,7 +36,7 @@ public class MandelbrotController: Controller
 
 ### ASP.NET MVC 控制器不喜欢 Task.Run 异步包装器
 
-```
+```c#
 class MyService
 {
     public int CalculateMandelbrot()
@@ -51,8 +49,6 @@ class MyService
         return 100;
     }
 }
-    
-...
 
 public class MandelbrotController: Controller
 {

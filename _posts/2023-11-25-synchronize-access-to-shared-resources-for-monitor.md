@@ -6,7 +6,7 @@ enable: true
 
 为了理解同步访问共享资源，我们来看一个例子：2 个线程向 Dictionary 添加数据。
 
-```CSharp
+```c#
 internal class Program
 {
     private static Int32 PRODUCT_NUMBER = 100;
@@ -41,7 +41,7 @@ internal class Program
 
 上面的代码出现了竞态条件，会出现类似于下面的错误：
 
-```CSharp
+```c#
 System.ArgumentException
   HResult=0x80070057
   Message=An item with the same key has already been added. Key: 5
@@ -63,7 +63,7 @@ System.ArgumentException
 
 Monitor 类可以通过调用 Monitor.Enter, Monitor.TryEnter, 以及 Monitor.Exit 方法来获取和释放对象锁，从而对代码区域进行同步访问。
 
-```CSharp
+```c#
 internal class Program
 {
     private static Int32 PRODUCT_NUMBER = 100;

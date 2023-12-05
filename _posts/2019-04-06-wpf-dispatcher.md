@@ -61,7 +61,7 @@ Invoke 方法采用 Action 或委托并同步执行该方法。这意味着在 D
 
 这里是 Invoke 的一个例子：
 
-```C#
+```c#
 public partial class MainWindow : Window
 {
     public MainWindow()
@@ -89,7 +89,7 @@ public partial class MainWindow : Window
 
 BeginInvoke 方法接受一个 Delegate，但它以异步方式执行该方法。这意味着它在调用方法之前理解返回。
 
-```C#
+```c#
 public partial class MainWindow : Window
 {
     public MainWindow()

@@ -10,7 +10,7 @@ enable: false
 
 可使用类似于定义方法签名的语法来定义委托类型。 只需向定义方法签名的前面添加 delegate 关键字即可。
 
-```
+```c#
 // 定义委托类型，类型名为 Comparison 
 public delegate Int32 Comparison<in T>(T left, T right);
 ```
@@ -21,7 +21,7 @@ public delegate Int32 Comparison<in T>(T left, T right);
 
 事件的完整声明方式：
 
-```
+```c#
 // 定义委托类型，类型名为 Comparison 
 public delegate Int32 Comparison<in T>(T left, T right);
 ```

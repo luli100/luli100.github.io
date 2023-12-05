@@ -10,7 +10,7 @@ enable: true
 
 在 C# 语言中，下面代码是最优雅的，性能也能得到保证的实现方式。
 
-```
+```c#
 using System.Runtime.InteropServices;
 
 namespace EndianExtensionsTests
@@ -66,7 +66,7 @@ namespace EndianExtensionsTests
 
 为了解决发送端与接收端大小端编码解码不一致的情况，我们可以将转换后的结构体对象里的字段进行二次转换。
 
-```
+```c#
 using System.Runtime.InteropServices;
 
 namespace EndianExtensionsTests
@@ -141,7 +141,7 @@ namespace EndianExtensionsTests
 
 针对上面的问题，首先想到的就是利用 C# 语言的反射特性。利用反射特性重新给字段赋值，必须要将 Target 结构换为 Target 类，因为 <strong>C# 反射特性无法为结构体的公共字段赋值</strong>。
 
-```
+```c#
 using System.Runtime.InteropServices;
 
 namespace EndianExtensionsTests
@@ -218,7 +218,7 @@ namespace EndianExtensionsTests
 
 终极的解决方案是，反转 Target 结构体字段的内存布局为 TargetReversed 结构体，反转整个 buffer 内容。
 
-```
+```c#
 using System.Runtime.InteropServices;
 
 namespace EndianExtensionsTests

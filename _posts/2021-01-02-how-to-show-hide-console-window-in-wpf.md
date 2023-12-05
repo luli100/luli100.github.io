@@ -16,7 +16,7 @@ enable: true
 
 - 添加 NativeConsole 类公开 C++ 函数。
 
-```
+```c++
 public static class NativeConsole
 {
     [DllImport("kernel32.dll")]
@@ -44,7 +44,7 @@ public static class NativeConsole
 
 - 为了让 WPF 应用程序启动时，默认<strong>隐藏</strong>控制台窗口，可以在 App.xaml.cs 里重写 OnStartup 方法。
 
-```
+```c#
 public partial class App : Application
 {
     protected override void OnStartup(StartupEventArgs e)
@@ -61,12 +61,12 @@ public partial class App : Application
 
 <strong>显示</strong>控制台窗口方法：
 
-```
+```c#
 NativeConsole.Show();
 ```
 
 <strong>隐藏</strong>控制台窗口方法:
 
-```
+```c#
 NativeConsole.Hide();
 ```

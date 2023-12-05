@@ -6,7 +6,7 @@ enable: true
 
 如果你使用过 WPF 框架开发应用程序，我想你一定使用过 ObservableCollection&lt;T&gt;。但 ObservableCollection&lt;T&gt; 的问题在于：它仅能在 Dispacher 线程「这里可以理解为 UI 线程」更新数据。如果你想从另外一个线程更新数据到 ObservableCollection&lt;T&gt; 中时，你需要编写类似于下面的代码：
 
-```
+```c#
 this.Dispatcher.BeginInvoke(new Action(() =>
 {
     // 操作 ObservableCollection<T> 对象逻辑
@@ -15,7 +15,7 @@ this.Dispatcher.BeginInvoke(new Action(() =>
 
 为了不让代码到处充斥着 Dispatcher.BeginInvoke，可以封装了一个 SafeObservableCollection&lt;T&gt;：
 
-```
+```c#
 [DebuggerDisplay("Count = {Count}")]
 [ComVisible(false)]
 public class SafeObservableCollection<T> : ObservableCollection<T>

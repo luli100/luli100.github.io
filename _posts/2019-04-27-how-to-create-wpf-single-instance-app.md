@@ -6,7 +6,7 @@ enable: true
 
 你曾经是否遇到过只准打开一个 WPF 应用程序实例这样的需求，如果有这样的需求场景，下面的方法应该可以满足你的需求：
 
-```C#
+```c#
 public partial class App : Application
 {
     private EventWaitHandle AppEventWait;
@@ -52,7 +52,7 @@ public partial class App : Application
 
 很长一段时间，我一直用上面的方法实现 WPF 单实例应用，后来发现还有更好更优雅的方式：
 
-```C#
+```c#
 public partial class App : Application
 {
     private const String MUTEX_NAME = "f7eeb38e-3ede-4fdb-8891-b285bff816e8";

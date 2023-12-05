@@ -10,7 +10,7 @@ enable: true
 
 运行下面的代码会复现上面的错误信息：
 
-```C#
+```c#
 try
 {
     Byte[] datas = new Byte[UInt16.MaxValue];

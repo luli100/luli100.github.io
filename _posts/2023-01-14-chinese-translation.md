@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 汉语翻译
+enable: false
 ---
 
 - 如果你不能简单地解释它，你就没有很好地理解它。

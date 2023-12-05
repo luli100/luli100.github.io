@@ -14,7 +14,7 @@ Windows 资源管理器以这种方式工作。 每个新资源管理器窗口�
 
 以下示例显示了代码。
 
-```
+```c#
 <Window x:Class="SDKSamples.Window1"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -40,7 +40,7 @@ Windows 资源管理器以这种方式工作。 每个新资源管理器窗口�
 </Window>
 ```
 
-```
+```c#
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -88,7 +88,7 @@ namespace SDKSamples
 
 此代码中的以下线程段对我们来说是最有趣的：
 
-```
+```c#
 private void NewWindowHandler(object sender, RoutedEventArgs e)
 {
     Thread newWindowThread = new Thread(new ThreadStart(ThreadStartingPoint));
@@ -100,7 +100,7 @@ private void NewWindowHandler(object sender, RoutedEventArgs e)
 
 当单击“新建窗口”按钮时，将调用该方法。 它创建了一个新线程，并以异步方式启动。
 
-```
+```c#
 private void ThreadStartingPoint()
 {
     Window1 tempWindow = new Window1();

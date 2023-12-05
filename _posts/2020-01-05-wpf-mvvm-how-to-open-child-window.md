@@ -8,7 +8,7 @@ enable: true
 
 ### 直接在 View 后台代码打开子窗口
 
-```
+```c#
 public partial class MainWindow : Window
 {
     private readonly MainViewModel MainVM;
@@ -35,7 +35,7 @@ public partial class MainWindow : Window
 
 ### 以 MVVMLight Messenger 消息通知法打开子窗体
 
-```
+```c#
 public partial class MainWindow : Window
 {
     public MainWindow()
@@ -56,7 +56,7 @@ public partial class MainWindow : Window
 
 ### 以委托的方式打开子窗口
 
-```
+```c#
 public partial class MainWindow : Window
 {
     private readonly MainViewModel MainVM;
@@ -80,7 +80,7 @@ public partial class MainWindow : Window
 
 ### 以导航服务的方式打开子窗口
 
-```
+```c#
 public class NavigationService
 {
     private Dictionary<String, Type> windows { get; } = new Dictionary<String, Type>();
@@ -121,7 +121,7 @@ public class NavigationService
 }
 ```
 
-```
+```c#
 public static class WindowsKeys
 {
     public const string MainWindow = nameof(MainWindow);

@@ -29,7 +29,7 @@ enable: true
 
 接下来，我们就来实现需要放入队列里的类：
 
-```
+```c#
 internal class StaDispatcherOperation
 {
     private object? mState;
@@ -120,7 +120,7 @@ internal enum ExecutionType
 
 现在我们有了一个队列，并且我们知道将什么放入该队列中，让我们看看 STA 线程需要做什么工作。
 
-```
+```c#
 internal class StaDispatcher
 {
     private Thread mStaThread;
@@ -185,7 +185,7 @@ internal class StaDispatcher
 
 现在有一个并发队列来处理 STA 线程和任何其他线程之间的通信。唯一缺少的是实际的同步上下文类本身，接下来，我们就实现它：
 
-```
+```c#
 internal class StaDispatcherSynchronizationContext : SynchronizationContext, IDisposable
 {
     private StaDispatcher mStaDispatcher;
@@ -232,7 +232,7 @@ internal class StaDispatcherSynchronizationContext : SynchronizationContext, IDi
 
 为了实际测试这个类，我创建了一个测试程序，代码如下：
 
-```
+```c#
 public class Params
 {
     public String Output { get; set; }

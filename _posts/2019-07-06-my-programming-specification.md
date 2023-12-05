@@ -8,7 +8,7 @@ enable: true
 
 坏的实践：
 
-```
+```c#
 private void ShowHideWindow(Boolean value)
 {
     if (value)
@@ -26,7 +26,7 @@ private void ShowHideWindow(Boolean value)
 
 好的实践：
 
-```
+```c#
 private void ShowWindow()
 {
     // 你的逻辑
@@ -46,7 +46,7 @@ private void HideWindow()
 
 坏的实践：
 
-```
+```c#
 private void Set(String userRole)
 {
     if (userRole == "Admin")
@@ -58,7 +58,7 @@ private void Set(String userRole)
 
 好的实践：
 
-```
+```c#
 private const string ADMIN_ROLE = "Admin";
 private void Set(String userRole)
 {
@@ -81,7 +81,7 @@ private void Set(String userRole)
 
 坏的实践：
 
-```
+```c#
 public void SomeMethod(string name, string city, int age, string section)
 {
     // 你的逻辑
@@ -90,7 +90,7 @@ public void SomeMethod(string name, string city, int age, string section)
 
 好的实践：
 
-```
+```c#
 public void SomeMethod(Student student)
 {
     // 你的逻辑
@@ -103,14 +103,14 @@ public void SomeMethod(Student student)
 
 坏的实践：
 
-```
+```c#
 if (condition)
     Action();
 ```
 
 好的实践：
 
-```
+```c#
 if (condition)
 {
     Action();

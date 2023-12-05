@@ -20,7 +20,7 @@ Model 类的设计其实与 MVVM 模式无关。你可以创建一个 ViewModel 
 
 **错误的设计**
 
-```
+```c#
 public class User : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -59,7 +59,7 @@ public class User : INotifyPropertyChanged
 
 **正确的设计**
 
-```
+```c#
 public class User
 {
     public String Name { get; set; }
@@ -72,7 +72,7 @@ public class User
 
 请注意，ViewModel 是 Model 对象的包装器。它通过一组属性公开 Model 的状态，在 View 控件中使用状态。ViewModel 不复制 Model 的状态；它只是通过委托将其公开，如下所示：
 
-```
+```c#
 public class UserViewModel : INotifyPropertyChanged
 {
     private readonly User user;
@@ -123,7 +123,7 @@ public class UserViewModel : INotifyPropertyChanged
 
 **错误的设计**
 
-```
+```c#
 public class MultiUserViewModel
 {
     public ObservableCollection<User> Users { get; private set; } = new ObservableCollection<User>();
@@ -132,7 +132,7 @@ public class MultiUserViewModel
 
 **正确的设计**
 
-```
+```c#
 public class MultiUserViewModel
 {
     public ObservableCollection<UserViewModel> Users { get; private set; } = new ObservableCollection<UserViewModel>();

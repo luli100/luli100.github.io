@@ -12,7 +12,7 @@ enable: true
 
 结构体转字节数组，可以认为是序列化。
 
-```
+```c#
 public static Byte[] Serialize<T>(T t) where T : struct
 {
     var size = Marshal.SizeOf(typeof(T));
@@ -29,7 +29,7 @@ public static Byte[] Serialize<T>(T t) where T : struct
 
 字节数组转结构体，可以认为是反序列化。
 
-```
+```c#
 public static T Deserialize<T>(byte[] array) where T : struct
 {
     var size = Marshal.SizeOf(typeof(T));

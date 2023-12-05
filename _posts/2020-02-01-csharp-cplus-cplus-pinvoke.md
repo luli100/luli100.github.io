@@ -12,7 +12,7 @@ P/Invoke『Platform Invoke』是可用于从托管代码访问非托管库中的
 
 默认情况下，非托管结构与托管结构在内存中的布局不同，因此，成功跨托管/非托管边界传递结构需要额外的步骤来保留数据完整性。
 
-```
+```c++
 #include <iostream>
 #include <comdef.h>
 using namespace std;
@@ -46,7 +46,7 @@ extern "C"
 
 非托管模块是一个 DLL，它定义了一个 Book 结构和两个函数（Generate，Print）。
 
-```
+```c#
 using System.Runtime.InteropServices;
 
 namespace TestShoppingService
@@ -93,7 +93,7 @@ C++ 编译器会给程序中的每个函数换一个独一无二的名字。在 
 
 由于 C# 中结构是值类型，类是引用类型，因此，在封送 C++ 类时，需要做特殊处理。
 
-```
+```c++
 #include <iostream>
 using namespace std;
 
@@ -163,7 +163,7 @@ extern "C"
 
 通常来说，C++ 代码会提供一个 C++ 原始类的包装类供 C# 调用。
 
-```
+```c#
 using System.Runtime.InteropServices;
 
 namespace TestShoppingService
@@ -229,7 +229,7 @@ C# 通常也提供一个类来封装 C++ 的包装类，供其它 C# 代码调�
 
 有时候，我们需要 C++ 可以主动调用 C# 函数。我们知道，C# 实现回调功能可以用委托进行包装，最为关键的是 C++ 可以通过函数指针直接接收 C# 委托来实现回调。
 
-```
+```c
 #include <iostream>
 
 extern "C"
@@ -253,7 +253,7 @@ extern "C"
 
 从 C++ 代码可以看到，PCALLBACK 就是定义的函数指针，接收一个 int32_t 参数。SetCallback 函数用于将 C# 传递进来的委托转换为函数指针。Notify 函数的作用是向 C# 提供一个函数调用，从而触发 C++ 代码调用 C# 委托。
 
-```
+```c#
 class Program
 {
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
