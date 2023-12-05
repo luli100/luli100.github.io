@@ -1,6 +1,6 @@
 ---
 layout: post
-title: C# Deadlocks
+title: C# 死锁--嵌套锁
 enable: true
 ---
 
@@ -54,7 +54,7 @@ task1 获取 locker1 休眠 1 秒，然后等待 locker2 被释放。task2 获�
 
 上面这种死锁场景，只要稍稍努力，就很容易发现。然而，在更复杂的场景下，死锁是很难一下子被发现。在了解更复杂的场景前，我们先来看一下如何调试死锁。
 
-### 调式死锁
+### 使用 Threads 窗口调式死锁
 
 在 Visual Studio 运行上面代码将导致挂起。点击 Debug -> Break All，然后点击 Debug -> Windows -> Threads，双击 Threads 里的对应的项，你可以看到如下内容,
 
@@ -71,6 +71,20 @@ lock(locker1) 卡死：
 <img src="/images/deadlock-task2.png" width="80%">
 
 这就是死锁在调试中的样子。正如你所看到的，主线程被卡在 Task.WaitAll 上。其它两个线程被卡在内部 lock 语句上。
+
+### 使用 Tasks 窗口调试死锁
+
+你使用过“Tasks 窗口”？点击 Debug->Windows->Tasks 可以调出“Tasks 窗口”。它显示当前正在运行的所有任务。包括它们的状态、开始时间、持续时间、代码中的位置等等。它最酷的一点就是能自动检测死锁。下面是调试死锁的效果：
+
+lock(loker2) 卡死：
+
+<img src="/images/tasks-window-task1.png" width="80%">
+
+lock(locker1) 卡死：
+
+<img src="/images/tasks-window-task2.png" width="80%">
+
+使用“任务窗口”的注意事项是，它只能显示 Task。这就是为什么你在这里看不到 UI 线程，用 Thread 和 ThreadPool 类创建的线程也是看不到的。为了感受它的全部威力，你可以看这个更复杂的多线程场景：[Visual Studio .NET Debugging - Parallel Stacks and Tasks](https://www.youtube.com/watch?v=S9Ht9Npy1Cw)。
 
 ### 解决嵌套死锁问题
 
