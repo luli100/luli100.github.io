@@ -73,7 +73,7 @@ task1 获取 locker1 休眠 1 秒，然后等待 locker2 被释放。task2 获�
 #### 方案1--以相同的顺序嵌套锁
 
 如果我们按照相同的顺序嵌套锁，就不会出现死锁问题。模拟转账账户锁定问题：
-```C#
+```c#
 public class Account
 {
     public Int32 Id { get; set; }
@@ -121,7 +121,7 @@ internal class Program
 
 解决这个问题的另一种方法时在等待释放锁时，使用超时机制。如果在一段时间内锁没有被释放，则取消操作。它可以被再次放入队列或类似的地方，收稍后再执行。模拟转账方法更改如下：
 
-```C#
+```c#
 private static Task Transfer(Account acc1, Account acc2, Int32 amount)
 {
     return Task.Run(() =>
@@ -161,4 +161,21 @@ private static Task Transfer(Account acc1, Account acc2, Int32 amount)
 
 从理论上讲，使用这种方法可能总是无法执行某个操作--当两个线程同时获取外部锁时，则无法获取内部锁。但实际上，这几乎时不可能的。线程切换机制将在每次不同的时间进行。
 
-值得一提的是，现在应用程序中可以通过 [Event Sourcing](https://martinfowler.com/eaaDev/EventSourcing.html) 模式来完全避免死锁。
+值得一提的是，现代应用程序中可以通过 [Event Sourcing](https://martinfowler.com/eaaDev/EventSourcing.html) 模式来完全避免死锁。
+
+### 查找 C# 死锁
+
+上面的死锁问题，只要稍稍努力，很容易识别。但有些场景下，一下子识别死锁还是比较困难的。事实上，在 C# 中要识别死锁，你应该查找如下地方：
+
+- lock 语句
+- 使用 AutoResetEvent, Mutex, Semaphore, EventWaitHandle 时的 WaitOne 方法
+- 使用 Task 时的 WaitAll 和 WaitAny 方法
+- 使用 Task 时的 .Result 和 .GetAwaiter().GetResult 以及 .Wait 方法
+- 使用 Thread 时的 Join 方法
+- 使用 WPF 编程时的 Dispatcher.Invoke 方法
+
+当你看到调试器的执行点卡在上面任何一个点时，很有可能出现死锁。
+
+### 参考资料
+
+[C# Deadlocks in Depth - Part 1](https://michaelscodingspot.com/c-deadlocks-in-depth-part-1/)
