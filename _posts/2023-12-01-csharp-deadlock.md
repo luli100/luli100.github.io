@@ -56,11 +56,17 @@ task1 获取 locker1 休眠 1 秒，然后等待 locker2 被释放。task2 获�
 
 ### 调式死锁
 
-在 Visual Studio 运行上面代码将导致挂起。点击 Debug -> Break All，然后点击 Debug -> Windows -> Threads，双击 Threads 里的对应的项，你可以看到如下内容：
+在 Visual Studio 运行上面代码将导致挂起。点击 Debug -> Break All，然后点击 Debug -> Windows -> Threads，双击 Threads 里的对应的项，你可以看到如下内容,
+
+WaitAll 卡死：
 
 <img src="/images/deadlock-waitwall.png" width="80%">
 
+lock(locker2) 卡死：
+
 <img src="/images/deadlock-task1.png" width="80%">
+
+lock(locker1) 卡死：
 
 <img src="/images/deadlock-task2.png" width="80%">
 
