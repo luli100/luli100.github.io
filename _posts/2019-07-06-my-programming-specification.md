@@ -4,6 +4,10 @@ title: 本人遵循的编码规范
 enable: true
 ---
 
+### 命名
+
+C#: [Naming guidelines](https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/naming-guidelines)
+
 ### 设计函数时，不要将 Boolean 类型设计成函数参数，设计成两个函数是比较好的实践。
 
 坏的实践：
