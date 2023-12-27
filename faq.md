@@ -74,7 +74,7 @@ orientation -= 2 * Math.PI * Math.Floor((orientation + Math.PI) / (2* Math.PI));
 
 对于系统现在的状态进行估计，并根据现在的状态预测下一状态的值，把这个预测当作一个传感器来使用，进行加权平均。例如雷达测量目标的距离：目前雷达测到目标的位置在正前方 100 米处，速度为正前方 10 米/秒，那么可以预测一下秒目标的距离为 100 + 10 = 110，在下一秒距离估计中，将预测值 110 和测量值综合考虑得到下一秒的估计值。
 
-### 球坐标(γ,θ,φ) 转直接坐标(x,y,z)
+### 球坐标(γ,θ,φ) 转直角坐标(x,y,z)
 
 <img src="/images/azimuth_elevation.png" width="80%">
 <img src="/images/spherical_coordinate_system.png" width="80%">
