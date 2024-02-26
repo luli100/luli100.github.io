@@ -2,7 +2,7 @@
 layout: post
 title: 卡尔曼滤波
 use_math: true
-enable: true
+enable: false
 ---
 
 ### 为什么要使用跟踪预测算法
