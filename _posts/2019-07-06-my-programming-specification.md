@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 本人遵循的编码规范
-enable: true
+enable: false
 ---
 
 ### 命名
