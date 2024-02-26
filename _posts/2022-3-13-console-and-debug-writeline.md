@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Console.WriteLine vs Debug.WriteLine
-enable: true
+enable: false
 ---
 
 Console.WriteLine 在 debug / release 时写入输出流。
