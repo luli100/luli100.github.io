@@ -53,7 +53,7 @@ private void OnButtonClick(object sender, RoutedEventArgs e)
 }
 ```
 
-### 方案 #3--Dispatcher.BeginInvoke
+### 方案 #2--Dispatcher.BeginInvoke
 
 Dispatcher.Invoke 会在 UI 线程上执行同步的委托调用并等待完成。而 Dispatcher.BeginInvoke 会在 UI 线程执行异步的委托调用，不会等待它完成。使用 Dispatcher.BeginInvoke 方法替换 Dispatcher.Invoke 方法解决死锁问题的方案：
 
@@ -73,7 +73,7 @@ private void OnButtonClick(object sender, RoutedEventArgs e)
 }
 ```
 
-### 方案 #2--ContinueWith
+### 方案 #3--ContinueWith
 
 另一种方法是使用 ContinueWith 方法：
 
