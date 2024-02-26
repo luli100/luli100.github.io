@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Air Alert『空中预警』程序审查 - 警告！远离
-enable: true
+enable: false
 ---
 
 本文翻译自 BASKETBALL WORKOUT TIPS 上的一篇文章，<a href="https://www.basketballworkouttips.com/air-alert-review/">原文地址</a>。
