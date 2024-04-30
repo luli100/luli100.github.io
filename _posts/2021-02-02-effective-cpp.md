@@ -1,6 +1,6 @@
 ---
 layout: post
-title: <Effective C++> 笔记
+title: Effective C++ 笔记
 enable: true
 ---
 
