@@ -124,6 +124,49 @@ enable: true
 
 - Store newed objects in smart pointers in standalone statements. Failure to do this can lead to subtle resource leaks when exceptions are thrown.
 
+## Designs and Declarations
+
+### Item 20: Prefer pass-by-reference-to-const to pass-by-value.
+
+**Things to Remember**
+
+- Prefer pass-by-reference-to-const over pass-by-value. It's typically more efficient and it avoids the slicing problem.
+- The rule doesn't apply to built-in types and STL iterator and function object types. For them, pass-by-value is usually appropriate.
+
+### Item 21: Don't try to return a reference when you must return an object.
+
+**Things to Remember**
+
+- Never return a pointer or reference to a local stack object, a  reference to a heap-allocated object, or a pointer or reference to a local static object if there is a chance that more than one such object will be needed. (**Item 4** provides an example of a design where returning a reference to a local static is reasonable, at least in single-threaded environments.)
+
+### Item 22: Declare data members private.
+
+**Things to Remember**
+
+- Declare data members private. It gives clients syntactically uniform access to data, affords fine-grained access control, allows invariants to be enforced, and offers class authors implementation flexibility.
+- protected is no more encapsulated than public.
+
+## Implementations
+
+### Item 26: Postpone variable definitions as long as possible.
+
+**Things to Remember**
+
+- Postpone variable definitions as long as possible. It increases program clarity and improves program effeciency.
+
+## Inheritance and Object-Oriented Design
+
+### Item 32: Make sure public inheritance models "is-a".
+
+**Things to Remember**
+
+- public inheritance means "is-a." Everything that applies to base classes must also apply to derived classes, because every derived class object is a base class object.
+
+## Templates and Generic Programming
+
+## Customizing new and delete
+
+## Miscellany
 
 
 
