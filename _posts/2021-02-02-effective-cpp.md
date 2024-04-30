@@ -6,6 +6,12 @@ enable: true
 
 ## Accustoming Yourself to C++
 
+### Item 1: View C++ as a federation of languages.
+
+**Things to Remember**
+
+- Rules for effective C++ programming vary, depending on the part of C++ you are using.
+
 ### Item 2: Prefer consts, enums, and inlines to #defines.
 
 **Things to Remember**
