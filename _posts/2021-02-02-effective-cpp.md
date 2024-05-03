@@ -164,6 +164,14 @@ enable: true
 
 ## Templates and Generic Programming
 
+### Item 41: Understand implicit interfaces and compiler-time polymorphism.
+
+**Things to Remember**
+
+- Both classes and templates support imterfaces and polymorphism.
+- For classes, interfaces are explicit and centered on function signatures. Polymorphism occurs at runtime through virtual functions.
+- For template parameters, interfaces are implicit and based on valid expressions. Polymorphism occurs during compilation through template instantiation and function overloading resolution.
+
 ## Customizing new and delete
 
 ## Miscellany
