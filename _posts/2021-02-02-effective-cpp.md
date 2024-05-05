@@ -126,6 +126,15 @@ enable: true
 
 ## Designs and Declarations
 
+### Item 18: Make interfaces easy to use correctly and hard to use incorrectly.
+
+**Things to Remember**
+
+- Good interfaces are easy to use correctly and hard to use incorrectly. You should strive for these characteristics in all your interfaces.
+- Ways to facilitate correct use include consistency in interfaces and behavioral compatibility with build-in types.
+- Ways to prevent errors include creating new types, restricting operations on types, constraining object values, and eliminating client resource management responsibilities.
+- tr1::shared_ptr supports custom deleters. This prevents the cross-DLL problem, can be used to automatically unlock mutexes (see **Item 14**), etc.
+
 ### Item 20: Prefer pass-by-reference-to-const to pass-by-value.
 
 **Things to Remember**
