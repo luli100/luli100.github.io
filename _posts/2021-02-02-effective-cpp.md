@@ -154,6 +154,12 @@ enable: true
 
 - Postpone variable definitions as long as possible. It increases program clarity and improves program effeciency.
 
+### Item 28: Avoid returning "Handles" to object internals.
+
+**Things to Remember**
+
+- Avoid returning handles (references, pointers, or iterators) to object internals. Not returning handles increases encapsulation, helps const member functions act const, and minimizes the creation of dangling handles.
+
 ## Inheritance and Object-Oriented Design
 
 ### Item 32: Make sure public inheritance models "is-a".
