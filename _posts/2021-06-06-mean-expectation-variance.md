@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 均值、期望、方差和正态分布
-enable: true
+enable: false
 ---
 
 ### 均值和期望
