@@ -1,6 +1,6 @@
 ---
 layout: post
-title: STATE 模式 (2)
+title: 实现有限状态机 FSM (2)
 enable: true
 ---
 
