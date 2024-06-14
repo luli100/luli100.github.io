@@ -4,7 +4,7 @@ title: 实现有限状态机 FSM (2)
 enable: true
 ---
 
-### 状态迁移表
+### 解释迁移表
 
 ```C#
 public enum State
