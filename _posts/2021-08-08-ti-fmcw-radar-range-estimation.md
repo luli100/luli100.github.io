@@ -159,3 +159,7 @@ The other bandwidth is the IF bandwidth. A larger IF bandwidth primarily enables
 This concludes the first module in the series. We focused primarily on range estimation using the FMCW radar. Here's a question to motivate the subsequent modules. So there are two objects equidistant from the radar. How will the range FFT look like? Now since these objects are equidistant, the range FFT will have a single peak corresponding to this range d and incorporating the effects of both these objects. So how then do we separate out these two objects. It turns out that if these two objects have different velocities relating to the radar, then they can be separated out by further signal processing. And to understand that, we need to really look at the phase of the IF signal which is something we will be doing in the next module.
 
 该系列的第一个 模块到此结束。我们主要讨论了如何使用 FMCW 雷达进行距离估算。这里有一个问题，用以引出后续模块。有两个与雷达的距离相同的物体。距离 FFT 看起来会是什么样的？现在，由于这些物体的距离是相同的，因此距离 FFT 将具有与该距离 d 相对应并受到这两个物体影响的单个峰值。那么，我们如何分离这两个物体呢？事实证明，如果这两个物体具有不同的相对于雷达的速度，那么可以通过进一步的信号处理分离它们。要理解这一点，我们需要实际看看 IF 信号的相位，这是我们将在下一个模块中做的事情。
+
+### 参考资料
+
+[Intro to mmWave Sensing : FMCW Radars - Module 1 : Range Estimation](https://www.ti.com.cn/content/dam/videos/external-videos/zh-cn/2/3816841626001/5415203482001.mp4/subassets/mmwaveSensing-FMCW-offlineviewing_0.pdf)
