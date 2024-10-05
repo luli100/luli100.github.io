@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Effective C++ 笔记
-enable: true
+enable: false
 ---
 
 ## Accustoming Yourself to C++
