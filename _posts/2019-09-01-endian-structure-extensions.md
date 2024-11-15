@@ -116,7 +116,7 @@ namespace EndianExtensionsTests
             Console.WriteLine($"ID: {obj.Id}, X: {obj.x}, Y: {obj.y}, Z: {obj.z}");
         }
 
-        public static T ToStructureHostEndian&lt;T&gt;(Byte[] buffer) where T : struct
+        public static T ToStructureHostEndian<T>(Byte[] buffer) where T : struct
         {
             var size = Marshal.SizeOf(typeof(T));
             if (size != buffer.Length)
@@ -126,7 +126,7 @@ namespace EndianExtensionsTests
 
             var intPtr = Marshal.AllocHGlobal(size);
             Marshal.Copy(buffer, 0, intPtr, size);
-            var obj = Marshal.PtrToStructure&lt;T&gt;(intPtr);
+            var obj = Marshal.PtrToStructure<T>(intPtr);
             Marshal.FreeHGlobal(intPtr);
 
             return obj;
@@ -194,7 +194,7 @@ namespace EndianExtensionsTests
             Console.WriteLine($"ID: {obj.Id}, X: {obj.x}, Y: {obj.y}, Z: {obj.z}");
         }
 
-        public static T ToStructureHostEndian&lt;T&gt;(Byte[] buffer) where T : class
+        public static T ToStructureHostEndian<T>(Byte[] buffer) where T : class
         {
             var size = Marshal.SizeOf(typeof(T));
             if (size != buffer.Length)
@@ -204,7 +204,7 @@ namespace EndianExtensionsTests
 
             var intPtr = Marshal.AllocHGlobal(size);
             Marshal.Copy(buffer, 0, intPtr, size);
-            var obj = Marshal.PtrToStructure&lt;T&gt;(intPtr);
+            var obj = Marshal.PtrToStructure<T>(intPtr);
             Marshal.FreeHGlobal(intPtr);
 
             return obj;
@@ -267,7 +267,7 @@ namespace EndianExtensionsTests
             }
         }
 
-        public static T ToStructureHostEndian&lt;T&gt;(Byte[] buffer) where T : struct
+        public static T ToStructureHostEndian<T>(Byte[] buffer) where T : struct
         {
             var size = Marshal.SizeOf(typeof(T));
             if (size != buffer.Length)
@@ -277,7 +277,7 @@ namespace EndianExtensionsTests
 
             var intPtr = Marshal.AllocHGlobal(size);
             Marshal.Copy(buffer, 0, intPtr, size);
-            var obj = Marshal.PtrToStructure&lt;T&gt;(intPtr);
+            var obj = Marshal.PtrToStructure<T>(intPtr);
             Marshal.FreeHGlobal(intPtr);
 
             return obj;
