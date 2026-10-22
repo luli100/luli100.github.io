@@ -16,7 +16,7 @@
                 <a class="site-brand" href="/">{{ site.name }}</a>
                 {% assign nav = page.url | remove: ".html" | remove: "/" %}
                 <nav class="site-nav">
-                    <a href="/"{% if nav != "faq" and nav != "about" %} class="active"{% endif %}>博客</a>
+                    <a href="/"{% if nav != "faq" and nav != "about" %} class="active"{% endif %}>手记</a>
                     <a href="/faq"{% if nav == "faq" %} class="active"{% endif %}>FAQ</a>
                     <a href="/about"{% if nav == "about" %} class="active"{% endif %}>关于</a>
                 </nav>
