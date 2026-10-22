@@ -1,27 +1,19 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=0.5">
-        <link rel="shortcut icon" href="/images/luli.png"/>
-        <title>{{ page.title }}</title>
-        <link rel="stylesheet" href="/css/post.css" type="text/css" media="screen, projection" />
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-        {% if page.use_math %}
-            {% include mathjax_support.html %}
+---
+layout: default
+---
+<div class="article-wrap">
+    <article class="post">
+        <h1>{{ page.title }}</h1>
+        {% if page.date %}
+        <div class="meta">
+            {% include icon-calendar.html %}
+            <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y年%-m月%-d日" }}</time>
+        </div>
+        {% else %}
+        <div class="meta"></div>
         {% endif %}
-    </head>
-    <body>
-        <script>
-            if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent))
-            {
-               document.body.classList.add('mobile');
-            }
-        </script>
-        <div class="inner">
-            <h2>{{ page.title }}</h2>
+        <div class="prose">
             {{ content }}
         </div>
-    </body>
-</html>
+    </article>
+</div>

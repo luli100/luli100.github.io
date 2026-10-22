@@ -1,11 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
     <head>
         <meta charset="UTF-8"/>
-        <title>{{ page.title }}</title>
-        <link rel="stylesheet" href="/css/home.css" type="text/css" media="screen, projection" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="/images/luli.png"/>
+        <link rel="stylesheet" href="/css/site.css" type="text/css" />
+        <title>{% if page.title and page.title != site.name %}{{ page.title }} - {% endif %}{{ site.name }}</title>
+        {% if page.use_math %}
+            {% include mathjax_support.html %}
+        {% endif %}
     </head>
     <body>
-        {{ content }}
+        <header class="site-header">
+            <div class="bar">
+                <a class="site-brand" href="/">{{ site.name }}</a>
+                {% assign nav = page.url | remove: ".html" | remove: "/" %}
+                <nav class="site-nav">
+                    <a href="/"{% if nav != "faq" and nav != "about" %} class="active"{% endif %}>博客</a>
+                    <a href="/faq"{% if nav == "faq" %} class="active"{% endif %}>FAQ</a>
+                    <a href="/about"{% if nav == "about" %} class="active"{% endif %}>关于</a>
+                </nav>
+            </div>
+        </header>
+        <main>
+            {{ content }}
+        </main>
+        <footer class="site-footer">© {{ site.time | date: "%Y" }} {{ site.name }}</footer>
     </body>
 </html>
