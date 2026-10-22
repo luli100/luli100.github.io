@@ -1,48 +1,50 @@
 ---
 layout: default
 title: 路上的骑士
-use_math: true
 ---
 {% assign posts = site.posts | where: "enable", true %}
-<div class="notes-wrap">
-    <h1 class="page-title">手记</h1>
-    <p class="page-subtitle">碎片想法，随手记录。</p>
+{% assign years = posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+<div class="container">
+    <h1 class="page-title">博客文章</h1>
+    <p class="page-subtitle">从 {{ posts.last.date | date: "%Y" }} 年至今的文章，共 {{ posts.size }} 篇。</p>
 
-    <div class="notes">
-        {% for post in posts %}
-        {% include note.html note=post collapsed=true %}
-        {% endfor %}
+    <div class="tabs"><span>按时间浏览</span></div>
+
+    <div class="layout">
+        <div class="post-list">
+            {% for post in posts %}
+            <a class="card" href="{{ post.url }}" data-year="{{ post.date | date: '%Y' }}">
+                <h2>{{ post.title }}</h2>
+                <p class="excerpt">{{ post.content | strip_html | strip_newlines | truncate: 180 }}</p>
+                <div class="meta">
+                    {% include icon-calendar.html %}
+                    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y年%-m月%-d日" }}</time>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <aside class="sidebar">
+            <div class="card panel">
+                <h3>按年份筛选</h3>
+                <div class="pills">
+                    <button class="pill active" data-year="">全部 ({{ posts.size }})</button>
+                    {% for year in years %}
+                    <button class="pill" data-year="{{ year.name }}">{{ year.name }} ({{ year.size }})</button>
+                    {% endfor %}
+                </div>
+            </div>
+        </aside>
     </div>
 </div>
 <script>
-    document.querySelectorAll('.note.collapsed').forEach(function (note) {
-        var body = note.querySelector('.note-body');
-        var toggle = note.querySelector('.note-toggle');
-        function update() {
-            if (body.scrollHeight <= body.clientHeight + 4) {
-                note.classList.remove('collapsed');
-                toggle.hidden = true;
-            }
-        }
-        update();
-        window.addEventListener('load', update);
-
-        function setOpen(open) {
-            note.classList.toggle('open', open);
-            toggle.setAttribute('aria-label', open ? '收起' : '展开');
-            toggle.title = open ? '收起' : '展开';
-            if (!open && note.getBoundingClientRect().top < 0) {
-                note.scrollIntoView();
-            }
-        }
-        toggle.addEventListener('click', function (e) {
-            e.stopPropagation();
-            setOpen(!note.classList.contains('open'));
-        });
-        note.addEventListener('click', function (e) {
-            if (!note.classList.contains('open') && !e.target.closest('a') && !window.getSelection().toString()) {
-                setOpen(true);
-            }
+    document.querySelectorAll('.pill').forEach(function (pill) {
+        pill.addEventListener('click', function () {
+            var year = pill.dataset.year;
+            document.querySelectorAll('.pill').forEach(function (p) { p.classList.toggle('active', p === pill); });
+            document.querySelectorAll('.post-list .card').forEach(function (card) {
+                card.style.display = !year || card.dataset.year === year ? '' : 'none';
+            });
         });
     });
 </script>

@@ -1,0 +1,51 @@
+---
+layout: default
+title: 手记
+permalink: /notes/
+use_math: true
+---
+{% assign notes = site.notes | where_exp: "n", "n.enable != false" | sort: "date" | reverse %}
+<div class="notes-wrap">
+    <h1 class="page-title">手记</h1>
+    <p class="page-subtitle">碎片想法，随手记录。</p>
+
+    <div class="notes">
+        {% for note in notes %}
+        {% include note.html note=note collapsed=true %}
+        {% else %}
+        <p class="empty">还没有手记。</p>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.note.collapsed').forEach(function (note) {
+        var body = note.querySelector('.note-body');
+        var toggle = note.querySelector('.note-toggle');
+        function update() {
+            if (body.scrollHeight <= body.clientHeight + 4) {
+                note.classList.remove('collapsed');
+                toggle.hidden = true;
+            }
+        }
+        update();
+        window.addEventListener('load', update);
+
+        function setOpen(open) {
+            note.classList.toggle('open', open);
+            toggle.setAttribute('aria-label', open ? '收起' : '展开');
+            toggle.title = open ? '收起' : '展开';
+            if (!open && note.getBoundingClientRect().top < 0) {
+                note.scrollIntoView();
+            }
+        }
+        toggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setOpen(!note.classList.contains('open'));
+        });
+        note.addEventListener('click', function (e) {
+            if (!note.classList.contains('open') && !e.target.closest('a') && !window.getSelection().toString()) {
+                setOpen(true);
+            }
+        });
+    });
+</script>

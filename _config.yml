@@ -55,6 +55,19 @@ baseurl: ""
 
 permalink: /:title/
 
+# 手记：放在 _notes/ 目录下，每条一个 Markdown 文件
+collections:
+  notes:
+    output: true
+    permalink: /notes/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: notes
+    values:
+      layout: note
+
 # The release of Jekyll Now that you're using
 version: v4.4.3
 

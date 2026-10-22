@@ -124,10 +124,10 @@ main {
     margin-top: 32px;
 }
 
-/* 手记 */
+/* 首页 */
 
-.notes-wrap {
-    max-width: 672px;
+.container {
+    max-width: 1152px;
     margin: 0 auto;
     padding: 32px 16px;
 }
@@ -137,12 +137,150 @@ main {
     line-height: 40px;
     font-weight: 700;
     color: var(--heading);
-    margin: 0 0 12px;
+    margin: 0 0 8px;
 }
 
 .page-subtitle {
     color: var(--muted);
-    margin: 0 0 32px;
+    margin: 0 0 24px;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid var(--theme-200);
+    margin-bottom: 24px;
+}
+
+.tabs span {
+    padding: 12px 16px;
+    font-weight: 500;
+    color: var(--theme-700);
+    border-bottom: 2px solid var(--theme-600);
+    margin-bottom: -1px;
+}
+
+.layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.post-list {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.sidebar {
+    width: 288px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 88px;
+}
+
+.card {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--theme-200);
+    border-radius: 16px;
+    padding: 24px;
+    transition: box-shadow .3s, border-color .3s;
+}
+
+a.card:hover {
+    border-color: var(--theme-400);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, .1), 0 8px 10px -6px rgba(0, 0, 0, .1);
+}
+
+.card h2 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+    color: var(--heading);
+    margin: 0 0 12px;
+    transition: color .3s;
+}
+
+a.card:hover h2 {
+    color: var(--theme-700);
+}
+
+.card .excerpt {
+    color: var(--excerpt);
+    line-height: 1.625;
+    margin: 0 0 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card .excerpt:empty {
+    display: none;
+}
+
+.meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.meta svg {
+    width: 14px;
+    height: 14px;
+    color: var(--theme-600);
+}
+
+.card .meta {
+    padding-top: 16px;
+    border-top: 1px solid var(--theme-100);
+}
+
+.panel h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--body);
+    margin: 0 0 16px;
+}
+
+.pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pill {
+    padding: 4px 12px;
+    font-size: 14px;
+    line-height: 20px;
+    border: 0;
+    border-radius: 9999px;
+    background: var(--theme-100);
+    color: var(--theme-900);
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color .2s;
+}
+
+.pill:hover {
+    background: var(--theme-200);
+}
+
+.pill.active {
+    background: var(--theme-600);
+    color: #fff;
+}
+
+/* 手记 */
+
+.notes-wrap {
+    max-width: 672px;
+    margin: 0 auto;
+    padding: 32px 16px;
 }
 
 .back {
@@ -254,28 +392,85 @@ main {
     display: none;
 }
 
-.prose {
-    color: var(--body);
+.note-body.prose {
     font-size: 16px;
     line-height: 28px;
+}
+
+.note-body.prose p {
+    margin: 0 0 16px;
+}
+
+.note-body.prose h1, .note-body.prose h2, .note-body.prose h3, .note-body.prose h4 {
+    font-weight: 600;
+    margin: 28px 0 12px;
+}
+
+.note-body.prose h1 { font-size: 22px; }
+.note-body.prose h2 { font-size: 20px; }
+.note-body.prose h3 { font-size: 18px; }
+.note-body.prose h4 { font-size: 16px; }
+
+.note-body.prose > :first-child {
+    margin-top: 0;
+}
+
+.empty {
+    color: var(--muted);
+    text-align: center;
+    padding: 48px 0;
+}
+
+/* 文章页 */
+
+.article-wrap {
+    max-width: 768px;
+    margin: 32px auto 0;
+    padding: 0 16px;
+}
+
+article.post {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 32px;
+}
+
+article.post > h1 {
+    font-size: 36px;
+    line-height: 1.15;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 16px;
+}
+
+article.post > .meta {
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--theme-200);
+}
+
+.prose {
+    color: var(--body);
+    font-size: 18px;
+    line-height: 32px;
     overflow-wrap: break-word;
 }
 
 .prose p {
-    margin: 0 0 16px;
+    margin: 0 0 24px;
 }
 
 .prose h1, .prose h2, .prose h3, .prose h4 {
     color: var(--heading);
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.4;
-    margin: 28px 0 12px;
+    margin: 40px 0 16px;
 }
 
-.prose h1 { font-size: 22px; }
-.prose h2 { font-size: 20px; }
-.prose h3 { font-size: 18px; }
-.prose h4 { font-size: 16px; }
+.prose h1 { font-size: 28px; }
+.prose h2 { font-size: 24px; }
+.prose h3 { font-size: 20px; }
+.prose h4 { font-size: 18px; }
 
 .prose a {
     color: var(--theme-700);
@@ -367,8 +562,15 @@ main {
     margin: 32px 0;
 }
 
-.prose > :first-child {
-    margin-top: 0;
+@media (max-width: 1023px) {
+    .layout {
+        flex-direction: column-reverse;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+    }
 }
 
 @media (max-width: 640px) {
@@ -380,12 +582,22 @@ main {
         gap: 16px;
     }
 
-    .notes-wrap {
-        padding: 24px 8px;
+    .page-title, article.post > h1 {
+        font-size: 28px;
+        line-height: 1.25;
     }
 
-    .page-title {
-        font-size: 28px;
+    .card {
+        padding: 20px;
+    }
+
+    .card h2 {
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .notes-wrap {
+        padding: 24px 8px;
     }
 
     .note-head, .note-body {
@@ -396,6 +608,20 @@ main {
     .note-title {
         font-size: 20px;
         margin: 8px 16px;
+    }
+
+    .article-wrap {
+        margin-top: 16px;
+        padding: 0 8px;
+    }
+
+    article.post {
+        padding: 20px 16px;
+    }
+
+    .prose {
+        font-size: 17px;
+        line-height: 30px;
     }
 }
 

@@ -1,7 +1,19 @@
 ---
 layout: default
 ---
-<div class="notes-wrap">
-    {% if page.date %}<a class="back" href="/">← 手记</a>{% endif %}
-    {% include note.html note=page body=content %}
+<div class="article-wrap">
+    <article class="post">
+        <h1>{{ page.title }}</h1>
+        {% if page.date %}
+        <div class="meta">
+            {% include icon-calendar.html %}
+            <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y年%-m月%-d日" }}</time>
+        </div>
+        {% else %}
+        <div class="meta"></div>
+        {% endif %}
+        <div class="prose">
+            {{ content }}
+        </div>
+    </article>
 </div>
