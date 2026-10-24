@@ -1,6 +1,6 @@
 # 博客内容清理记录 · 2026-10-24
 
-本轮按独立阅读价值、内容完整性和关键结论的可验证性整理已有文章。清理前首页公开文章 45 篇，清理后 33 篇，共 12 篇撤回草稿。原来 enable: false 的文章和两篇手记不在本次撤回范围。
+本轮按独立阅读价值、内容完整性和关键结论的可验证性整理已有文章。首轮首页公开文章从 45 篇减至 33 篇，撤回 12 篇。补充撤回 MathJax 建站配置说明后，当前公开 32 篇，累计撤回 13 篇。原来 enable: false 的文章和两篇手记不在本次撤回范围。
 
 所有撤回文章从 `_posts/` 移到 `_drafts/`，原文逐字节保留，未删除配图。普通 GitHub Pages 构建不会发布草稿，因此这些文章会同时退出首页、RSS/Atom 和站点地图，原文章网址也将不再提供正文。Git 历史和草稿均可恢复。
 
@@ -20,6 +20,7 @@
 | [卡尔曼滤波](../_drafts/2023-09-10-kalman-filter.md) | 开头讨论过程噪声，但预测公式未说明 Q=0 的限制；位置、速度分开使用标量增益，示例又用位置残差更新速度，未给出匹配的观测模型和交叉协方差。不能作为完整多维卡尔曼推导发布，需统一模型后重写。 | 模型与推导待重写 |
 | [线程安全的 SafeObservableCollection&lt;T&gt;](../_drafts/2019-04-28-wpf-thread-safe-observable-collection.md) | 修改通过 BeginInvoke 异步入队，而继承的 Remove 等方法同步查找索引并返回。原文类在后台连续 Remove("A") 两次，两个调用均返回 true，队列执行后 A 和 B 都被删除；不满足标题对线程安全集合的承诺。 | 代码存在已复现的逻辑问题 |
 | [C# 结构体和字节数组之间的转换](../_drafts/2019-08-03-convert-struct-byte-arrary-CSharp.md) | 新分配的内存首次 StructureToPtr 就传入 fDeleteOld=true；缺少 try/finally、输入长度校验和可封送类型限制，结尾还推荐 BinaryFormatter。应明确原生布局与序列化协议的区别后重写。 | 资源处理与建议需重写 |
+| [如何在 Jekyll 生成的 Github 页面中使用 MathJax](../_drafts/2023-08-01-how-to-use-mathjax-in-jekyll-generated-github-pages.md) | 主要是建站配置备忘，缺少进一步的问题分析；示例仍引用已退役的 cdn.mathjax.org，与本站当前使用的 cdnjs 配置不一致。按精简博客的方向撤回，保留现有 MathJax 语法速查页。 | 配置备忘与过时示例 |
 
 ## 已做的核实
 
@@ -32,6 +33,8 @@
 - 卡尔曼协方差预测与过程噪声，对照 [Covariance Extrapolation Equation](https://kalmanfilter.net/covextrap.html)核实。该资料明确区分一般形式和 Q=0 的特例。
 
 复现项目放在系统临时目录，未加入博客发布内容。没有运行原文中潜在不安全的非托管内存示例。
+
+- 补充核实：文章示例中的 cdn.mathjax.org 服务已退役，见 [MathJax 官方公告](https://www.mathjax.org/cdn-shutting-down/)。本站实际配置已使用 cdnjs，本次只撤回文章，不修改数学公式渲染配置。
 
 ## 本轮保留的取舍
 
@@ -63,3 +66,4 @@
 - `2023-09-10-kalman-filter.md`：`f3863ddb1f6f0f0b35d937bae6292007466a477fe39bd021d00fc93d168b90c0`
 - `2019-04-28-wpf-thread-safe-observable-collection.md`：`a0e127fcf9e20da41a3ba4511b881762a25c8a201e4ffe5ebf0b419896127c50`
 - `2019-08-03-convert-struct-byte-arrary-CSharp.md`：`1329d584a3e28317b463ce7dbe4243dd2f333589998960726e27263bddcfcd6f`
+- `2023-08-01-how-to-use-mathjax-in-jekyll-generated-github-pages.md`：`0c5cca5364e11fa31965905e0a9a4103837ab1b0f3c8152d5a56b686e0b409d9`
