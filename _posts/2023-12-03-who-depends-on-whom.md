@@ -3,6 +3,29 @@ layout: post
 title: 谁依赖谁：用换设备与做测试理解 DIP、IoC 和 DI
 enable: true
 description: 从开关控制灯的逐步改造出发，分清依赖倒置、控制反转与依赖注入，再把同样的思路用到设备适配和 C 语言算法替换中。
+toc:
+  - title: 开关把灯写死了
+    anchor: coupled-switch
+  - title: 有了接口，还差一步
+    anchor: interface-first
+  - title: 把设备的选择和创建交给外面
+    anchor: external-assembly
+  - title: 同一次修改，三个观察角度
+    anchor: dip-ioc-di
+  - title: 没有真设备，怎样验证开关
+    anchor: testing
+  - title: 放到扫描系统里：流程依赖设备能力
+    anchor: scan-system
+  - title: C 语言里，也可以从外部提供算法
+    anchor: c-functions
+  - title: 哪些写法容易混淆
+    anchor: common-confusions
+  - title: 容器是装配工具
+    anchor: container
+  - title: 接口能不能承受下一次变化
+    anchor: interface-design
+  - title: 示例与延伸阅读
+    anchor: further-reading
 ---
 
 一段控制设备的代码已经能正常工作。现在，要把灯换成风扇，应该改哪里？如果手边没有真实设备，能不能先验证控制逻辑？
@@ -10,23 +33,6 @@ description: 从开关控制灯的逐步改造出发，分清依赖倒置、控�
 这两个问题，能帮我们看清代码中的依赖关系。DIP、IoC、DI 这几个经常一起出现的概念，也可以沿着同一次修改来理解。
 
 本文先把一个开关逐步改到可以换设备、做测试，再把这个思路放到扫描系统和 C 语言的算法选择中。示例刻意简化了设备操作，重点看：使用设备的代码依赖什么，具体设备由谁准备，又怎样交给使用它的代码。
-
-<nav class="article-toc" aria-label="文章目录">
-  <p class="article-toc-title">目录</p>
-  <ol>
-    <li><a href="#coupled-switch">开关把灯写死了</a></li>
-    <li><a href="#interface-first">有了接口，还差一步</a></li>
-    <li><a href="#external-assembly">把设备的选择和创建交给外面</a></li>
-    <li><a href="#dip-ioc-di">同一次修改，三个观察角度</a></li>
-    <li><a href="#testing">没有真设备，怎样验证开关</a></li>
-    <li><a href="#scan-system">放到扫描系统里：流程依赖设备能力</a></li>
-    <li><a href="#c-functions">C 语言里，也可以从外部提供算法</a></li>
-    <li><a href="#common-confusions">哪些写法容易混淆</a></li>
-    <li><a href="#container">容器是装配工具</a></li>
-    <li><a href="#interface-design">接口能不能承受下一次变化</a></li>
-    <li><a href="#further-reading">示例与延伸阅读</a></li>
-  </ol>
-</nav>
 
 ## 开关把灯写死了 {#coupled-switch}
 

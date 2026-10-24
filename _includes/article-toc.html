@@ -1,0 +1,19 @@
+<details class="article-toc" open>
+    <summary>目录</summary>
+    <nav aria-label="文章目录">
+        <ul>
+            {% for item in page.toc %}
+            <li><a href="#{{ item.anchor | escape }}">{{ item.title | escape }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+</details>
+<script>
+    (function () {
+        var toc = document.querySelector('.article-toc');
+        var desktop = window.matchMedia('(min-width: 1280px)');
+        function updateLayout() { toc.open = desktop.matches; }
+        updateLayout();
+        desktop.addEventListener('change', updateLayout);
+    }());
+</script>
