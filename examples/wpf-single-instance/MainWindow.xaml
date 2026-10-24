@@ -1,0 +1,15 @@
+<Window x:Class="SingleInstanceDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WPF 单实例示例" Width="760" Height="440">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="再次启动程序：请求会转发到此窗口。可先最小化或最大化验证恢复行为。"
+                   TextWrapping="Wrap" Margin="0,0,0,12" />
+        <TextBox x:Name="Requests" Grid.Row="1" IsReadOnly="True" AcceptsReturn="True"
+                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+    </Grid>
+</Window>
