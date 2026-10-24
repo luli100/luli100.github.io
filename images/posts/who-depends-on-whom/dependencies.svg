@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 600" role="img" aria-labelledby="title desc">
+  <title id="title">开关改造前后的源代码依赖</title>
+  <desc id="desc">改造前 Switch 直接依赖 Light。改造后 Switch 依赖 ISwitchable，Light 和 Fan 实现 ISwitchable。箭头表示源代码依赖，运行时仍由开关调用设备。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#587044"/></marker>
+    <style>
+      text { font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; fill: #303a29; }
+      .label { font-size: 22px; font-weight: 600; }
+      .code { font-family: Consolas, monospace; font-size: 23px; }
+      .note { font-size: 21px; fill: #56634e; }
+      .box { fill: #fff; stroke: #a3b492; stroke-width: 2; rx: 8; }
+      .line { fill: none; stroke: #587044; stroke-width: 2.5; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="560" height="600" rx="12" fill="#f5f7f0"/>
+  <text x="26" y="43" class="label">改造前：控制逻辑认识具体设备</text>
+  <rect class="box" x="30" y="84" width="160" height="68"/>
+  <text class="code" x="110" y="126" text-anchor="middle">Switch</text>
+  <path class="line" d="M 190 118 H 360"/>
+  <text class="note" x="280" y="101" text-anchor="middle">直接依赖</text>
+  <rect class="box" x="370" y="84" width="160" height="68"/>
+  <text class="code" x="450" y="126" text-anchor="middle">Light</text>
+  <path d="M 26 198 H 534" stroke="#d7dfcc"/>
+  <text x="26" y="244" class="label">改造后：控制逻辑与设备实现</text>
+  <text x="26" y="276" class="label">都依赖抽象</text>
+  <rect class="box" x="30" y="318" width="160" height="68"/>
+  <text class="code" x="110" y="360" text-anchor="middle">Switch</text>
+  <path class="line" d="M 190 352 H 310"/>
+  <text class="note" x="250" y="336" text-anchor="middle">使用</text>
+  <rect class="box" x="320" y="318" width="210" height="68"/>
+  <text class="code" x="425" y="360" text-anchor="middle">ISwitchable</text>
+  <rect class="box" x="110" y="466" width="160" height="64"/>
+  <text class="code" x="190" y="506" text-anchor="middle">Light</text>
+  <rect class="box" x="370" y="466" width="160" height="64"/>
+  <text class="code" x="450" y="506" text-anchor="middle">Fan</text>
+  <path class="line" d="M 190 466 V 422 H 389 V 392"/>
+  <path class="line" d="M 450 466 V 392"/>
+  <text class="note" x="300" y="451" text-anchor="middle">实现</text>
+  <text class="note" x="26" y="576">箭头表示源代码依赖，运行时仍由开关调用设备。</text>
+</svg>
