@@ -11,7 +11,24 @@ description: 从开关控制灯的逐步改造出发，分清依赖倒置、控�
 
 本文先把一个开关逐步改到可以换设备、做测试，再把这个思路放到扫描系统和 C 语言的算法选择中。示例刻意简化了设备操作，重点看：使用设备的代码依赖什么，具体设备由谁准备，又怎样交给使用它的代码。
 
-## 开关把灯写死了
+<nav class="article-toc" aria-label="文章目录">
+  <p class="article-toc-title">目录</p>
+  <ol>
+    <li><a href="#coupled-switch">开关把灯写死了</a></li>
+    <li><a href="#interface-first">有了接口，还差一步</a></li>
+    <li><a href="#external-assembly">把设备的选择和创建交给外面</a></li>
+    <li><a href="#dip-ioc-di">同一次修改，三个观察角度</a></li>
+    <li><a href="#testing">没有真设备，怎样验证开关</a></li>
+    <li><a href="#scan-system">放到扫描系统里：流程依赖设备能力</a></li>
+    <li><a href="#c-functions">C 语言里，也可以从外部提供算法</a></li>
+    <li><a href="#common-confusions">哪些写法容易混淆</a></li>
+    <li><a href="#container">容器是装配工具</a></li>
+    <li><a href="#interface-design">接口能不能承受下一次变化</a></li>
+    <li><a href="#further-reading">示例与延伸阅读</a></li>
+  </ol>
+</nav>
+
+## 开关把灯写死了 {#coupled-switch}
 
 先看最直接的实现：
 
@@ -50,7 +67,7 @@ private readonly Light _light = new Light();
 
 于是，修改有了明确目标：让开关只依赖自己需要的设备能力，同时允许外面提供设备。
 
-## 有了接口，还差一步
+## 有了接口，还差一步 {#interface-first}
 
 开关需要设备提供什么能力？在这个例子里，只有打开和关闭。先把这两项能力写成接口：
 
@@ -88,7 +105,7 @@ private readonly ISwitchable _device = new Light();
 
 判断依赖关系时，要看完整的类。字段、构造函数、方法体里，只要仍然引用具体设备类型，这段代码就仍然认识具体设备。
 
-## 把设备的选择和创建交给外面
+## 把设备的选择和创建交给外面 {#external-assembly}
 
 继续改造，让 `Switch` 从构造函数接收设备：
 
@@ -130,7 +147,7 @@ fanSwitch.Press(true);
 
 这次修改把职责分开了：`Switch` 负责使用设备，装配入口负责选择设备、创建对象，并把它交给开关。
 
-## 同一次修改，三个观察角度
+## 同一次修改，三个观察角度 {#dip-ioc-di}
 
 现在回头看 DIP、IoC 和 DI。它们描述的是这次修改中的不同方面。
 
@@ -178,7 +195,7 @@ DI 还可以通过属性或方法参数完成：
 
 另外，外面传入对象时，还要约定谁负责释放它。设备连接可能持有串口、网络连接或 SDK 句柄；注入动作本身不会自动确定资源的所有权。
 
-## 没有真设备，怎样验证开关
+## 没有真设备，怎样验证开关 {#testing}
 
 设备能从外面传进来后，测试代码就可以提供自己的实现。
 
@@ -241,7 +258,7 @@ public void Press_SendsExpectedCommand(bool shouldOn)
 
 文末提供了[完整测试项目](https://github.com/luli100/luli100.github.io/tree/main/examples/who-depends-on-whom)，可以直接运行，验证这里的代码。
 
-## 放到扫描系统里：流程依赖设备能力
+## 放到扫描系统里：流程依赖设备能力 {#scan-system}
 
 开关例子很小，同样的关系也适用于设备控制系统。
 
@@ -289,7 +306,7 @@ var scan = new ScanFlow(turntable);
 
 实际项目还要明确角度单位、超时、取消、失败后的状态。这些约定决定了流程能否安全地使用不同实现。相同的方法签名，只是起点。
 
-## C 语言里，也可以从外部提供算法
+## C 语言里，也可以从外部提供算法 {#c-functions}
 
 DIP、IoC 和 DI 的思路也能用于 C 代码。
 
@@ -339,7 +356,7 @@ tracker_init(&tracker, gnn_associate);
 
 要符合 DIP，还需要保证公共数据类型和函数约定没有夹带某个算法的私有细节。把函数指针传进去是 DI；抽象是否合适，需要另外检查。
 
-## 哪些写法容易混淆
+## 哪些写法容易混淆 {#common-confusions}
 
 ### 传入具体类型，也用了 DI
 
@@ -368,7 +385,7 @@ public Switch(Light light)
 
 同样，普通值对象、局部集合的创建，也不必机械地全部改成注入。值得分离的通常是会变化的实现、外部资源，以及需要独立测试的协作对象。
 
-## 容器是装配工具
+## 容器是装配工具 {#container}
 
 前面的手工装配已经完成了依赖注入：
 
@@ -396,7 +413,7 @@ sw.Press(true);
 
 对象少时，手工装配容易理解。决定是否引入容器，可以看对象关系和生命周期管理是否已经带来实际的维护负担。
 
-## 接口能不能承受下一次变化
+## 接口能不能承受下一次变化 {#interface-design}
 
 把具体类型替换成接口后，还要检查抽象是否真的合适。
 
@@ -412,7 +429,7 @@ sw.Press(true);
 
 检查自己的代码时，也可以沿着同一条线找下去：**设备或算法在哪里选择、在哪里创建，又怎样交给使用它的代码？下一次换实现时，需要修改哪些地方？**
 
-## 示例与延伸阅读
+## 示例与延伸阅读 {#further-reading}
 
 - [完整 C# 示例与 xUnit 测试](https://github.com/luli100/luli100.github.io/tree/main/examples/who-depends-on-whom)：包含开关、灯、风扇与测试替身，使用 .NET 8 SDK 运行 `dotnet test`。
 - Robert C. Martin：[Design Principles and Design Patterns](https://staff.cs.utu.fi/~jounsmed/doos_06/material/DesignPrinciplesAndPatterns.pdf)，其中的 DIP 章节讨论高层模块、抽象与具体实现的依赖关系。

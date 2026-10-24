@@ -581,6 +581,29 @@ article.post > .meta {
     margin: 32px 0;
 }
 
+.prose .article-toc {
+    margin: 32px 0;
+    padding: 20px 0;
+    border-top: 1px solid var(--theme-200);
+    border-bottom: 1px solid var(--theme-200);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.prose .article-toc-title {
+    margin: 0 0 12px;
+    color: var(--heading);
+    font-weight: 600;
+}
+
+.prose .article-toc ol {
+    margin: 0;
+}
+
+.prose .article-toc ~ h2[id] {
+    scroll-margin-top: 24px;
+}
+
 @media (max-width: 1023px) {
     .layout {
         flex-direction: column-reverse;
