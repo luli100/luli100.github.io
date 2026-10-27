@@ -1,0 +1,80 @@
+---
+layout: post
+title: 系统架构对话（二）：缓冲区加大了，为什么还是丢数据？
+enable: true
+series: system-architecture
+series_order: 2
+description: 用缓冲容量预算区分短时停顿和持续过载，再追问多进程、环形缓冲与优先级分别解决了什么。
+toc:
+  - title: 缓冲区买到的是时间
+    anchor: buffer-budget
+  - title: 多进程改变了什么
+    anchor: processes
+  - title: 环形缓冲减少了什么
+    anchor: ring-buffer
+  - title: 优先级不会增加算力
+    anchor: scheduling
+  - title: 怎样证明改动有效
+    anchor: measurement
+---
+<p>有一类性能问题很容易让人困惑：平均处理速度看起来足够，数据却仍然会丢。于是我们扩大缓冲区、增加线程、提高优先级。改动越来越多，效果却未必跟着变好。</p>
+<p>这一篇继续使用五路采集、每路约 26 MB/s 的设定。所有容量计算都是简化预算，统一使用十进制 MB，并不替代实际的接收和存储测试。</p>
+
+<h2 id="buffer-budget">缓冲区买到的是时间</h2>
+<p class="dialogue-question"><strong>问：</strong>把回读缓冲区从小容量加到 64 MB，接收是不是就变快了？</p>
+<p><strong>答：</strong>缓冲区本身没有让消费者每秒多处理一个字节。它给短时积压留出了位置：消费者暂时没运行时，新到的数据还不至于立刻无处可放。</p>
+<p class="dialogue-question"><strong>问：</strong>输入 26 MB/s，64 MB 能让消费者停多久？</p>
+<p><strong>答：</strong>如果缓冲区原本为空，而且暂停期间完全没有消费，理想时间预算约为 64 ÷ 26，也就是 2.46 秒。实际应使用<strong>当时剩余的可用容量</strong>计算，还要扣除元数据、对齐和实现上的保留空间。</p>
+<figure class="architecture-figure">
+  <a href="/images/posts/system-architecture/02-buffer-budget.svg" target="_blank" rel="noopener"><img src="/images/posts/system-architecture/02-buffer-budget.svg" alt="64MB 缓冲在输入26MB每秒、消费暂停时约2.46秒填满；若消费持续25MB每秒，每秒净积压1MB，约64秒填满。容量只能吸收有限积压。" width="600" height="470" loading="lazy"></a>
+  <figcaption>同一块缓冲区，面对短暂停顿和持续过载，耗尽预算的机制不同。</figcaption>
+</figure>
+<p class="dialogue-question"><strong>问：</strong>如果消费者持续只能处理 25 MB/s 呢？</p>
+<p><strong>答：</strong>每秒净积压约 1 MB，从空缓冲开始，理想情况下约 64 秒填满。容量再翻倍，也只是把失败推迟。长期输入大于长期处理能力时，需要提升瓶颈能力、减少处理需求，或者在业务允许的地方限流和丢弃。</p>
+<p>对于不能要求源端减速的 UDP 采集，“背压”未必能一直传回设备。此时必须约定超限策略，并明确记录缺失，不能让系统表面显示成功、文件却悄悄变得不可用。</p>
+<p class="dialogue-question"><strong>问：</strong>那只要平均消费速度大于输入速度，就够了？</p>
+<p><strong>答：</strong>还不够。平均值只说明长期账面上可能追得上。一次停顿能否被容纳、停顿之后能否及时清空积压，以及积压期间的端到端延迟是否合格，都要另外检查。缓冲越大，也可能让旧数据在队列里等得越久。</p>
+<p>另外，应用缓冲和网卡、驱动、套接字接收队列位于不同位置。扩大下游缓冲，无法挽回已经在上游队列中被丢弃的数据。容量预算应该沿整条链路分段计算。</p>
+
+<h2 id="processes">多进程改变了什么</h2>
+<p class="dialogue-question"><strong>问：</strong>我们把五路采集拆成五个进程，是不是就能用上五个 CPU 核？</p>
+<p><strong>答：</strong>具备并行执行的机会，但一个进程里有多个线程，本来就可能使用多个核。要判断多进程的价值，需要分开看并发组织和故障、内存管理的边界。</p>
+<figure class="architecture-figure">
+  <a href="/images/posts/system-architecture/02-process-boundaries.svg" target="_blank" rel="noopener"><img src="/images/posts/system-architecture/02-process-boundaries.svg" alt="单进程中的界面、解析和接收共享运行时与地址空间；拆为界面进程和独立采集进程后形成局部故障边界，但所有进程仍共享CPU、网卡和磁盘。" width="600" height="480" loading="lazy"></a>
+  <figcaption>进程边界可以隔离一部分干扰，硬件资源的竞争仍然存在。</figcaption>
+</figure>
+<p><strong>答：</strong>原先界面、解析、推送和五路接收都在同一个托管进程中，分配行为和 GC 暂停可能影响同一进程内的接收工作。拆开以后，界面进程的一次回收不再是采集进程自己的回收；某一路崩溃，也不必直接终止其他路。</p>
+<p>这不是“GC 总会暂停所有线程”的简单规则。.NET 有不同的 GC 模式和回收阶段，原生代码执行也有不同情况。设计时应测量实际的分配率和暂停，相关边界可对照 <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/workstation-server-gc">.NET GC 文档</a>。</p>
+<p class="dialogue-question"><strong>问：</strong>这样性能和可用性都提升了，代价在哪里？</p>
+<p><strong>答：</strong>配置如何交给子进程、进程间消息是否丢失、怎样启动和关闭、异常如何关联，都要设计。定位问题时，日志和时间戳也必须跨进程对齐。维护和测试的成本会增加。</p>
+<p>而且五个进程仍可能争用同一块磁盘、同一个内存控制器和同一组 CPU。如果瓶颈在磁盘写入，增加进程可能只会让竞争更激烈。它是一种边界调整，效果需要沿瓶颈验证。</p>
+
+<h2 id="ring-buffer">环形缓冲减少了什么</h2>
+<p class="dialogue-question"><strong>问：</strong>扩大缓冲区和使用环形缓冲，不都是空间换时间吗？</p>
+<p><strong>答：</strong>它们的主要作用不同。扩大容量是增加可用资源，容忍更长的积压；预分配并复用存储，则是在减少反复申请和释放资源的工作。</p>
+<figure class="architecture-figure">
+  <a href="/images/posts/system-architecture/02-ring-buffer.svg" target="_blank" rel="noopener"><img src="/images/posts/system-architecture/02-ring-buffer.svg" alt="环形缓冲的槽位依次经历空闲、写入、可读、读取和归还；写入者不能覆盖仍被读取者使用的槽位，缓冲满时必须采用明确策略。" width="600" height="410" loading="lazy"></a>
+  <figcaption>复用内存需要所有权规则。一个槽位“被读完”以后，才能再次交给写入者。</figcaption>
+</figure>
+<p class="dialogue-question"><strong>问：</strong>用了环形缓冲，就不会再触发 GC 了？</p>
+<p><strong>答：</strong>只能说它可能减少这条数据路径上的分配。日志、消息封装、回调和解析代码仍可能产生对象。缓存住数据数组，也不意味着周围代码已经没有分配。</p>
+<p>复用还带来新的约束：生产者何时发布数据，消费者何时归还槽位，谁负责可见性和同步，缓冲满了怎么办？如果消费者还在使用一块内存，生产者就覆盖了它，得到的可能是内容损坏，而不只是统计上的丢帧。</p>
+<p class="dialogue-question"><strong>问：</strong>单生产者、单消费者的队列能否直接换成多生产者？</p>
+<p><strong>答：</strong>不能只改调用数量。并发模型、读写索引和发布顺序都是协议的一部分。先明确使用模型，再选择经过验证的实现，并用乱序、满队列和慢消费者场景测试它。</p>
+
+<h2 id="scheduling">优先级不会增加算力</h2>
+<p class="dialogue-question"><strong>问：</strong>把接收线程的优先级提到最高，让它总是先运行，不就能避免丢包？</p>
+<p><strong>答：</strong>优先级解决的是资源紧张时谁先获得运行机会。它不会增加 CPU 总量，也不能保证线程永远不被打断。如果接收工作压住了落盘消费者，数据只会从套接字队列挪到应用缓冲里，最后仍可能溢出。</p>
+<p>因此，优先级、读写分离和环形缓冲应放在一张链路图上讨论：谁产生数据、谁消耗数据、共享什么资源、在哪一段积压。接收端的计数变漂亮，而最终文件缺失增加，不能算优化成功。</p>
+<p>把办法按作用分开会更容易分析：减少重复计算和分配是在减少资源需求；并发、容量和资源池是在组织可用资源；优先级和调度是在仲裁竞争。一个实现可能同时包含几类作用，分类的目的是解释机制，不是给它贴唯一标签。</p>
+
+<h2 id="measurement">怎样证明改动有效</h2>
+<p class="dialogue-question"><strong>问：</strong>那优化前后，我应该看什么？</p>
+<p><strong>答：</strong>至少沿数据路径保留能相互核对的观测：逐路输入与缺失、各级队列高水位、消费速率、写入延迟，以及分配率和暂停。对于时延，除了平均值，还要看高分位和最长停顿的分布。</p>
+<p>同一批数据、同一负载和相同的存储条件下，先测基线，再改变一个主要因素。扩大缓冲以后，若缺失降低但排队时间明显增加，就要回到场景确认延迟预算是否仍然允许。</p>
+<p class="key-point">性能优化的判断单位是完整业务链路。局部更快、队列更大，只有在最终数据质量和时延目标同时达标时，才算获得了需要的收益。</p>
+<details class="reading-exercise">
+  <summary>如果消费者因磁盘抖动停顿 4 秒，64 MB 缓冲够不够？</summary>
+  <p>按单路输入 26 MB/s、期间不消费的简化假设，会积压约 104 MB，64 MB 不够。还要问停顿发生前已经积压了多少，以及恢复后的净消费余量有多大。不能仅凭一次“平均写入速度高于 26 MB/s”的测试，就判定方案合格。</p>
+</details>
+<p>持续过载和无边界排队也可能引发级联故障，进一步的工程案例可读 <a href="https://sre.google/sre-book/addressing-cascading-failures/">Google SRE 关于级联故障的讨论</a>。下一篇则看另一类问题：这一路确实崩溃了，恢复到底从哪里开始，又在哪里才算结束？</p>

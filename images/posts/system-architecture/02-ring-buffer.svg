@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 410" role="img" aria-labelledby="title desc">
+<title id="title">复用槽位，需要明确所有权</title><desc id="desc">槽位从空闲到写入、可读、读取后归还，写者不能覆盖仍在使用的数据。</desc>
+<defs><marker id="tip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#806a4d"/></marker></defs>
+<style>
+text {font-family:'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif;fill:#27342f}
+.title {font-weight:700} .muted {fill:#61695f} .emphasis {fill:#7b522c;font-weight:700}
+.box {fill:#fff;stroke:#aeb9ad;stroke-width:1.8}
+.soft {fill:#eef2e9;stroke:#aeb9ad;stroke-width:1.8}
+.warning {fill:#fbefdf;stroke:#c3a078;stroke-width:1.8}
+.boundary {fill:#f1f2ed;stroke:#bbc4b6;stroke-width:1.6;stroke-dasharray:6 5}
+.arrow,.line {fill:none;stroke:#806a4d;stroke-width:2.2;stroke-linejoin:round}
+.faint {stroke:#d4dbce;stroke-width:1.4}
+</style>
+<rect width="600" height="410" rx="10" fill="#f8f8f3"/>
+<text x="28" y="38" font-size="23" text-anchor="start" class="title"><tspan x="28" dy="0">复用槽位，需要明确所有权</tspan></text>
+<text x="300" y="100" font-size="22" text-anchor="middle" class="muted"><tspan x="300" dy="0">固定存储循环复用，减少反复分配</tspan></text><rect x="24" y="181" width="114" height="74" rx="7" class="soft"/><text x="81.0" y="225.48" font-size="22" text-anchor="middle" class=""><tspan x="81.0" dy="0">空闲</tspan></text><rect x="170" y="181" width="114" height="74" rx="7" class="box"/><text x="227.0" y="225.48" font-size="22" text-anchor="middle" class=""><tspan x="227.0" dy="0">写入</tspan></text><rect x="316" y="181" width="114" height="74" rx="7" class="soft"/><text x="373.0" y="225.48" font-size="22" text-anchor="middle" class=""><tspan x="373.0" dy="0">可读</tspan></text><rect x="462" y="181" width="114" height="74" rx="7" class="box"/><text x="519.0" y="225.48" font-size="22" text-anchor="middle" class=""><tspan x="519.0" dy="0">读取</tspan></text><polyline points="143,218 162,218" class="arrow" marker-end="url(#tip)"/><polyline points="289,218 308,218" class="arrow" marker-end="url(#tip)"/><polyline points="435,218 454,218" class="arrow" marker-end="url(#tip)"/><polyline points="519,261 519,310 81,310 81,261" class="arrow" marker-end="url(#tip)"/><text x="300" y="300" font-size="22" text-anchor="middle" class=""><tspan x="300" dy="0">读完归还</tspan></text><text x="300" y="369" font-size="20" text-anchor="middle" class="emphasis"><tspan x="300" dy="0">缓冲满了：等待、拒绝或丢弃，必须事先约定</tspan></text>
+</svg>

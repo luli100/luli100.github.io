@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 470" role="img" aria-labelledby="title desc">
+<title id="title">64 MB 缓冲，究竟能撑多久？</title><desc id="desc">短暂停顿与持续过载的容量预算。</desc>
+<defs><marker id="tip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#806a4d"/></marker></defs>
+<style>
+text {font-family:'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif;fill:#27342f}
+.title {font-weight:700} .muted {fill:#61695f} .emphasis {fill:#7b522c;font-weight:700}
+.box {fill:#fff;stroke:#aeb9ad;stroke-width:1.8}
+.soft {fill:#eef2e9;stroke:#aeb9ad;stroke-width:1.8}
+.warning {fill:#fbefdf;stroke:#c3a078;stroke-width:1.8}
+.boundary {fill:#f1f2ed;stroke:#bbc4b6;stroke-width:1.6;stroke-dasharray:6 5}
+.arrow,.line {fill:none;stroke:#806a4d;stroke-width:2.2;stroke-linejoin:round}
+.faint {stroke:#d4dbce;stroke-width:1.4}
+</style>
+<rect width="600" height="470" rx="10" fill="#f8f8f3"/>
+<text x="28" y="38" font-size="23" text-anchor="start" class="title"><tspan x="28" dy="0">64 MB 缓冲，究竟能撑多久？</tspan></text>
+<rect x="24" y="78" width="140" height="78" rx="7" class="box"/><text x="94.0" y="109.08" font-size="22" text-anchor="middle" class=""><tspan x="94.0" dy="0">输入</tspan><tspan x="94.0" dy="30.799999999999997">26 MB/s</tspan></text><rect x="230" y="78" width="140" height="78" rx="7" class="soft"/><text x="300.0" y="109.08" font-size="22" text-anchor="middle" class=""><tspan x="300.0" dy="0">缓冲</tspan><tspan x="300.0" dy="30.799999999999997">64 MB</tspan></text><rect x="436" y="78" width="140" height="78" rx="7" class="box"/><text x="506.0" y="109.08" font-size="22" text-anchor="middle" class=""><tspan x="506.0" dy="0">消费</tspan><tspan x="506.0" dy="30.799999999999997">μ MB/s</tspan></text><polyline points="170,117 222,117" class="arrow" marker-end="url(#tip)"/><polyline points="376,117 428,117" class="arrow" marker-end="url(#tip)"/><line x1="28" y1="192" x2="572" y2="192" class="faint"/><text x="30" y="233" font-size="22" text-anchor="start" class=""><tspan x="30" dy="0">暂停消费：μ = 0</tspan></text><text x="300" y="281" font-size="30" text-anchor="middle" class="emphasis"><tspan x="300" dy="0">64 ÷ 26 ≈ 2.46 秒</tspan></text><line x1="28" y1="315" x2="572" y2="315" class="faint"/><text x="30" y="355" font-size="22" text-anchor="start" class=""><tspan x="30" dy="0">持续过载：μ = 25 MB/s</tspan></text><text x="300" y="404" font-size="25" text-anchor="middle" class="emphasis"><tspan x="300" dy="0">每秒积压 1 MB，约 64 秒填满</tspan></text><text x="300" y="448" font-size="18" text-anchor="middle" class="muted"><tspan x="300" dy="0">理想预算：初始为空，未计额外开销</tspan></text>
+</svg>

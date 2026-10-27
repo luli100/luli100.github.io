@@ -1,0 +1,88 @@
+---
+layout: post
+title: 系统架构对话（三）：进程重启了，为什么还不算恢复？
+enable: true
+series: system-architecture
+series_order: 3
+description: 从心跳告警追到状态恢复、半帧文件和冗余边界，区分“进程活着”与“业务重新可用”。
+toc:
+  - title: 谁来发现进程不工作
+    anchor: detection
+  - title: 把恢复时间拆开
+    anchor: recovery-budget
+  - title: 重启以后恢复什么
+    anchor: state
+  - title: 文件写到一半怎么办
+    anchor: partial-data
+  - title: 两份进程是否足够
+    anchor: redundancy
+  - title: 用故障演练验收
+    anchor: drills
+---
+<p>“发现进程没了，就重新启动它。”这听上去是一条完整的恢复策略。可新进程不知道正在执行什么任务，文件可能只有半帧，界面也未必能区分恢复中和正常采集。</p>
+<p>这一篇从一个问题追下去：我们要恢复的是一个进程，还是它本来提供的服务？</p>
+
+<h2 id="detection">谁来发现进程不工作</h2>
+<p class="dialogue-question"><strong>问：</strong>采集进程里已经有流量监控和告警，崩溃时能提醒测试人员吗？</p>
+<p><strong>答：</strong>如果整个进程终止，它内部的监控和告警代码也不能继续执行。对于进程崩溃，观察者应处于这个失效边界之外，例如由独立的监督进程负责。</p>
+<p class="dialogue-question"><strong>问：</strong>把监控放在主界面进程里就够了？</p>
+<p><strong>答：</strong>能覆盖采集进程退出这一类情况。但主界面本身卡住、机器断电或磁盘故障时，又由谁发现？监控放在哪个边界外，决定了它能够覆盖哪一类故障。重要的监督工作也不宜依赖界面线程一直保持响应。</p>
+<p>在贯穿案例中，采集进程周期性上报流量和状态，这是主动上报的心跳。监控者主动发起探测、被监控者回复，是 Ping/Echo。两种机制都需要约定超时和判断规则。</p>
+<p class="dialogue-question"><strong>问：</strong>收到心跳，能证明这一路正在正常录制吗？</p>
+<p><strong>答：</strong>只能证明心跳链路在工作。进程可能仍在收包，却因磁盘已满而无法写入。除了存活信号，还应观测最后一次成功写入、已落盘字节数、错误和积压。监控线程一直发送“我活着”，并不能代替业务健康检查。</p>
+<p>同理，心跳超时是需要调查和处置的证据，未必能直接证明进程已经死亡。调度延迟、网络抖动和监控端自身的暂停，也可能导致超时。</p>
+
+<h2 id="recovery-budget">把恢复时间拆开</h2>
+<p class="dialogue-question"><strong>问：</strong>每秒上报一次，连续三个周期没有收到就处理，能承诺 3 秒内恢复吗？</p>
+<p><strong>答：</strong>不能。约 3 秒只是这个设定下的名义检测窗口，还没有计入检查周期、消息延迟和系统调度，更没有计入重启和恢复工作。应按实际实现测量检测分布。</p>
+<figure class="architecture-figure">
+  <a href="/images/posts/system-architecture/03-recovery-timeline.svg" target="_blank" rel="noopener"><img src="/images/posts/system-architecture/03-recovery-timeline.svg" alt="故障后的服务恢复依次经过发现故障、隔离旧实例、启动新实例、恢复配置状态和验证业务就绪。检测时间只是总恢复时间的一部分。" width="600" height="440" loading="lazy"></a>
+  <figcaption>恢复计时应从约定的故障时刻，到重新产生有效业务结果，而不是到进程创建成功。</figcaption>
+</figure>
+<p class="dialogue-question"><strong>问：</strong>单路每秒 26 MB，检测花 3 秒，就是丢了 78 MB？</p>
+<p><strong>答：</strong>若这 3 秒完全没有有效接收，且源端持续发送，约有 78 MB 输入处在缺失风险中。这仍不一定是最终损失：上游能否暂存、此前待写数据是否保住、恢复用了多久，都要看系统的实际链路。</p>
+<p>场地测试中，一个用例可以重跑，可能更关心立即发现失败，别把无效结果当成成功。道路测试中的一次现场事件未必能够重现，除了恢复时间，还要度量数据空洞和文件可用性。两者需要不同的验收场景。</p>
+
+<h2 id="state">重启以后恢复什么</h2>
+<p class="dialogue-question"><strong>问：</strong>新进程直接把数据追加到原文件，不就继续录了吗？</p>
+<p><strong>答：</strong>它至少还需要知道任务标识、设备配置、输出目录、文件格式版本，以及续写规则。这些信息必须来自仍然存活的协调者或持久记录，不能指望新进程记住旧进程内存里的状态。</p>
+<p>恢复还要确认旧实例不会继续写同一份数据。对于只是“心跳没到”而非已经确认退出的情况，贸然再启动一份，可能形成两个写入者。需要明确的实例代次、文件所有权或其他隔离机制。</p>
+<p class="dialogue-question"><strong>问：</strong>恢复就是把所有内存状态都存盘？</p>
+<p><strong>答：</strong>先分清哪些状态是必须恢复的。临时缓存可能可以重建，已经确认完成的工作需要有可靠记录，正在执行的操作则需要定义是否重做，以及重做会不会重复产生副作用。</p>
+<p>把恢复所需状态补齐，再让实例重新提供服务，是状态再同步的思路。检查点与回滚则是在约定位置保存一致状态，故障后退回并继续。选择哪一种，取决于任务能否重放、恢复成本以及数据损失目标。</p>
+
+<h2 id="partial-data">文件写到一半怎么办</h2>
+<p class="dialogue-question"><strong>问：</strong>崩溃时留下半帧，后处理丢掉不完整的部分，够不够？</p>
+<p><strong>答：</strong>如果协议能够识别帧边界，记录包含足够的序号、长度和校验信息，而且读者能够重新找到下一条有效记录，这是一种可行的恢复约定。但“能丢半帧”本身还不是证明。</p>
+<figure class="architecture-figure">
+  <a href="/images/posts/system-architecture/03-file-recovery.svg" target="_blank" rel="noopener"><img src="/images/posts/system-architecture/03-file-recovery.svg" alt="文件恢复读取完整记录，识别崩溃留下的不完整尾部，再重新建立有效边界；必须依靠长度、序号、格式版本与校验信息，而不能直接把所有尾部当作合法数据。" width="600" height="400" loading="lazy"></a>
+  <figcaption>图中只展示局部写入中断。真实损失范围还受刷新策略、文件系统和设备行为影响。</figcaption>
+</figure>
+<p><strong>答：</strong>还要验证断电、缓冲未刷新、索引损坏等情况。应用调用写入成功，并不总等于数据已经持久到存储介质。不能仅因为“每帧定长”，就声称任何崩溃最多损失一帧。</p>
+<p class="dialogue-question"><strong>问：</strong>那为什么不对所有数据都做事务？</p>
+<p><strong>答：</strong>事务提供的原子性和一致性保障有成本，而且文件追加也不会因为我们使用了这个词就自动具备事务语义。高速原始数据和账户转账，对“只做了一半”的容忍完全不同。</p>
+<p>对采集系统，可以选择记录原始输入，保留足够的自描述信息，在恢复和后处理中识别缺口。对不能部分完成的业务操作，则要使用能兑现原子性、持久性要求的机制。关键是说明允许的损坏范围，并用故障测试验证。</p>
+
+<h2 id="redundancy">两份进程是否足够</h2>
+<p class="dialogue-question"><strong>问：</strong>如果业务要求数据空洞不超过 100 毫秒，单进程重启很难做到，是不是加一个备用进程就行？</p>
+<p><strong>答：</strong>先问备用实例平时在做什么：只准备好程序，还是持续同步状态，或者已经处理同一份输入？还要问它的数据从哪里来，切换由谁决定，以及切换后怎样识别重复和缺失。</p>
+<figure class="architecture-figure">
+  <a href="/images/posts/system-architecture/03-failure-domains.svg" target="_blank" rel="noopener"><img src="/images/posts/system-architecture/03-failure-domains.svg" alt="同机两个进程仍共享电源、操作系统、网卡和磁盘；跨主机独立输入与存储可以扩大故障覆盖范围，但输入复制和结果选择也要纳入设计。" width="600" height="460" loading="lazy"></a>
+  <figcaption>冗余的价值由故障独立性和完整的数据路径决定，不能只数实例个数。</figcaption>
+</figure>
+<p class="dialogue-question"><strong>问：</strong>两个进程都监听同一个 UDP 端口，就会收到相同的数据吗？</p>
+<p><strong>答：</strong>不能把端口复用当作数据复制的保证。分发行为与操作系统、套接字选项和网络方式有关。若两边都必须取得完整输入，就应明确设计并验证组播、源端双发或网络复制等路径。</p>
+<p>备份是否已处理输入、状态落后多少，以及是否共用失效点，比“热备、温备、冷备”几个名称更有用。这些名称在不同产品中也有不同含义，不能按名称承诺毫秒级或秒级恢复。复制延迟还可能影响数据损失，具体可参照 <a href="https://www.postgresql.org/docs/current/high-availability.html">PostgreSQL 对同步、异步复制和备机的说明</a>。</p>
+<p class="dialogue-question"><strong>问：</strong>如果两份结果不一样，再加第三份投票，总能选对吧？</p>
+<p><strong>答：</strong>只有在故障模型成立时才有意义。三份相同代码可能因为同一个缺陷一起给出错误结果，表决器也可能出问题。多数结果不自动等于正确结果。冗余解决了哪些失效、留下哪些共同失效，应写进设计。</p>
+
+<h2 id="drills">用故障演练验收</h2>
+<p class="dialogue-question"><strong>问：</strong>我应该怎样写一条能验收的恢复要求？</p>
+<p><strong>答：</strong>把检测、业务恢复和数据结果分别写。例如：在五路正常采集时，主动终止一路进程；监督者在约定检测窗口内告警；恢复流程在实测预算内重新写出有效数据；其他四路继续满足各自的采集要求；故障段文件能够识别缺失并被后处理读取。</p>
+<p>这里不凭空给重启耗时填一个数字。先测启动、连接、配置恢复和首次成功落盘，再与客户确认预算。恢复目标是约束设计的输入，也是需要演练证明的承诺。</p>
+<details class="reading-exercise">
+  <summary>如果杀掉进程后自动恢复通过了，是否证明这一路已经高可用？</summary>
+  <p>只覆盖了一种故障。还要检查进程存活但不写盘、磁盘满、状态文件损坏、监督者失联，以及反复重启等场景。持续失败时应告警并限制重试，不能让重启风暴扩大故障。每次演练都要检查最终数据和业务状态，而不只看进程列表。</p>
+</details>
+<p class="key-point">可用性设计要闭合一条链：发现异常、控制影响、恢复必要状态、重新提供服务，并留下能够验证恢复结果的证据。</p>
+<p>战术分类在不同资料和版本间会调整，但检测、准备、恢复与预防这些责任不能漏掉。SEI 的<a href="https://www.sei.cmu.edu/library/file_redirect/2009_005_001_15101.pdf/">战术细化报告</a>讨论了这种演进。下一篇将继续追问：原始数据、进程边界和接口这些决定，又怎样影响换设备、测试、安全和使用体验？</p>

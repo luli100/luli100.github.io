@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 460" role="img" aria-labelledby="title desc">
+<title id="title">有两份实例，还要问共用什么</title><desc id="desc">同机进程与跨机冗余的故障域比较。</desc>
+<defs><marker id="tip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#806a4d"/></marker></defs>
+<style>
+text {font-family:'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif;fill:#27342f}
+.title {font-weight:700} .muted {fill:#61695f} .emphasis {fill:#7b522c;font-weight:700}
+.box {fill:#fff;stroke:#aeb9ad;stroke-width:1.8}
+.soft {fill:#eef2e9;stroke:#aeb9ad;stroke-width:1.8}
+.warning {fill:#fbefdf;stroke:#c3a078;stroke-width:1.8}
+.boundary {fill:#f1f2ed;stroke:#bbc4b6;stroke-width:1.6;stroke-dasharray:6 5}
+.arrow,.line {fill:none;stroke:#806a4d;stroke-width:2.2;stroke-linejoin:round}
+.faint {stroke:#d4dbce;stroke-width:1.4}
+</style>
+<rect width="600" height="460" rx="10" fill="#f8f8f3"/>
+<text x="28" y="38" font-size="23" text-anchor="start" class="title"><tspan x="28" dy="0">有两份实例，还要问共用什么</tspan></text>
+<text x="150" y="83" font-size="22" text-anchor="middle" class=""><tspan x="150" dy="0">同一台主机</tspan></text><text x="450" y="83" font-size="22" text-anchor="middle" class=""><tspan x="450" dy="0">不同主机</tspan></text><rect x="24" y="108" width="252" height="220" rx="7" class="boundary"/><text x="150.0" y="225.48" font-size="22" text-anchor="middle" class=""><tspan x="150.0" dy="0"></tspan></text><rect x="45" y="134" width="210" height="64" rx="7" class="box"/><text x="150.0" y="173.48" font-size="22" text-anchor="middle" class=""><tspan x="150.0" dy="0">采集进程 A</tspan></text><rect x="45" y="237" width="210" height="64" rx="7" class="box"/><text x="150.0" y="276.48" font-size="22" text-anchor="middle" class=""><tspan x="150.0" dy="0">采集进程 B</tspan></text><rect x="324" y="108" width="252" height="95" rx="7" class="box"/><text x="450.0" y="147.57999999999998" font-size="22" text-anchor="middle" class=""><tspan x="450.0" dy="0">主机 A</tspan><tspan x="450.0" dy="30.799999999999997">独立采集与存储</tspan></text><rect x="324" y="233" width="252" height="95" rx="7" class="box"/><text x="450.0" y="272.58000000000004" font-size="22" text-anchor="middle" class=""><tspan x="450.0" dy="0">主机 B</tspan><tspan x="450.0" dy="30.799999999999997">独立采集与存储</tspan></text><text x="150" y="365" font-size="19" text-anchor="middle" class="muted"><tspan x="150" dy="0">电源、OS、磁盘共享</tspan></text><text x="450" y="365" font-size="19" text-anchor="middle" class="muted"><tspan x="450" dy="0">可覆盖更多主机故障</tspan></text><text x="300" y="420" font-size="21" text-anchor="middle" class="emphasis"><tspan x="300" dy="0">输入复制、故障判定、结果选择仍要设计</tspan></text>
+</svg>

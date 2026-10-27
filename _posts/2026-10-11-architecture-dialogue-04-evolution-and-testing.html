@@ -1,0 +1,99 @@
+---
+layout: post
+title: 系统架构对话（四）：换设备、做测试，代价应该留在哪里？
+enable: true
+series: system-architecture
+series_order: 4
+description: 沿着新增设备、协议适配、记录回放和数据归档，讨论可修改性、可测试性、安全性与易用性的相互影响。
+toc:
+  - title: 多一路和换一种
+    anchor: changes
+  - title: 协议差异放在哪里
+    anchor: boundaries
+  - title: 重放一样不代表正确
+    anchor: testing
+  - title: 测试入口也是安全边界
+    anchor: security
+  - title: 告警之后让人能行动
+    anchor: usability
+  - title: 让一个决定经得起多种追问
+    anchor: decisions
+---
+<p>前面为了性能，把采集与界面分开；为了恢复，把任务配置和有效数据留下来。同样的决定，还会影响系统能否增加设备、复现问题，以及让使用者判断当前发生了什么。</p>
+<p>这一篇从“再加一路设备”开始。问题逐渐从代码怎么写，转向变化、测试和责任应该停在哪条边界上。</p>
+
+<h2 id="changes">多一路和换一种</h2>
+<p class="dialogue-question"><strong>问：</strong>系统已经用配置描述每路设备，再加第六路，不改代码。这是不是说明可修改性已经很好了？</p>
+<p><strong>答：</strong>它吸收了“同类设备数量变化”这类需求。第六路一旦使用新协议，控制命令、包头和帧长都变了，原来的配置能力未必足够。</p>
+<p>还要区分修改成本和运行容量。即使一行代码不用改，第六路也会增加 CPU、网络和磁盘压力；原有五路的性能目标仍要重新验证。配置可以减少发布工作，不会免除测试。</p>
+<p class="dialogue-question"><strong>问：</strong>把决定推迟到运行时，总比编译时定死更好？</p>
+<p><strong>答：</strong>晚绑定让选择更灵活，也把某些错误推迟到了运行时。配置需要校验，增加一路可能失败，删除一路也可能正好发生在写文件中途。我们得定义谁创建实例、什么时候算加入成功，以及失败时怎样清理。</p>
+<p>因此，按预期变化决定哪些可配置。一个真实存在的第二种设备，往往能帮助我们识别共性；没必要为了假设中的所有设备，先造出一个无所不包的插件系统。</p>
+
+<h2 id="boundaries">协议差异放在哪里</h2>
+<p class="dialogue-question"><strong>问：</strong>换采集卡只改采集进程，主界面不改，这样就把变化局部化了吧？</p>
+<p><strong>答：</strong>再沿数据走一遍。假如文件里存的是厂家原始包，后处理也认识包头格式。设备协议变了，影响可能已经穿过采集进程，到了离线解析程序。</p>
+<figure class="architecture-figure">
+  <a href="/images/posts/system-architecture/04-change-boundary.svg" target="_blank" rel="noopener"><img src="/images/posts/system-architecture/04-change-boundary.svg" alt="方案一在采集实时路径内把厂家协议转换为统一格式；方案二先保存原始数据，在离线解析器中按协议版本适配。两者把转换成本放在不同位置。" width="600" height="470" loading="lazy"></a>
+  <figcaption>两种方案都可以合理，区别是把协议理解和转换放在哪条路径上。</figcaption>
+</figure>
+<p class="dialogue-question"><strong>问：</strong>那在采集时全部转换成统一格式，后处理就不用管设备了。</p>
+<p><strong>答：</strong>这样能隔离后处理，但把解析、转换和格式演进放进了实时路径。新的适配器可能带来更多计算、分配和故障情况，影响前面讨论的接收目标。</p>
+<p>另一种选择是尽量简单地保存原始输入，再由离线解析器处理协议差异。它保留了回放和重新解释数据的机会，代价是原始格式必须可识别：设备类型、协议版本、采集配置和必要的时间信息，都要能与数据对应。</p>
+<p class="dialogue-question"><strong>问：</strong>把协议变成一个描述文件，就能做到永远不改解析器？</p>
+<p><strong>答：</strong>只能覆盖描述语言表达得出的变化。字段偏移和长度变化，也许能配置；若增加压缩、加密或复杂状态机，解析器可能仍需扩展。配置也是一种接口，有自己的表达能力和版本边界。</p>
+<p>接口应围绕调用方需要的能力设计，把厂家特有知识收在适配边界内。错误码、取消、完成时机和单位也属于契约；不能因为方法名相同，就认为实现可以互换。这与<a href="/who-depends-on-whom/">“谁依赖谁”中讨论的接口与外部装配</a>是同一条思路。</p>
+
+<h2 id="testing">重放一样不代表正确</h2>
+<p class="dialogue-question"><strong>问：</strong>新版本解析旧数据，结果和旧版本完全一样，就能证明正确吗？</p>
+<p><strong>答：</strong>能证明在这组输入和比较规则下没有观察到差异，是有价值的回归证据。可旧版本本来就可能有错，因此还需要独立确认过的样本或其他测试判据。</p>
+<figure class="architecture-figure">
+  <a href="/images/posts/system-architecture/04-replay-testing.svg" target="_blank" rel="noopener"><img src="/images/posts/system-architecture/04-replay-testing.svg" alt="固定原始输入、配置和协议版本后，新旧解析器运行结果可用于差异比较；独立确认的期望结果另外用于正确性判断。回归一致与业务正确不是同一结论。" width="600" height="460" loading="lazy"></a>
+  <figcaption>回放需要固定输入之外的条件，也需要说明结果比较容忍哪些差异。</figcaption>
+</figure>
+<p class="dialogue-question"><strong>问：</strong>回放一个数据文件，还有什么条件会变？</p>
+<p><strong>答：</strong>解析配置、协议版本、软件版本和时间基准。并发处理还可能改变输出顺序。应约定按什么键对齐，浮点数允许多大误差，以及哪些差异必须报错。否则测试可能忽略真正的问题，也可能被无关差异淹没。</p>
+<p class="dialogue-question"><strong>问：</strong>办公室没有五部设备，接收链路怎么办？</p>
+<p><strong>答：</strong>用遵守同一协议的模拟器发送数据，并主动构造慢速、突发、乱序和缺失。故障恢复还可以通过终止进程、阻断上报或模拟写入失败来验证。</p>
+<p>但模拟器也要校准。如果它和被测系统共用 CPU、网卡或磁盘，压测时可能先把自己压垮；如果时间节奏不真实，也不能据此证明硬件接入达标。软件回放、可控模拟和真机联调分别提供不同层次的证据。</p>
+
+<h2 id="security">测试入口也是安全边界</h2>
+<p class="dialogue-question"><strong>问：</strong>留一个“让采集进程崩溃”的接口，测恢复就方便了。</p>
+<p><strong>答：</strong>也多了一个可以中断服务的入口。它需要明确的可达范围、权限和审计。可以在测试构建中启用，或者在受控环境中通过授权机制使用；不能只是把一个按钮藏起来，就当作生产环境无法访问。</p>
+<p class="dialogue-question"><strong>问：</strong>系统只给自己团队用，安全设计能否等接入公网再做？</p>
+<p><strong>答：</strong>先看保护对象和威胁。这里最重要的可能是无法重新获得的原始数据。即使没有公网攻击，也存在误删除、拷贝遗漏、账号权限过大和测试接口误触发。所需措施不必复杂，但责任不能留空。</p>
+<figure class="architecture-figure">
+  <a href="/images/posts/system-architecture/04-data-protection.svg" target="_blank" rel="noopener"><img src="/images/posts/system-architecture/04-data-protection.svg" alt="原始数据从采集机交接到归档系统，身份与权限限制访问，可信校验验证交接完整性，审计记录操作，独立备份支持恢复。每项措施承担不同责任。" width="600" height="430" loading="lazy"></a>
+  <figcaption>保护数据要覆盖交接之前和之后。归档成功也需要有可验证的定义。</figcaption>
+</figure>
+<p class="dialogue-question"><strong>问：</strong>对文件算一个哈希，是否就防篡改了？</p>
+<p><strong>答：</strong>哈希可以帮助发现内容与可信基准不一致。若攻击者能够同时替换文件和它旁边的哈希文件，这种比较不能证明真实性。要按威胁模型保护校验基准，必要时使用妥善管理密钥的 HMAC 或数字签名。相关区别见 <a href="https://learn.microsoft.com/en-us/dotnet/standard/security/cryptographic-services">.NET 密码学服务概览</a>。</p>
+<p>身份验证回答“是谁”，授权回答“能做什么”，审计回答“做过什么”，备份则帮助在损害发生后恢复。它们不能互相代替。把数据拷到另一个目录，也不自动证明已经具备可恢复的备份。</p>
+
+<h2 id="usability">告警之后让人能行动</h2>
+<p class="dialogue-question"><strong>问：</strong>丢帧和空间不足都有红色弹窗，使用体验是不是就够了？</p>
+<p><strong>答：</strong>要看使用者当时能不能看屏幕、看见后是否知道该怎么办。道路测试中，操作员不能持续盯着界面，可以使用适当的声音提示，但不应要求驾驶员在行车中处理弹窗。告警还需要区分严重程度，并控制重复频率。</p>
+<p>“磁盘不足”只说了系统状态。“按当前数据速率，剩余空间预计还能录约 20 分钟”才更接近使用者的决策。这个估算应说明依据和不确定性；数据速率变化后，剩余时间也应更新。</p>
+<p class="dialogue-question"><strong>问：</strong>点击停止后立即显示“已停止”，会更有响应感吗？</p>
+<p><strong>答：</strong>如果队列还没排空、文件还没封存，就是过早承诺。应该明确显示正在停止、当前进度和完成条件。停止接收、结束写入、确认文件状态，可能是几个不同阶段。</p>
+<p>取消任务也不等于撤销已经写入的记录。用户可以请求停止后续工作，但是否删除已采集数据，是另一项需要明确语义的操作。清楚的状态和操作边界，本身就是易用性设计的一部分。</p>
+
+<h2 id="decisions">让一个决定经得起多种追问</h2>
+<p class="dialogue-question"><strong>问：</strong>这些不就是在讲接口、测试和界面吗，为什么都算架构？</p>
+<p><strong>答：</strong>并非每个按钮或接口都要上升到架构层面。但当决定影响系统的主要边界、关键数据路径和多个质量目标时，它就需要整体考虑。</p>
+<p>例如保存原始包，可以让实时路径更简单，也提供回放材料；同时要求协议版本和采集配置能长期匹配。把数据转换移到离线路径，可以降低实时接收的负担，也让离线工具承担更多适配和测试工作。</p>
+<table>
+  <thead><tr><th>追问角度</th><th>拿什么证据回答</th></tr></thead>
+  <tbody>
+    <tr><td>好不好改</td><td>一次真实设备变更涉及哪些模块、配置和发布步骤。</td></tr>
+    <tr><td>好不好测</td><td>输入和环境能否复现，结果判据是否独立可信。</td></tr>
+    <tr><td>是否安全</td><td>数据和测试入口由谁访问，如何追踪和恢复。</td></tr>
+    <tr><td>是否好用</td><td>使用者能否判断当前状态，并完成正确的下一步操作。</td></tr>
+  </tbody>
+</table>
+<details class="reading-exercise">
+  <summary>试着为“支持一种新设备”约定验收条件</summary>
+  <p>可先约定目标：新增设备适配器和版本化协议说明，控制主流程不因厂家差异分叉；限定工作量和受影响模块；旧设备数据回放通过，新增设备的正常与异常样本通过；满载采集仍满足原来的性能目标。具体数字要由真实范围和团队能力确定。</p>
+</details>
+<p class="key-point">架构决策值得记录的内容，是为什么把责任放在这里、它覆盖了哪些变化，以及需要怎样验证代价仍然可接受。</p>
+<p>从第一篇到这里，问题始终在收敛：先说明在什么情况下要做到什么程度，再选择能兑现目标的结构。战术如何从质量目标推导出来，可以进一步阅读 SEI 的<a href="https://sei.cmu.edu/documents/704/2003_005_001_14213.pdf">架构战术技术报告</a>。</p>

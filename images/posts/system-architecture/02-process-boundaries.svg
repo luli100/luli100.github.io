@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480" role="img" aria-labelledby="title desc">
+<title id="title">进程隔离和资源独立，是不同的事</title><desc id="desc">拆分进程可以隔离部分运行时和故障影响，但仍共享主机资源。</desc>
+<defs><marker id="tip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#806a4d"/></marker></defs>
+<style>
+text {font-family:'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif;fill:#27342f}
+.title {font-weight:700} .muted {fill:#61695f} .emphasis {fill:#7b522c;font-weight:700}
+.box {fill:#fff;stroke:#aeb9ad;stroke-width:1.8}
+.soft {fill:#eef2e9;stroke:#aeb9ad;stroke-width:1.8}
+.warning {fill:#fbefdf;stroke:#c3a078;stroke-width:1.8}
+.boundary {fill:#f1f2ed;stroke:#bbc4b6;stroke-width:1.6;stroke-dasharray:6 5}
+.arrow,.line {fill:none;stroke:#806a4d;stroke-width:2.2;stroke-linejoin:round}
+.faint {stroke:#d4dbce;stroke-width:1.4}
+</style>
+<rect width="600" height="480" rx="10" fill="#f8f8f3"/>
+<text x="28" y="38" font-size="23" text-anchor="start" class="title"><tspan x="28" dy="0">进程隔离和资源独立，是不同的事</tspan></text>
+<rect x="24" y="77" width="552" height="139" rx="7" class="boundary"/><text x="300.0" y="153.98" font-size="22" text-anchor="middle" class=""><tspan x="300.0" dy="0"></tspan></text><text x="44" y="108" font-size="21" text-anchor="start" class="muted"><tspan x="44" dy="0">单进程</tspan></text><rect x="44" y="130" width="145" height="55" rx="7" class="box"/><text x="116.5" y="164.98" font-size="22" text-anchor="middle" class=""><tspan x="116.5" dy="0">界面</tspan></text><rect x="226" y="130" width="145" height="55" rx="7" class="box"/><text x="298.5" y="164.98" font-size="22" text-anchor="middle" class=""><tspan x="298.5" dy="0">解析</tspan></text><rect x="408" y="130" width="145" height="55" rx="7" class="box"/><text x="480.5" y="164.98" font-size="22" text-anchor="middle" class=""><tspan x="480.5" dy="0">五路接收</tspan></text><text x="300" y="246" font-size="21" text-anchor="middle" class="muted"><tspan x="300" dy="0">共享地址空间与进程内运行时</tspan></text><rect x="24" y="290" width="165" height="69" rx="7" class="box"/><text x="106.5" y="331.98" font-size="22" text-anchor="middle" class=""><tspan x="106.5" dy="0">界面进程</tspan></text><rect x="218" y="290" width="165" height="69" rx="7" class="box"/><text x="300.5" y="331.98" font-size="22" text-anchor="middle" class=""><tspan x="300.5" dy="0">采集进程1</tspan></text><rect x="412" y="290" width="164" height="69" rx="7" class="box"/><text x="494.0" y="331.98" font-size="22" text-anchor="middle" class=""><tspan x="494.0" dy="0">采集进程5</tspan></text><text x="300" y="388" font-size="20" text-anchor="middle" class="muted"><tspan x="300" dy="0">……每路有自己的进程边界</tspan></text><rect x="24" y="417" width="552" height="43" rx="7" class="warning"/><text x="300.0" y="445.3" font-size="20" text-anchor="middle" class=""><tspan x="300.0" dy="0">仍共享 CPU、网卡、磁盘和主机电源</tspan></text>
+</svg>

@@ -1,0 +1,99 @@
+---
+layout: post
+title: 系统架构对话（一）：功能做对了，系统为什么仍然不好用？
+enable: true
+series: system-architecture
+series_order: 1
+description: 从拆函数、加缓存和采集丢帧出发，把“快、稳、好改”变成可以讨论、设计和验收的质量属性场景。
+toc:
+  - title: 功能相同，质量可以不同
+    anchor: function-and-quality
+  - title: 加缓存是在换什么
+    anchor: tradeoffs
+  - title: 把高可用问具体
+    anchor: scenarios
+  - title: 可用与可靠的区别
+    anchor: availability
+  - title: 丢帧属于哪一种问题
+    anchor: acquisition
+  - title: 先写场景，再谈方案
+    anchor: practice
+---
+<p>我开始学习系统架构时，遇到的第一个问题并不是“选哪种架构风格”，而是：功能已经做对了，为什么还需要讨论架构？</p>
+<p>这组对话从一个很小的选择开始，最后落到一套五路数据采集系统。沿途要分清三件事：系统要做什么、要做到什么程度，以及准备怎样做到。</p>
+
+<h2 id="function-and-quality">功能相同，质量可以不同</h2>
+<p class="dialogue-question"><strong>问：</strong>一个功能写成 500 行的大函数，或者拆成十个小函数，如果对外行为完全相同，用户能看出区别吗？</p>
+<p><strong>答：</strong>仅从这次输入和输出看，通常看不出来。可下次改需求时，开发人员会发现区别：逻辑是否容易定位，修改是否会波及不相关的代码，出错后能否单独测试。</p>
+<p>这些差别属于质量属性。它们既包括运行时的响应速度、故障恢复，也包括开发时修改和验证系统的成本。一次函数拆分未必就是架构决策，但它足以说明：功能相同，软件的质量仍然可以不同。</p>
+<p class="dialogue-question"><strong>问：</strong>那质量属性就是开发人员觉得代码好不好看？</p>
+<p><strong>答：</strong>还要看用户。查询结果完全正确，却要等半分钟；数据确实能保存，但一次故障让整个下午的采集都不能继续。这些系统的功能可能存在，使用价值却大打折扣。</p>
+<p>我们可以先用两个问题区分：<strong>“能不能查询”描述功能，“在怎样的负载下，多快返回结果”描述质量。</strong>两者需要一起讨论。列出了用户角色，并不等于已经说明权限如何控制；提出一个接口，也不等于已经证明系统容易修改。</p>
+
+<h2 id="tradeoffs">加缓存是在换什么</h2>
+<p class="dialogue-question"><strong>问：</strong>用户说“太慢了”，我先加一个进度条，可以吗？</p>
+<p><strong>答：</strong>先问他在抱怨什么。进度条能让人知道系统没有卡死、还要等多久，改善的是操作反馈和等待体验。如果要求是“查询在 0.5 秒内返回”，进度条没有完成这个性能目标。</p>
+<p class="dialogue-question"><strong>问：</strong>必须真的变快，我就加缓存。</p>
+<p><strong>答：</strong>这是一个可讨论的办法，但要继续问：哪些数据被重复读取，命中率有多少，允许读到多旧的值？缓存命中时省下了查询，未命中时仍要回源。要判断收益，就得知道实际的访问模式。</p>
+<figure class="architecture-figure">
+  <a href="/images/posts/system-architecture/01-cache-tradeoff.svg" target="_blank" rel="noopener"><img src="/images/posts/system-architecture/01-cache-tradeoff.svg" alt="查询从直接访问数据源改为先访问缓存；写入后还需要失效或更新缓存，多出一致性与回源问题。" width="600" height="410" loading="lazy"></a>
+  <figcaption>缓存缩短了一部分读取路径，也引入了需要维护的新关系。图可点击放大。</figcaption>
+</figure>
+<p class="dialogue-question"><strong>问：</strong>代价就是系统变复杂了？</p>
+<p><strong>答：</strong>“复杂”还不够具体。失效逻辑多了，修改和测试更费力；失效不及时，可能读到旧数据；大量键同时失效，回源压力可能压垮下游。代价分别落在可修改性、数据一致性和可用性上。</p>
+<p>这不意味着缓存一定会伤害可用性。缓存有时也能隔离下游压力。关键是把条件和失效方式说出来，才能判断收益是否值得。架构讨论不能停在“缓存快”或“缓存复杂”。</p>
+
+<h2 id="scenarios">把高可用问具体</h2>
+<p class="dialogue-question"><strong>问：</strong>客户要求高可用，我是不是应该先设计主备？</p>
+<p><strong>答：</strong>先想一件具体的坏事。比如数据库所在的服务器硬盘损坏：业务最忙的时候发生，还是夜间发生？影响交易数据库，还是影响月底才使用的报表？每种情况允许的中断时间可能不同。</p>
+<p class="dialogue-question"><strong>问：</strong>那我应该问客户“多久恢复”？</p>
+<p><strong>答：</strong>这是一个关键问题。还要问恢复以后允许少多少数据。如果是人员误删，而删除操作也复制到了备库，只做主备切换并不能恢复被删的数据，需要可恢复的备份、日志或其他保护机制。</p>
+<p>把讨论组织起来，可以使用质量属性场景的六个要素：刺激源、刺激、环境、制品、响应、响应度量。“制品”在这里就是受影响的系统或部件。下面是一条<strong>示例要求</strong>，数字用来说明写法，不是现有系统的恢复承诺。</p>
+<figure class="architecture-figure">
+  <a href="/images/posts/system-architecture/01-scenario.svg" target="_blank" rel="noopener"><img src="/images/posts/system-architecture/01-scenario.svg" alt="正常运行环境下，运维人员误删数据库，系统发现并告警，从可用备份和日志恢复；示例验收目标是两小时内恢复、可接受的数据丢失窗口不超过五分钟。" width="600" height="470" loading="lazy"></a>
+  <figcaption>先写发生什么、系统怎样应对，再约定如何判断应对是否合格。</figcaption>
+</figure>
+<p class="dialogue-question"><strong>问：</strong>“刺激源”填误删数据库，“刺激”填数据库不能用，对吗？</p>
+<p><strong>答：</strong>这会把来源、事件和后果混在一起。刺激源可以写运维人员，刺激写误删操作；数据库不能用是可能出现的后果。同一个后果可能由硬盘损坏、误操作或软件缺陷造成，它们需要的恢复办法并不相同。</p>
+<p>“保证数据完整”也还不能直接验收。恢复时间目标通常称为 RTO，可接受的数据丢失窗口通常用 RPO 描述。写下数字以后，还要通过恢复演练证明备份、日志和操作流程能够兑现它。</p>
+<p>这套六要素是帮助追问的框架。它不要求一口气填完，更不应该为了填满表格，凭空编出客户没有确认的指标。SEI 对质量属性需求的说明，也强调用可讨论、可验证的场景替代笼统形容词，见<a href="https://sei.cmu.edu/documents/5465/2013_018_101_60984.pdf">质量属性需求访谈资料</a>。</p>
+
+<h2 id="availability">可用与可靠的区别</h2>
+<p class="dialogue-question"><strong>问：</strong>一个服务经常重启，但每次很快恢复；另一个很少出故障，可一修就是两天。哪个更稳定？</p>
+<p><strong>答：</strong>“稳定”把两个问题揉在了一起。可靠性关心在指定条件和时间内能否持续完成工作；可用性关心需要服务时，它有多大比例的时间能够提供服务。</p>
+<figure class="architecture-figure">
+  <a href="/images/posts/system-architecture/01-reliability.svg" target="_blank" rel="noopener"><img src="/images/posts/system-architecture/01-reliability.svg" alt="服务甲每天故障十次、每次中断一秒，全年约中断一小时；服务乙一年故障一次、中断两天。故障次数与总不可用时间是不同指标。" width="600" height="360" loading="lazy"></a>
+  <figcaption>这是只按中断时间比较的算例，假设所有中断都完整计入，且每次恢复时间固定。</figcaption>
+</figure>
+<p>按图中的假设，甲全年中断约 1 小时，乙中断 48 小时。甲的总不可用时间更短，却不能因此说它更适合一项必须连续运行数小时的实验：实验可能会被每次短暂停顿打断。</p>
+<p class="dialogue-question"><strong>问：</strong>所以自动重启解决的是快速恢复，不一定解决少出故障？</p>
+<p><strong>答：</strong>对。而且恢复要按业务结果判断。进程出现了，并不代表它已经重新连接设备、恢复配置并写出了有效文件。后面讨论可用性时，我们会把这条恢复链拆开。</p>
+
+<h2 id="acquisition">丢帧属于哪一种问题</h2>
+<p class="case-note">贯穿案例采用学习记录中的负载设定：五路采集，每路输入约 26 MB/s，使用 UDP 接收并存储原始数据。这里的 MB 按十进制计量；具体设备和网络的可达性能需要另外测量。</p>
+<p class="dialogue-question"><strong>问：</strong>要求每路丢帧率低于 1%，这属于可靠性吗？</p>
+<p><strong>答：</strong>先看怎样丢的。程序仍在工作，只是某次调度或回收停顿让接收不及时，缓冲区满了，这是吞吐、停顿和期限方面的性能问题。如果采集进程崩溃，几秒钟根本没有继续采集，则需要另写故障恢复场景。</p>
+<p>分类是为了找对机制。它不意味着可以随意把崩溃造成的缺失从验收结果里删掉。正常负载下的丢帧、故障期间的数据空洞、整段文件的可用性，应分别定义，并约定哪些计入哪项指标。</p>
+<p class="dialogue-question"><strong>问：</strong>那“响应”一栏写防丢帧？</p>
+<p><strong>答：</strong>防丢帧是目标。响应要写系统采取的动作，例如接收数据、识别序号、写入存储并报告缺失。响应度量则要说明怎样统计。</p>
+<table>
+  <thead><tr><th>要素</th><th>这条性能场景可以怎样写</th></tr></thead>
+  <tbody>
+    <tr><td>刺激源与刺激</td><td>五路数据源按约定速率持续发送 UDP 数据。</td></tr>
+    <tr><td>环境与制品</td><td>五路同时采集，存储剩余空间充足；考察接收与落盘链路。</td></tr>
+    <tr><td>响应</td><td>接收、记录数据，统计帧序号缺失并暴露运行状态。</td></tr>
+    <tr><td>响应度量</td><td>约定测试时长、帧边界、分母和乱序处理规则后，逐路验证丢帧率低于 1%。</td></tr>
+  </tbody>
+</table>
+<p>还要说清“完整一帧”的判定。一个包丢失可能使整帧失效；收到的包数、完整帧数和最终可用数据量，不是同一个指标。平均值也可能掩盖某一路特别差的问题，所以这里要求逐路验收。</p>
+
+<h2 id="practice">先写场景，再谈方案</h2>
+<p class="dialogue-question"><strong>问：</strong>现在能开始选缓存、并发和冗余了吗？</p>
+<p><strong>答：</strong>可以开始比较了。我们已经知道要改善哪条路径、在哪种环境下验收，才有办法判断一项结构调整是否值得。</p>
+<p class="key-point">一条有效的架构讨论链是：具体场景、可测量的目标、改变结构的办法，以及这个办法给其他目标带来的影响。</p>
+<p>“增加服务器”和“新增一种采集卡”也应分开。前者主要讨论负载增长时如何维持服务质量，后者主要讨论功能和设备变化需要付出多少修改成本。两个变化都可能叫“扩展”，但它们不是同一道设计题。</p>
+<details class="reading-exercise">
+  <summary>试着判断：把“支持第六路设备”写成怎样的要求，才便于设计？</summary>
+  <p>至少拆成两个场景：一是第六路加入后，六路同时满载时丢帧、延迟和资源占用是否达标；二是增加同类设备是否只需配置，换一种协议的设备需要改哪些模块、花多长时间。前者量运行质量，后者量修改成本。</p>
+</details>
+<p>下一篇回到那条接收链路：输入每秒都在到达，扩大缓冲区为什么只能解决一部分丢帧问题？</p>

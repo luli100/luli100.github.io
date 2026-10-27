@@ -712,6 +712,35 @@ article.post > .meta {
 
 /* 代码高亮（rouge） */
 
+/* 系列文章与对话正文 */
+.sidebar .panel + .panel { margin-top: 24px; }
+.series-panel > a { color: var(--theme-700); font-weight: 600; }
+.series-panel > p { margin: 8px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.series-context { display: flex; flex-wrap: wrap; gap: 12px; margin: -12px 0 28px; color: var(--muted); font-size: 14px; }
+.series-context a { color: var(--theme-700); }
+.series-pagination { display: flex; gap: 24px; justify-content: space-between; padding-top: 24px; margin-top: 40px; border-top: 1px solid var(--theme-200); }
+.series-pagination a { flex: 1; min-width: 0; color: var(--theme-700); line-height: 1.7; font-size: 15px; }
+.series-pagination .series-next { text-align: right; margin-left: auto; }
+.series-pagination span { display: block; margin-bottom: 6px; color: var(--muted); font-size: 13px; }
+.prose .series-reading-list li { margin-bottom: 24px; }
+.prose .series-reading-list p { margin: 6px 0 0; color: var(--muted); font-size: 16px; line-height: 1.8; }
+.architecture-dialogue .dialogue-question { margin-top: 28px; padding-left: 16px; border-left: 3px solid var(--theme-400); color: var(--heading); }
+.architecture-dialogue .dialogue-question strong { color: var(--theme-700); }
+.prose .architecture-figure { margin: 28px 0 32px; }
+.prose .architecture-figure > a { display: block; border: 0; }
+.prose .architecture-figure img { width: 100%; height: auto; margin: 0; }
+.prose .architecture-figure figcaption { margin-top: 10px; color: var(--muted); font-size: 14px; line-height: 1.7; text-align: center; }
+.architecture-dialogue .reading-exercise { margin: 24px 0; padding: 16px 20px; border: 1px solid var(--theme-200); border-radius: 6px; }
+.architecture-dialogue .reading-exercise summary { cursor: pointer; color: var(--theme-700); font-weight: 600; }
+.architecture-dialogue .reading-exercise p { margin: 16px 0 0; }
+.architecture-dialogue .case-note { color: var(--muted); font-size: 16px; line-height: 1.8; }
+.architecture-dialogue .key-point { padding: 12px 16px; background: var(--theme-100); border-left: 3px solid var(--theme-400); }
+
+@media (max-width: 640px) {
+    .series-pagination { flex-direction: column; gap: 20px; }
+    .series-pagination .series-next { text-align: left; margin-left: 0; }
+}
+
 .highlight .c, .highlight .c1, .highlight .cm, .highlight .cs { color: #998; font-style: italic; }
 .highlight .cp { color: #099; }
 .highlight .err { color: #a00; }

@@ -1,0 +1,23 @@
+---
+layout: post
+title: 系统架构对话
+permalink: /series/system-architecture/
+---
+<p>学架构时，容易记住“缓存、并发、冗余、接口”这些名词，却未必能解释：为什么在这里使用它，用了以后又会失去什么。</p>
+<p>这个系列从学习系统架构设计师知识时的真实追问出发，围绕一个多路数据采集系统展开。每篇保留“提出直觉、追问条件、修正判断”的过程，配上结构图和时间线，让抽象概念能落到具体的设计决定上。</p>
+<p>你不必做过雷达系统。只要写过接收数据、处理任务、存文件的程序，就能沿着对话读下去。文中的负载和验收数字都有明确的讨论条件，不是对设备性能的承诺。</p>
+
+<h2>按顺序阅读</h2>
+{% assign series_posts = site.posts | where: "series", "system-architecture" | where: "enable", true | sort: "series_order" %}
+<ol class="series-reading-list">
+    {% for series_post in series_posts %}
+    <li>
+        <a href="{{ series_post.url }}">{{ series_post.title }}</a>
+        <p>{{ series_post.description }}</p>
+    </li>
+    {% endfor %}
+</ol>
+
+<h2>这些对话怎样连起来</h2>
+<p>先把“快、稳、好改”写成能验收的场景，再讨论性能和故障恢复。到了第四篇，同一套系统开始面对新设备、回归测试、权限与操作反馈。一个决定对多个质量属性的影响，会在不同文章里反复出现。</p>
+<p>后续内容将随学习进度继续补充。本页按篇次维护，已发布文章的前后篇导航会随之更新。</p>

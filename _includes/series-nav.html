@@ -1,0 +1,24 @@
+{% assign series_info = site.data.series[page.series] %}
+{% assign series_posts = site.posts | where: "series", page.series | where: "enable", true | sort: "series_order" %}
+{% if series_info %}
+{% if include.position == "footer" %}
+<nav class="series-pagination" aria-label="系列文章前后篇">
+    {% for series_post in series_posts %}
+        {% if series_post.url == page.url %}
+            {% assign previous_index = forloop.index0 | minus: 1 %}
+            {% assign next_index = forloop.index0 | plus: 1 %}
+            {% if forloop.index0 > 0 %}
+                {% assign previous_post = series_posts[previous_index] %}
+                <a class="series-previous" href="{{ previous_post.url }}"><span>上一篇</span>{{ previous_post.title }}</a>
+            {% endif %}
+            {% if next_index < series_posts.size %}
+                {% assign next_post = series_posts[next_index] %}
+                <a class="series-next" href="{{ next_post.url }}"><span>下一篇</span>{{ next_post.title }}</a>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</nav>
+{% else %}
+<p class="series-context"><a href="{{ series_info.url }}">{{ series_info.title }}</a><span>第 {{ page.series_order }} 篇</span></p>
+{% endif %}
+{% endif %}

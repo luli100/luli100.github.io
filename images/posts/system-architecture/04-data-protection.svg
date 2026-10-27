@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 430" role="img" aria-labelledby="title desc">
+<title id="title">数据交接，需要几种不同的保障</title><desc id="desc">采集、交接、归档、备份分别需要权限、可信校验、审计和恢复验证。</desc>
+<defs><marker id="tip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#806a4d"/></marker></defs>
+<style>
+text {font-family:'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif;fill:#27342f}
+.title {font-weight:700} .muted {fill:#61695f} .emphasis {fill:#7b522c;font-weight:700}
+.box {fill:#fff;stroke:#aeb9ad;stroke-width:1.8}
+.soft {fill:#eef2e9;stroke:#aeb9ad;stroke-width:1.8}
+.warning {fill:#fbefdf;stroke:#c3a078;stroke-width:1.8}
+.boundary {fill:#f1f2ed;stroke:#bbc4b6;stroke-width:1.6;stroke-dasharray:6 5}
+.arrow,.line {fill:none;stroke:#806a4d;stroke-width:2.2;stroke-linejoin:round}
+.faint {stroke:#d4dbce;stroke-width:1.4}
+</style>
+<rect width="600" height="430" rx="10" fill="#f8f8f3"/>
+<text x="28" y="38" font-size="23" text-anchor="start" class="title"><tspan x="28" dy="0">数据交接，需要几种不同的保障</tspan></text>
+<text x="99" y="94" font-size="20" text-anchor="middle" class="muted"><tspan x="99" dy="0">身份与权限</tspan></text><text x="299" y="94" font-size="20" text-anchor="middle" class="muted"><tspan x="299" dy="0">可信校验</tspan></text><text x="499" y="94" font-size="20" text-anchor="middle" class="muted"><tspan x="499" dy="0">访问与审计</tspan></text><rect x="24" y="124" width="150" height="76" rx="7" class="box"/><text x="99.0" y="169.48" font-size="22" text-anchor="middle" class=""><tspan x="99.0" dy="0">采集机</tspan></text><rect x="224" y="124" width="150" height="76" rx="7" class="soft"/><text x="299.0" y="169.48" font-size="22" text-anchor="middle" class=""><tspan x="299.0" dy="0">交接验证</tspan></text><rect x="424" y="124" width="150" height="76" rx="7" class="box"/><text x="499.0" y="169.48" font-size="22" text-anchor="middle" class=""><tspan x="499.0" dy="0">归档系统</tspan></text><polyline points="180,162 216,162" class="arrow" marker-end="url(#tip)"/><polyline points="380,162 416,162" class="arrow" marker-end="url(#tip)"/><text x="30" y="277" font-size="21" text-anchor="start" class=""><tspan x="30" dy="0">哈希基准也要保护</tspan></text><text x="30" y="315" font-size="21" text-anchor="start" class="emphasis"><tspan x="30" dy="0">拷贝成功 ≠ 能够恢复</tspan></text><polyline points="499,206 499,274" class="arrow" marker-end="url(#tip)"/><rect x="424" y="283" width="150" height="68" rx="7" class="box"/><text x="499.0" y="324.48" font-size="22" text-anchor="middle" class=""><tspan x="499.0" dy="0">独立备份</tspan></text><text x="499" y="390" font-size="20" text-anchor="middle" class="muted"><tspan x="499" dy="0">恢复演练</tspan></text>
+</svg>

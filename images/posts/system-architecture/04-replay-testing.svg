@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 460" role="img" aria-labelledby="title desc">
+<title id="title">回归一致，不等于已经证明正确</title><desc id="desc">固定条件后比较新旧结果；再以独立确认的期望结果验证正确性。</desc>
+<defs><marker id="tip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#806a4d"/></marker></defs>
+<style>
+text {font-family:'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif;fill:#27342f}
+.title {font-weight:700} .muted {fill:#61695f} .emphasis {fill:#7b522c;font-weight:700}
+.box {fill:#fff;stroke:#aeb9ad;stroke-width:1.8}
+.soft {fill:#eef2e9;stroke:#aeb9ad;stroke-width:1.8}
+.warning {fill:#fbefdf;stroke:#c3a078;stroke-width:1.8}
+.boundary {fill:#f1f2ed;stroke:#bbc4b6;stroke-width:1.6;stroke-dasharray:6 5}
+.arrow,.line {fill:none;stroke:#806a4d;stroke-width:2.2;stroke-linejoin:round}
+.faint {stroke:#d4dbce;stroke-width:1.4}
+</style>
+<rect width="600" height="460" rx="10" fill="#f8f8f3"/>
+<text x="28" y="38" font-size="23" text-anchor="start" class="title"><tspan x="28" dy="0">回归一致，不等于已经证明正确</tspan></text>
+<rect x="100" y="80" width="400" height="67" rx="7" class="soft"/><text x="300.0" y="120.98" font-size="22" text-anchor="middle" class=""><tspan x="300.0" dy="0">固定输入、配置和协议版本</tspan></text><polyline points="300,152 300,180 150,180 150,211" class="arrow" marker-end="url(#tip)"/><polyline points="300,180 450,180 450,211" class="arrow" marker-end="url(#tip)"/><rect x="30" y="220" width="240" height="60" rx="7" class="box"/><text x="150.0" y="257.48" font-size="22" text-anchor="middle" class=""><tspan x="150.0" dy="0">旧解析器</tspan></text><rect x="330" y="220" width="240" height="60" rx="7" class="box"/><text x="450.0" y="257.48" font-size="22" text-anchor="middle" class=""><tspan x="450.0" dy="0">新解析器</tspan></text><polyline points="150,285 150,317" class="arrow" marker-end="url(#tip)"/><polyline points="450,285 450,317" class="arrow" marker-end="url(#tip)"/><rect x="30" y="325" width="240" height="54" rx="7" class="box"/><text x="150.0" y="359.48" font-size="22" text-anchor="middle" class=""><tspan x="150.0" dy="0">旧结果</tspan></text><rect x="330" y="325" width="240" height="54" rx="7" class="box"/><text x="450.0" y="359.48" font-size="22" text-anchor="middle" class=""><tspan x="450.0" dy="0">新结果</tspan></text><polyline points="275,352 322,352" class="arrow" marker-end="url(#tip)"/><text x="300" y="315" font-size="19" text-anchor="middle" class=""><tspan x="300" dy="0">比差异</tspan></text><text x="300" y="420" font-size="22" text-anchor="middle" class="emphasis"><tspan x="300" dy="0">正确性另需独立确认的样本与判据</tspan></text>
+</svg>

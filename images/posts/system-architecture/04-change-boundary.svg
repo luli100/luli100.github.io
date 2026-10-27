@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 470" role="img" aria-labelledby="title desc">
+<title id="title">把协议差异留在哪一侧？</title><desc id="desc">实时转换和离线转换把修改与计算成本放在不同位置。</desc>
+<defs><marker id="tip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#806a4d"/></marker></defs>
+<style>
+text {font-family:'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif;fill:#27342f}
+.title {font-weight:700} .muted {fill:#61695f} .emphasis {fill:#7b522c;font-weight:700}
+.box {fill:#fff;stroke:#aeb9ad;stroke-width:1.8}
+.soft {fill:#eef2e9;stroke:#aeb9ad;stroke-width:1.8}
+.warning {fill:#fbefdf;stroke:#c3a078;stroke-width:1.8}
+.boundary {fill:#f1f2ed;stroke:#bbc4b6;stroke-width:1.6;stroke-dasharray:6 5}
+.arrow,.line {fill:none;stroke:#806a4d;stroke-width:2.2;stroke-linejoin:round}
+.faint {stroke:#d4dbce;stroke-width:1.4}
+</style>
+<rect width="600" height="470" rx="10" fill="#f8f8f3"/>
+<text x="28" y="38" font-size="23" text-anchor="start" class="title"><tspan x="28" dy="0">把协议差异留在哪一侧？</tspan></text>
+<text x="30" y="86" font-size="21" text-anchor="start" class="muted"><tspan x="30" dy="0">方案一：在实时路径转换</tspan></text><rect x="24" y="111" width="120" height="66" rx="7" class="box"/><text x="84.0" y="150.8" font-size="20" text-anchor="middle" class=""><tspan x="84.0" dy="0">厂家输入</tspan></text><rect x="168" y="111" width="120" height="66" rx="7" class="soft"/><text x="228.0" y="150.8" font-size="20" text-anchor="middle" class=""><tspan x="228.0" dy="0">实时转换</tspan></text><rect x="312" y="111" width="120" height="66" rx="7" class="box"/><text x="372.0" y="150.8" font-size="20" text-anchor="middle" class=""><tspan x="372.0" dy="0">统一格式</tspan></text><rect x="456" y="111" width="120" height="66" rx="7" class="box"/><text x="516.0" y="150.8" font-size="20" text-anchor="middle" class=""><tspan x="516.0" dy="0">后处理</tspan></text><polyline points="149,144 161,144" class="arrow" marker-end="url(#tip)"/><polyline points="293,144 305,144" class="arrow" marker-end="url(#tip)"/><polyline points="437,144 449,144" class="arrow" marker-end="url(#tip)"/><text x="300" y="219" font-size="21" text-anchor="middle" class="emphasis"><tspan x="300" dy="0">协议适配和转换成本，进入接收链路</tspan></text><line x1="28" y1="251" x2="572" y2="251" class="faint"/><text x="30" y="293" font-size="21" text-anchor="start" class="muted"><tspan x="30" dy="0">方案二：先记录，再离线适配</tspan></text><rect x="24" y="319" width="120" height="66" rx="7" class="box"/><text x="84.0" y="358.8" font-size="20" text-anchor="middle" class=""><tspan x="84.0" dy="0">厂家输入</tspan></text><rect x="168" y="319" width="120" height="66" rx="7" class="box"/><text x="228.0" y="358.8" font-size="20" text-anchor="middle" class=""><tspan x="228.0" dy="0">原样记录</tspan></text><rect x="312" y="319" width="120" height="66" rx="7" class="soft"/><text x="372.0" y="358.8" font-size="20" text-anchor="middle" class=""><tspan x="372.0" dy="0">离线适配</tspan></text><rect x="456" y="319" width="120" height="66" rx="7" class="box"/><text x="516.0" y="358.8" font-size="20" text-anchor="middle" class=""><tspan x="516.0" dy="0">统一结果</tspan></text><polyline points="149,352 161,352" class="arrow" marker-end="url(#tip)"/><polyline points="293,352 305,352" class="arrow" marker-end="url(#tip)"/><polyline points="437,352 449,352" class="arrow" marker-end="url(#tip)"/><text x="300" y="437" font-size="20" text-anchor="middle" class="emphasis"><tspan x="300" dy="0">协议版本与采集配置，必须和原始数据匹配</tspan></text>
+</svg>

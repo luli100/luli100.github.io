@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 440" role="img" aria-labelledby="title desc">
+<title id="title">创建进程，只完成了恢复的一段</title><desc id="desc">检测、隔离、启动、状态恢复和业务验证共同构成恢复过程。</desc>
+<defs><marker id="tip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#806a4d"/></marker></defs>
+<style>
+text {font-family:'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif;fill:#27342f}
+.title {font-weight:700} .muted {fill:#61695f} .emphasis {fill:#7b522c;font-weight:700}
+.box {fill:#fff;stroke:#aeb9ad;stroke-width:1.8}
+.soft {fill:#eef2e9;stroke:#aeb9ad;stroke-width:1.8}
+.warning {fill:#fbefdf;stroke:#c3a078;stroke-width:1.8}
+.boundary {fill:#f1f2ed;stroke:#bbc4b6;stroke-width:1.6;stroke-dasharray:6 5}
+.arrow,.line {fill:none;stroke:#806a4d;stroke-width:2.2;stroke-linejoin:round}
+.faint {stroke:#d4dbce;stroke-width:1.4}
+</style>
+<rect width="600" height="440" rx="10" fill="#f8f8f3"/>
+<text x="28" y="38" font-size="23" text-anchor="start" class="title"><tspan x="28" dy="0">创建进程，只完成了恢复的一段</tspan></text>
+<text x="80" y="106" font-size="21" text-anchor="middle" class=""><tspan x="80" dy="0">T检测</tspan></text><rect x="174" y="76" width="398" height="48" rx="7" class="box"/><text x="373.0" y="107.48" font-size="22" text-anchor="middle" class=""><tspan x="373.0" dy="0">发现异常</tspan></text><polyline points="373,127 373,135" class="arrow" marker-end="url(#tip)"/><text x="80" y="171" font-size="21" text-anchor="middle" class=""><tspan x="80" dy="0">T隔离</tspan></text><rect x="174" y="141" width="398" height="48" rx="7" class="box"/><text x="373.0" y="172.48" font-size="22" text-anchor="middle" class=""><tspan x="373.0" dy="0">隔离旧实例</tspan></text><polyline points="373,192 373,200" class="arrow" marker-end="url(#tip)"/><text x="80" y="236" font-size="21" text-anchor="middle" class=""><tspan x="80" dy="0">T启动</tspan></text><rect x="174" y="206" width="398" height="48" rx="7" class="box"/><text x="373.0" y="237.48" font-size="22" text-anchor="middle" class=""><tspan x="373.0" dy="0">启动新实例</tspan></text><polyline points="373,257 373,265" class="arrow" marker-end="url(#tip)"/><text x="80" y="301" font-size="21" text-anchor="middle" class=""><tspan x="80" dy="0">T恢复</tspan></text><rect x="174" y="271" width="398" height="48" rx="7" class="box"/><text x="373.0" y="302.48" font-size="22" text-anchor="middle" class=""><tspan x="373.0" dy="0">恢复配置与状态</tspan></text><polyline points="373,322 373,330" class="arrow" marker-end="url(#tip)"/><text x="80" y="366" font-size="21" text-anchor="middle" class=""><tspan x="80" dy="0">T验证</tspan></text><rect x="174" y="336" width="398" height="48" rx="7" class="soft"/><text x="373.0" y="367.48" font-size="22" text-anchor="middle" class=""><tspan x="373.0" dy="0">验证业务重新就绪</tspan></text><text x="300" y="424" font-size="22" text-anchor="middle" class="emphasis"><tspan x="300" dy="0">服务恢复时间 = 上述各段之和</tspan></text>
+</svg>
