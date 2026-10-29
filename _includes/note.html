@@ -1,8 +1,8 @@
 {% assign note = include.note %}
-<section class="note{% if include.collapsed %} collapsed{% endif %}" id="{{ note.slug | default: note.url | slugify }}">
+<section class="note{% if include.collapsed and note.full_content != true %} collapsed{% endif %}" id="{{ note.slug | default: note.url | slugify }}">
     <div class="note-head">
         {% if note.date %}<time datetime="{{ note.date | date_to_xmlschema }}">{{ note.date | date: "%Y-%m-%d" }}</time>{% else %}<span></span>{% endif %}
-        {% if include.collapsed %}
+        {% if include.collapsed and note.full_content != true %}
         <a class="note-link" href="{{ note.url }}" title="单独打开" aria-label="单独打开">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.07 0l3-3a5 5 0 00-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 00-7.07 0l-3 3a5 5 0 007.07 7.07l1.5-1.5"/></svg>
         </a>
@@ -12,7 +12,7 @@
     <div class="note-body prose">
         {{ include.body | default: note.content }}
     </div>
-    {% if include.collapsed %}
+    {% if include.collapsed and note.full_content != true %}
     <div class="note-foot">
         <button type="button" class="note-toggle" aria-label="展开" title="展开">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9l-7 7-7-7"/></svg>
