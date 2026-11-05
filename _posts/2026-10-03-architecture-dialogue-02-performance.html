@@ -43,7 +43,7 @@ toc:
   <a href="/images/posts/system-architecture/02-process-boundaries.svg" target="_blank" rel="noopener"><img src="/images/posts/system-architecture/02-process-boundaries.svg" alt="单进程中的界面、解析和接收共享运行时与地址空间；拆为界面进程和独立采集进程后形成局部故障边界，但所有进程仍共享CPU、网卡和磁盘。" width="600" height="480" loading="lazy"></a>
   <figcaption>进程边界可以隔离一部分干扰，硬件资源的竞争仍然存在。</figcaption>
 </figure>
-<p><strong>答：</strong>原先界面、解析、推送和五路接收都在同一个托管进程中，分配行为和 GC 暂停可能影响同一进程内的接收工作。拆开以后，界面进程的一次回收不再是采集进程自己的回收；某一路崩溃，也不必直接终止其他路。</p>
+<p>原先界面、解析、推送和五路接收都在同一个托管进程中，分配行为和 GC 暂停可能影响同一进程内的接收工作。拆开以后，界面进程的一次回收不再是采集进程自己的回收；某一路崩溃，也不必直接终止其他路。</p>
 <p>这不是“GC 总会暂停所有线程”的简单规则。.NET 有不同的 GC 模式和回收阶段，原生代码执行也有不同情况。设计时应测量实际的分配率和暂停，相关边界可对照 <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/workstation-server-gc">.NET GC 文档</a>。</p>
 <p class="dialogue-question"><strong>问：</strong>这样性能和可用性都提升了，代价在哪里？</p>
 <p><strong>答：</strong>配置如何交给子进程、进程间消息是否丢失、怎样启动和关闭、异常如何关联，都要设计。定位问题时，日志和时间戳也必须跨进程对齐。维护和测试的成本会增加。</p>
