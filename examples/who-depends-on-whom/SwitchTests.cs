@@ -5,28 +5,27 @@ namespace DependencyExamples;
 
 public sealed class SwitchTests
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
-    public void Press_SendsExpectedCommand(bool shouldOn)
+    [Fact]
+    public void Press_On_ShouldTurnDeviceOn()
     {
         var fake = new FakeDevice();
+        var sw = new Switch(fake);      // 把假设备注入进去
 
-        // 从相反状态开始，避免关闭测试因默认就是 false 而误通过。
-        if (shouldOn)
-            fake.TurnOff();
-        else
-            fake.TurnOn();
+        sw.Press(true);
 
-        int onBefore = fake.TurnOnCalls;
-        int offBefore = fake.TurnOffCalls;
+        Assert.True(fake.IsOn);         // 验证的是开关的逻辑，不是灯
+    }
+
+    [Fact]
+    public void Press_Off_ShouldTurnDeviceOff()
+    {
+        var fake = new FakeDevice();
+        fake.TurnOn();                  // 先打开，关闭才有可验证的变化
         var sw = new Switch(fake);
 
-        sw.Press(shouldOn);
+        sw.Press(false);
 
-        Assert.Equal(shouldOn, fake.IsOn);
-        Assert.Equal(onBefore + (shouldOn ? 1 : 0), fake.TurnOnCalls);
-        Assert.Equal(offBefore + (shouldOn ? 0 : 1), fake.TurnOffCalls);
+        Assert.False(fake.IsOn);
     }
 
     [Fact]

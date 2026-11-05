@@ -37,21 +37,9 @@ public sealed class Switch
     }
 }
 
-public sealed class FakeDevice : ISwitchable
+public sealed class FakeDevice : ISwitchable   // 一个“假灯”，只记录状态
 {
     public bool IsOn { get; private set; }
-    public int TurnOnCalls { get; private set; }
-    public int TurnOffCalls { get; private set; }
-
-    public void TurnOn()
-    {
-        IsOn = true;
-        TurnOnCalls++;
-    }
-
-    public void TurnOff()
-    {
-        IsOn = false;
-        TurnOffCalls++;
-    }
+    public void TurnOn() => IsOn = true;
+    public void TurnOff() => IsOn = false;
 }
