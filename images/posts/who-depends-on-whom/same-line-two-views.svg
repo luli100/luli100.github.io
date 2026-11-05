@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 560" role="img" aria-labelledby="title desc">
+  <title id="title">同一行代码的两个观察角度</title>
+  <desc id="desc">字段 ISwitchable _device = new Light() 中，看依赖关系：Switch 依赖 ISwitchable，但 new Light() 让它仍依赖具体的 Light；看控制权：用哪个设备、由谁创建，仍由 Switch 决定。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#587044"/></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#b5523b"/></marker>
+    <style>
+      text { font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; fill: #303a29; }
+      .label { font-size: 22px; font-weight: 600; }
+      .code { font-family: Consolas, monospace; font-size: 21px; }
+      .note { font-size: 19px; fill: #56634e; }
+      .warn { font-size: 19px; fill: #b5523b; }
+      .box { fill: #fff; stroke: #a3b492; stroke-width: 2; }
+      .hot { fill: #fbefe9; stroke: #b5523b; stroke-width: 2; stroke-dasharray: 6 5; }
+      .line { fill: none; stroke: #587044; stroke-width: 2.5; marker-end: url(#arrow); }
+      .line-red { fill: none; stroke: #b5523b; stroke-width: 2.5; marker-end: url(#arrow-red); }
+    </style>
+  </defs>
+  <rect width="560" height="560" rx="12" fill="#f5f7f0"/>
+  <rect x="26" y="24" width="508" height="58" rx="8" fill="#2d3a2a"/>
+  <text x="280" y="61" text-anchor="middle" class="code" style="fill:#f3f1e6">_device = <tspan style="fill:#f0a97f">new Light()</tspan>;</text>
+
+  <text x="26" y="130" class="label">看依赖关系（DIP 关心）</text>
+  <rect class="box" x="30" y="156" width="150" height="60" rx="8"/>
+  <text class="code" x="105" y="193" text-anchor="middle">Switch</text>
+  <path class="line" d="M 180 186 H 300"/>
+  <text class="note" x="240" y="174" text-anchor="middle">调用</text>
+  <rect class="box" x="310" y="156" width="190" height="60" rx="8"/>
+  <text class="code" x="405" y="193" text-anchor="middle">ISwitchable</text>
+  <path class="line-red" d="M 105 216 V 262"/>
+  <rect class="hot" x="30" y="270" width="150" height="56" rx="8"/>
+  <text class="code" x="105" y="305" text-anchor="middle">Light</text>
+  <text class="warn" x="200" y="304">创建时仍写着具体设备</text>
+
+  <path d="M 26 362 H 534" stroke="#d7dfcc"/>
+
+  <text x="26" y="406" class="label">看控制权（IoC 关心）</text>
+  <rect class="box" x="30" y="430" width="230" height="96" rx="8"/>
+  <text class="note" x="145" y="468" text-anchor="middle">用哪个设备？</text>
+  <text class="note" x="145" y="502" text-anchor="middle">由谁创建？</text>
+  <path class="line-red" d="M 260 478 H 330"/>
+  <rect class="hot" x="340" y="448" width="160" height="60" rx="8"/>
+  <text class="code" x="420" y="485" text-anchor="middle">Switch</text>
+  <text class="warn" x="420" y="540" text-anchor="middle">仍是开关自己决定</text>
+</svg>

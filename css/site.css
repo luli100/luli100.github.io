@@ -730,9 +730,9 @@ article.post > .meta {
 .prose .architecture-figure > a { display: block; border: 0; }
 .prose .architecture-figure img { width: 100%; height: auto; margin: 0; }
 .prose .architecture-figure figcaption { margin-top: 10px; color: var(--muted); font-size: 14px; line-height: 1.7; text-align: center; }
-.architecture-dialogue .reading-exercise { margin: 24px 0; padding: 16px 20px; border: 1px solid var(--theme-200); border-radius: 6px; }
-.architecture-dialogue .reading-exercise summary { cursor: pointer; color: var(--theme-700); font-weight: 600; }
-.architecture-dialogue .reading-exercise p { margin: 16px 0 0; }
+.prose .reading-exercise { margin: 24px 0; padding: 16px 20px; border: 1px solid var(--theme-200); border-radius: 6px; }
+.prose .reading-exercise summary { cursor: pointer; color: var(--theme-700); font-weight: 600; }
+.prose .reading-exercise p { margin: 16px 0 0; }
 .architecture-dialogue .case-note { color: var(--muted); font-size: 16px; line-height: 1.8; }
 .architecture-dialogue .key-point { padding: 12px 16px; background: var(--theme-100); border-left: 3px solid var(--theme-400); }
 

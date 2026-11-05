@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 640" role="img" aria-labelledby="title desc">
+  <title id="title">设备的决定挪到了哪里</title>
+  <desc id="desc">改造前，Switch 自己决定用灯并创建灯，换设备要改 Switch，测试无法传入假设备。改造后，装配者决定用谁、负责创建，再把 Light 交给 Switch；换设备改装配那一行，测试时传入假设备。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#587044"/></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#b5523b"/></marker>
+    <style>
+      text { font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; fill: #303a29; }
+      .label { font-size: 22px; font-weight: 600; }
+      .code { font-family: Consolas, monospace; font-size: 21px; }
+      .note { font-size: 19px; fill: #56634e; }
+      .warn { font-size: 19px; fill: #b5523b; }
+      .ok { font-size: 19px; fill: #3f7a3a; }
+      .box { fill: #fff; stroke: #a3b492; stroke-width: 2; }
+      .asm { fill: #e4efdc; stroke: #6f9a5d; stroke-width: 2; }
+      .line { fill: none; stroke: #587044; stroke-width: 2.5; marker-end: url(#arrow); }
+      .line-red { fill: none; stroke: #b5523b; stroke-width: 2.5; marker-end: url(#arrow-red); }
+    </style>
+  </defs>
+  <rect width="560" height="640" rx="12" fill="#f5f7f0"/>
+
+  <text x="26" y="44" class="label">改造前：两个决定写在 Switch.cs 里</text>
+  <rect class="box" x="40" y="72" width="150" height="58" rx="8"/>
+  <text class="code" x="115" y="108" text-anchor="middle">Switch</text>
+  <text class="warn" x="210" y="96">我决定用谁</text>
+  <text class="warn" x="210" y="122">我负责创建</text>
+  <path class="line-red" d="M 115 130 V 178"/>
+  <rect class="box" x="40" y="184" width="150" height="56" rx="8"/>
+  <text class="code" x="115" y="219" text-anchor="middle">Light</text>
+  <text class="note" x="26" y="278">换设备 = 改 Switch</text>
+  <text class="note" x="26" y="306">测 Switch = 无法传入假设备</text>
+
+  <path d="M 26 334 H 534" stroke="#d7dfcc"/>
+
+  <text x="26" y="376" class="label">改造后：两个决定写在 Program.cs 里</text>
+  <rect class="asm" x="190" y="398" width="160" height="56" rx="8"/>
+  <text x="270" y="433" text-anchor="middle" class="label" style="font-size:20px">装配者</text>
+  <text class="ok" x="366" y="420">决定用谁</text>
+  <text class="ok" x="366" y="446">负责创建和交付</text>
+  <path class="line" d="M 220 454 L 140 500"/>
+  <path class="line" d="M 320 454 L 400 500"/>
+  <rect class="box" x="40" y="506" width="150" height="56" rx="8"/>
+  <text class="code" x="115" y="541" text-anchor="middle">Light</text>
+  <rect class="box" x="350" y="506" width="160" height="56" rx="8"/>
+  <text class="code" x="430" y="541" text-anchor="middle">Switch</text>
+  <path class="line" d="M 190 534 H 342"/>
+  <text class="note" x="266" y="522" text-anchor="middle">交给</text>
+  <text class="note" x="26" y="596">换设备 = 改装配那一行</text>
+  <text class="note" x="26" y="624">测 Switch = 传入一个假设备</text>
+</svg>
