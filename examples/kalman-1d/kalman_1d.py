@@ -3,9 +3,10 @@
 实验一：融合后的方差是否等于 (1-K)^2 P + K^2 R，最优 K 是否为 P/(P+R)。
 实验二：雷达跟踪前车距离，对比 Q=0 与 Q=0.01。
     帧周期 50 ms，雷达测距标准差 0.3 m。
-    滤波器的运动模型假设前车以 10 m/s 匀速靠近。
+    速度 v 是距离的变化率，负值表示靠近。
+    滤波器的运动模型假设前车以 v = -10 m/s 匀速运动。
     前 100 帧确实匀速；第 100 帧起前车刹车，
-    靠近速度以 2 m/s^2 增加，模型对此一无所知。
+    v 每秒减小 2 m/s（靠近得越来越快），模型对此一无所知。
 
 只用标准库，运行：python kalman_1d.py
 """
@@ -15,11 +16,11 @@ import sys
 sys.stdout.reconfigure(encoding="utf-8")
 
 DT = 0.05          # 帧周期 (s)
-V_MODEL = 10.0     # 模型假设的靠近速度 (m/s)
+V_MODEL = -10.0    # 模型假设的速度 (m/s)，负值表示靠近
 R = 0.3 ** 2       # 雷达测距方差：标准差 0.3 m
 N = 200
 BRAKE_FRAME = 100
-BRAKE_ACC = 2.0    # 刹车后靠近加速度 (m/s^2)
+BRAKE_ACC = -2.0   # 刹车后的相对加速度 (m/s^2)
 
 
 def rms(e):
@@ -48,7 +49,7 @@ def truth():
     for k in range(N):
         if k >= BRAKE_FRAME:
             v += BRAKE_ACC * DT
-        x -= v * DT
+        x += v * DT
         xs.append(x)
     return xs
 
@@ -58,7 +59,7 @@ def run(Q, xs, zs):
     Ks, errs = [None], [x_hat - xs[0]]
     for k in range(1, N):
         # ① 预测
-        x_pred = x_hat - V_MODEL * DT
+        x_pred = x_hat + V_MODEL * DT
         P_pred = P + Q
         # ② 更新
         K = P_pred / (P_pred + R)
