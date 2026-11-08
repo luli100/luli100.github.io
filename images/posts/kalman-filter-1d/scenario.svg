@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 280" role="img" aria-labelledby="title desc">
+  <title id="title">雷达车跟踪前车</title>
+  <desc id="desc">俯视的一段道路。左边的雷达车向前发出雷达波束，右边是前车。两车相距 20.0 m，前车以 10 m/s 的速度向雷达车靠近。雷达每 50 ms 测一次距离。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#587044"/></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#b5523b"/></marker>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c9d8b8" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#c9d8b8" stop-opacity="0.15"/>
+    </linearGradient>
+    <style>
+      text { font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; font-size: 17px; fill: #303a29; }
+      .small { font-size: 15px; fill: #56634e; }
+      .label { font-weight: 600; }
+      .warn { fill: #b5523b; }
+      .road { fill: #eef1ea; }
+      .edge { stroke: #a3b492; stroke-width: 2; }
+      .lane { stroke: #a3b492; stroke-width: 2; stroke-dasharray: 14 12; }
+      .car { fill: #fff; stroke: #587044; stroke-width: 2.5; }
+      .radar-car { fill: #e4efdc; stroke: #587044; stroke-width: 2.5; }
+      .window { fill: #c9d8b8; }
+      .sensor { fill: #3f7a3a; }
+      .dim { stroke: #587044; stroke-width: 2; marker-start: url(#arrow); marker-end: url(#arrow); }
+      .tick { stroke: #587044; stroke-width: 1.5; stroke-dasharray: 4 4; }
+      .move { stroke: #b5523b; stroke-width: 2.5; marker-end: url(#arrow-red); }
+    </style>
+  </defs>
+  <rect width="560" height="280" fill="#fff"/>
+
+  <!-- 道路 -->
+  <rect class="road" x="0" y="60" width="560" height="150"/>
+  <line class="edge" x1="0" y1="60" x2="560" y2="60"/>
+  <line class="edge" x1="0" y1="210" x2="560" y2="210"/>
+  <line class="lane" x1="0" y1="135" x2="560" y2="135"/>
+
+  <!-- 雷达波束 -->
+  <path d="M 128 172 L 430 142 L 430 202 Z" fill="url(#beam)"/>
+
+  <!-- 雷达车（车头朝右） -->
+  <rect class="radar-car" x="40" y="152" width="88" height="40" rx="10"/>
+  <rect class="window" x="96" y="158" width="14" height="28" rx="3"/>
+  <rect class="window" x="56" y="158" width="10" height="28" rx="3"/>
+  <circle class="sensor" cx="128" cy="172" r="5"/>
+  <text class="label" x="84" y="234" text-anchor="middle">雷达车</text>
+
+  <!-- 前车（车头朝右，与雷达车同向行驶） -->
+  <rect class="car" x="430" y="152" width="88" height="40" rx="10"/>
+  <rect class="window" x="486" y="158" width="14" height="28" rx="3"/>
+  <rect class="window" x="446" y="158" width="10" height="28" rx="3"/>
+  <text class="label" x="474" y="234" text-anchor="middle">前车</text>
+
+  <!-- 距离 -->
+  <line class="tick" x1="128" y1="150" x2="128" y2="34"/>
+  <line class="tick" x1="430" y1="150" x2="430" y2="34"/>
+  <line class="dim" x1="134" y1="40" x2="424" y2="40"/>
+  <text x="279" y="30" text-anchor="middle">距离 20.0 m</text>
+
+  <!-- 靠近速度 -->
+  <line class="move" x1="420" y1="100" x2="350" y2="100"/>
+  <text class="warn" x="414" y="88" text-anchor="end">以 10 m/s 靠近</text>
+
+  <!-- 测量周期 -->
+  <text class="small" x="279" y="264" text-anchor="middle">雷达每 50 ms 测一次距离</text>
+</svg>
