@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" role="img" aria-labelledby="title desc">
+<title id="title">SAAM、ATAM、CBAM 各回答什么</title><desc id="desc">SAAM 主要看修改场景与场景交互；ATAM 在多个质量属性之间找敏感点、权衡点和风险；CBAM 用 ATAM 的结果按成本收益选方案。</desc>
+<defs><marker id="tip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#806a4d"/></marker></defs>
+<style>
+text {font-family:'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif;fill:#27342f}
+.title {font-weight:700} .muted {fill:#61695f} .emphasis {fill:#7b522c;font-weight:700}
+.box {fill:#fff;stroke:#aeb9ad;stroke-width:1.8}
+.soft {fill:#eef2e9;stroke:#aeb9ad;stroke-width:1.8}
+.warning {fill:#fbefdf;stroke:#c3a078;stroke-width:1.8}
+.boundary {fill:#f1f2ed;stroke:#bbc4b6;stroke-width:1.6;stroke-dasharray:6 5}
+.arrow,.line {fill:none;stroke:#806a4d;stroke-width:2.2;stroke-linejoin:round}
+.faint {stroke:#d4dbce;stroke-width:1.4}
+</style>
+<rect width="600" height="420" rx="10" fill="#f8f8f3"/>
+<text x="28" y="38" font-size="23" text-anchor="start" class="title"><tspan x="28" dy="0">SAAM、ATAM、CBAM 各回答什么</tspan></text>
+<rect x="28" y="70" width="160" height="64" rx="7" class="soft"/><text x="108.0" y="109.48" font-size="22" text-anchor="middle" class=""><tspan x="108.0" dy="0">SAAM</tspan></text><text x="210" y="96" font-size="20" text-anchor="start" class=""><tspan x="210" dy="0">这次修改要动哪些构件？</tspan></text><text x="210" y="124" font-size="20" text-anchor="start" class="muted"><tspan x="210" dy="0">几个修改会不会撞在一起？</tspan></text><polyline points="108,140 108,184" class="arrow" marker-end="url(#tip)"/><text x="124" y="168" font-size="18" text-anchor="start" class="muted"><tspan x="124" dy="0">发展出</tspan></text><rect x="28" y="190" width="160" height="64" rx="7" class="soft"/><text x="108.0" y="229.48" font-size="22" text-anchor="middle" class=""><tspan x="108.0" dy="0">ATAM</tspan></text><text x="210" y="216" font-size="20" text-anchor="start" class=""><tspan x="210" dy="0">哪些点牵动多个属性？</tspan></text><text x="210" y="244" font-size="20" text-anchor="start" class="muted"><tspan x="210" dy="0">哪里可能让重要目标落空？</tspan></text><polyline points="108,260 108,304" class="arrow" marker-end="url(#tip)"/><text x="124" y="288" font-size="18" text-anchor="start" class="muted"><tspan x="124" dy="0">用它的结果</tspan></text><rect x="28" y="310" width="160" height="64" rx="7" class="soft"/><text x="108.0" y="349.48" font-size="22" text-anchor="middle" class=""><tspan x="108.0" dy="0">CBAM</tspan></text><text x="210" y="336" font-size="20" text-anchor="start" class=""><tspan x="210" dy="0">先花钱解决哪个？</tspan></text><text x="210" y="364" font-size="20" text-anchor="start" class="muted"><tspan x="210" dy="0">每份成本换回多少收益？</tspan></text>
+</svg>

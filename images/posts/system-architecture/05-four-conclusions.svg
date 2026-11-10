@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 520" role="img" aria-labelledby="title desc">
+<title id="title">一句评估结论，按顺序认</title><desc id="desc">先看是否写明前提且可以接受，再看是否说某个目标可能落空，剩下的数牵动了几个质量属性。</desc>
+<defs><marker id="tip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#806a4d"/></marker></defs>
+<style>
+text {font-family:'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif;fill:#27342f}
+.title {font-weight:700} .muted {fill:#61695f} .emphasis {fill:#7b522c;font-weight:700}
+.box {fill:#fff;stroke:#aeb9ad;stroke-width:1.8}
+.soft {fill:#eef2e9;stroke:#aeb9ad;stroke-width:1.8}
+.warning {fill:#fbefdf;stroke:#c3a078;stroke-width:1.8}
+.boundary {fill:#f1f2ed;stroke:#bbc4b6;stroke-width:1.6;stroke-dasharray:6 5}
+.arrow,.line {fill:none;stroke:#806a4d;stroke-width:2.2;stroke-linejoin:round}
+.faint {stroke:#d4dbce;stroke-width:1.4}
+</style>
+<rect width="600" height="520" rx="10" fill="#f8f8f3"/>
+<text x="28" y="38" font-size="23" text-anchor="start" class="title"><tspan x="28" dy="0">一句评估结论，按顺序认</tspan></text>
+<rect x="28" y="70" width="330" height="62" rx="7" class="box"/><text x="193.0" y="108.48" font-size="22" text-anchor="middle" class=""><tspan x="193.0" dy="0">写明前提，并说可以接受？</tspan></text><polyline points="364,101 424,101" class="arrow" marker-end="url(#tip)"/><rect x="432" y="70" width="140" height="62" rx="7" class="soft"/><text x="502.0" y="108.48" font-size="22" text-anchor="middle" class=""><tspan x="502.0" dy="0">非风险点</tspan></text><polyline points="193,138 193,170" class="arrow" marker-end="url(#tip)"/><text x="214" y="160" font-size="18" text-anchor="start" class="muted"><tspan x="214" dy="0">否</tspan></text><rect x="28" y="176" width="330" height="62" rx="7" class="box"/><text x="193.0" y="214.48" font-size="22" text-anchor="middle" class=""><tspan x="193.0" dy="0">说某个目标“可能落空”？</tspan></text><polyline points="364,207 424,207" class="arrow" marker-end="url(#tip)"/><rect x="432" y="176" width="140" height="62" rx="7" class="warning"/><text x="502.0" y="214.48" font-size="22" text-anchor="middle" class=""><tspan x="502.0" dy="0">风险点</tspan></text><polyline points="193,244 193,276" class="arrow" marker-end="url(#tip)"/><text x="214" y="266" font-size="18" text-anchor="start" class="muted"><tspan x="214" dy="0">否</tspan></text><rect x="28" y="282" width="330" height="62" rx="7" class="box"/><text x="193.0" y="320.48" font-size="22" text-anchor="middle" class=""><tspan x="193.0" dy="0">它牵动了几个质量属性？</tspan></text><polyline points="110,350 110,394" class="arrow" marker-end="url(#tip)"/><polyline points="276,350 276,394" class="arrow" marker-end="url(#tip)"/><rect x="28" y="400" width="164" height="58" rx="7" class="soft"/><text x="110.0" y="436.14" font-size="21" text-anchor="middle" class=""><tspan x="110.0" dy="0">一个：敏感点</tspan></text><rect x="212" y="400" width="164" height="58" rx="7" class="soft"/><text x="294.0" y="436.14" font-size="21" text-anchor="middle" class=""><tspan x="294.0" dy="0">多个：权衡点</tspan></text><text x="28" y="498" font-size="19" text-anchor="start" class="emphasis"><tspan x="28" dy="0">句子里有“改变”“调整”，不代表是风险点</tspan></text>
+</svg>

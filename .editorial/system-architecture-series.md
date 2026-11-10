@@ -6,10 +6,12 @@
 
 本次输出为四篇 HTML 博客，按用户最新更正归档为 2026-10-02 到 2026-10-05，保持每日一篇。此次仅调整日期，文章正文保持不变；不再使用此前误设的 2020 年日期或原讲义日期覆盖归档日期。
 
+第五篇依据第 8 章第 5 讲《架构评估的结论与方法》及其作答记录（学习于 2026-11-09 至 11-10），按每日一篇接续归档为 2026-10-06。ATAM、SAAM 的步骤与阶段以 SEI 原始资料为准，未采用讲义中教材特有的提法（如“四个活动领域”、SAAM 年份）。
+
 ## 连载规则
 
 - 系列标识固定为 `system-architecture`，名称为“系统架构对话”。定义放在 `_data/series.yml`。
-- 新篇使用 `layout: post`、`enable: true`、`series: system-architecture`，并给出不重复的整数 `series_order`。下一篇为 5。
+- 新篇使用 `layout: post`、`enable: true`、`series: system-architecture`，并给出不重复的整数 `series_order`。下一篇为 6。
 - 既有链接保持稳定。系列入口 `/series/system-architecture/` 按篇次自动列出已发布文章，前后篇由 `_includes/series-nav.html` 自动生成。
 - 前四篇日期固定为用户指定的 2026-10-02 至 2026-10-05。后续文章日期按学习文档与用户“每日一篇”的要求安排；若日期重叠或与已发布篇次冲突，应先说明冲突，不自动改成整理当天。
 - 不自动把目录中的新文件发布成文章；仍需阅读、加工、核实与验证。
@@ -20,7 +22,7 @@
 
 围绕一个贯穿案例连接不同主题。不是每个问题都配一个标准答案或考试术语；避免把真题、教材清单和讲义修订记录直接当作博客主体。未经核实的教材页码、真题年份与答案不带入文章。
 
-图应解释结构、时间、边界或因果关系。已有 12 张原生 SVG，源文件生成脚本为 `.editorial/build-architecture-diagrams.py`，运行只依赖 Python 标准库。新增图用有意义的文件名，保留 title、desc、正文替代文本和图注；避免把完整段落塞进图片。图片可点击查看 SVG。
+图应解释结构、时间、边界或因果关系。已有 12 张原生 SVG，源文件生成脚本为 `.editorial/build-architecture-diagrams.py`，运行只依赖 Python 标准库。注意：本机 DLP 会把该 .py 加密，加密后无法直接运行或编辑；第五篇的 4 张图（`05-*.svg`）用同一套函数和样式在命令行内联生成，未写回脚本。新增图用有意义的文件名，保留 title、desc、正文替代文本和图注；避免把完整段落塞进图片。图片可点击查看 SVG。
 
 示例数字要写清条件、单位和是否为实测。不能把缓冲容量预算当作性能保证；不能用主备、热备名称直接承诺切换时延；不能把存活等同于业务健康；不能把回归结果一致等同于正确；不能把无保护的哈希文件当作真实性证明。
 
@@ -38,4 +40,5 @@
 - Microsoft：[Workstation and server garbage collection](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/workstation-server-gc)
 - Google SRE：[Addressing Cascading Failures](https://sre.google/sre-book/addressing-cascading-failures/)
 - PostgreSQL：[High Availability, Load Balancing, and Replication](https://www.postgresql.org/docs/current/high-availability.html)
+- SEI：[ATAM: Method for Architecture Evaluation](https://www.sei.cmu.edu/library/atam-method-for-architecture-evaluation/)
 - Microsoft：[Cryptographic services](https://learn.microsoft.com/en-us/dotnet/standard/security/cryptographic-services)
