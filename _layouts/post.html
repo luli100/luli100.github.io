@@ -16,7 +16,7 @@ layout: default
         <div class="meta"></div>
         {% endif %}
         {% if page.series %}{% include series-nav.html %}{% endif %}
-        <div class="prose{% if page.series == 'system-architecture' %} architecture-dialogue{% endif %}">
+        <div class="prose{% if page.series == 'system-architecture' or page.dialogue %} architecture-dialogue{% endif %}">
             {{ content }}
         </div>
         {% if page.series %}{% include series-nav.html position="footer" %}{% endif %}
