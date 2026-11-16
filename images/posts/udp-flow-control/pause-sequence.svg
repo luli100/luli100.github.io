@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="620" viewBox="0 0 800 620" role="img" aria-labelledby="title desc">
+<title id="title">以太网 PAUSE 的请求、暂停与恢复</title>
+<desc id="desc">接收端发出 PAUSE 后，发送端暂缓普通数据发送；超时或零时间 PAUSE 后恢复。</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#64748b"/></marker><marker id="red-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#b45345"/></marker></defs>
+<style>text{font-family:"Microsoft YaHei","PingFang SC",sans-serif;fill:#243244} .small{font-size:17px;fill:#58677a}.title{font-size:27px;font-weight:700}.label{font-size:23px;font-weight:700}.note{font-size:20px;fill:#58677a}</style>
+<rect width="800" height="620" rx="16" fill="#fff"/>
+<text x="400" y="43" class="title" text-anchor="middle">PAUSE 暂停的是链路发送</text>
+<rect x="169" y="75" width="190" height="48" rx="12" fill="#eaf2fb" stroke="#a9c3df" stroke-width="1.5"/>
+<rect x="501" y="75" width="190" height="48" rx="12" fill="#fbf0df" stroke="#d8bd97" stroke-width="1.5"/>
+<text x="264" y="107" class="label" text-anchor="middle">发送端 MAC</text>
+<text x="596" y="107" class="label" text-anchor="middle">接收端 MAC</text>
+<path d="M264,127 L264,525" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M596,127 L596,525" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="42" y="153" class="small" text-anchor="start">时间</text>
+<path d="M62,170 L62,242" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M270,177 L588,177" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="430" y="163" class="small" text-anchor="middle">普通数据帧</text>
+<path d="M589,244 L272,244" fill="none" stroke="#b45345" stroke-width="2.5" marker-end="url(#red-arrow)"/>
+<text x="430" y="227" class="note" text-anchor="middle">PAUSE：时间字段为 10,000</text>
+<rect x="155" y="276" width="218" height="133" rx="12" fill="#fff2ed" stroke="#dca499" stroke-width="1.5"/>
+<text x="264" y="310" class="note" text-anchor="middle">当前帧结束后</text>
+<text x="264" y="345" class="label" text-anchor="middle">暂停普通数据</text>
+<text x="264" y="381" class="small" text-anchor="middle">约 5.12 ms @ 1 Gbps</text>
+<rect x="477" y="290" width="238" height="99" rx="12" fill="#fbf0df" stroke="#d8bd97" stroke-width="1.5"/>
+<text x="596" y="325" class="note" text-anchor="middle">继续消耗接收积压</text>
+<text x="596" y="362" class="small" text-anchor="middle">反向通信仍可工作</text>
+<text x="26" y="293" class="small" text-anchor="start">新数据仍可到来</text>
+<text x="26" y="321" class="small" text-anchor="start">先占用本机队列</text>
+<path d="M79,348 L150,348" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M589,453 L272,453" fill="none" stroke="#b45345" stroke-width="2.5" marker-end="url(#red-arrow)"/>
+<text x="430" y="437" class="small" text-anchor="middle">可选：PAUSE(0) 提前恢复</text>
+<path d="M270,504 L588,504" fill="none" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="430" y="491" class="small" text-anchor="middle">恢复发送数据帧</text>
+<text x="400" y="557" class="note" text-anchor="middle">没有 PAUSE(0) 时，也可等待计时结束后恢复。</text>
+<text x="400" y="591" class="note" text-anchor="middle">拥塞持续时，接收侧可以再次发送 PAUSE 更新计时。</text>
+</svg>
