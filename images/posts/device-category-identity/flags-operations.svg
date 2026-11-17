@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="470" viewBox="0 0 800 470" role="img" aria-labelledby="title desc">
+  <title id="title">三个位标志，八种组合</title>
+  <desc id="desc">Execute、Write、Read 分别占第 2、1、0 位。Read 为 001，Write 为 010，按位或后为 011，即同时有读和写。三个独立标志可表达八种组合，包含零值。</desc>
+  <style>
+    text{font-family:"Segoe UI","Microsoft YaHei",sans-serif;fill:#182b43}
+    .title{font-size:25px;font-weight:700}.label{font-size:19px;font-weight:600}
+    .body{font-size:18px}.muted{fill:#4b6076}.bit{font-family:Consolas,monospace;font-size:27px;font-weight:700}
+    .active{fill:#215e4b}.code{font-family:Consolas,monospace;font-size:20px}
+  </style>
+  <rect width="800" height="470" rx="18" fill="#f5f8fc"/>
+  <text x="32" y="45" class="title">三个独立标志，可以表达八种组合</text>
+  <text x="32" y="77" class="body muted">每一位只表示对应选项是否存在，组合时保留各自的含义。</text>
+  <text x="359" y="119" text-anchor="middle" class="label">Execute</text>
+  <text x="485" y="119" text-anchor="middle" class="label">Write</text>
+  <text x="611" y="119" text-anchor="middle" class="label">Read</text>
+  <text x="733" y="119" text-anchor="middle" class="label">数值</text>
+  <rect x="28" y="138" width="744" height="62" rx="9" fill="#fff" stroke="#cbd7e3"/>
+  <text x="48" y="177" class="code">Read</text>
+  <text x="359" y="179" text-anchor="middle" class="bit muted">0</text>
+  <text x="485" y="179" text-anchor="middle" class="bit muted">0</text>
+  <rect x="581" y="147" width="60" height="44" rx="7" fill="#d9eee4"/>
+  <text x="611" y="179" text-anchor="middle" class="bit active">1</text>
+  <text x="733" y="179" text-anchor="middle" class="bit">1</text>
+  <rect x="28" y="212" width="744" height="62" rx="9" fill="#fff" stroke="#cbd7e3"/>
+  <text x="48" y="251" class="code">Write</text>
+  <text x="359" y="253" text-anchor="middle" class="bit muted">0</text>
+  <rect x="455" y="221" width="60" height="44" rx="7" fill="#d9eee4"/>
+  <text x="485" y="253" text-anchor="middle" class="bit active">1</text>
+  <text x="611" y="253" text-anchor="middle" class="bit muted">0</text>
+  <text x="733" y="253" text-anchor="middle" class="bit">2</text>
+  <rect x="28" y="286" width="744" height="70" rx="9" fill="#edf6ff" stroke="#81a7cc"/>
+  <text x="48" y="329" class="code">Read | Write</text>
+  <text x="359" y="330" text-anchor="middle" class="bit muted">0</text>
+  <rect x="455" y="299" width="60" height="44" rx="7" fill="#d9eee4"/>
+  <rect x="581" y="299" width="60" height="44" rx="7" fill="#d9eee4"/>
+  <text x="485" y="330" text-anchor="middle" class="bit active">1</text>
+  <text x="611" y="330" text-anchor="middle" class="bit active">1</text>
+  <text x="733" y="330" text-anchor="middle" class="bit">3</text>
+  <text x="32" y="402" class="label">3 个基础标志 → 2³ = 8 种组合（包含 000）。</text>
+  <text x="32" y="438" class="body muted">组合数量可以很多；每个独立选项仍要占一个比特位。</text>
+</svg>
