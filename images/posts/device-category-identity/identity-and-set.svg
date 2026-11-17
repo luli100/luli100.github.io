@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="610" viewBox="0 0 800 610" role="img" aria-labelledby="title desc">
+  <title id="title">型号标识与型号集合的职责分离</title>
+  <desc id="desc">原来一个带 Flags 的枚举同时表示单个型号和多个型号的位掩码。改造后，单型号仍使用 Int32 稳定编号，多型号使用独立集合，旧掩码在兼容边界转换。</desc>
+  <style>
+    text{font-family:"Segoe UI","Microsoft YaHei",sans-serif;fill:#182b43}
+    .heading{font-size:23px;font-weight:700}.label{font-size:19px;font-weight:600}
+    .body{font-size:17px}.code{font-family:Consolas,"Microsoft YaHei",monospace;font-size:19px}
+    .muted{fill:#4b6076}.small{font-size:16px}
+  </style>
+  <rect width="800" height="610" rx="20" fill="#f5f8fc"/>
+  <text x="32" y="43" class="heading">型号标识与型号集合，分别表达</text>
+  <rect x="28" y="66" width="744" height="183" rx="14" fill="#fff5e9" stroke="#ce9c59"/>
+  <text x="48" y="101" class="label">原来：DeviceCategory 同时承担两个角色</text>
+  <rect x="48" y="120" width="332" height="72" rx="9" fill="#fff" stroke="#d8b78c"/>
+  <text x="65" y="148" class="body">单设备的型号</text>
+  <text x="65" y="177" class="code">CornerRadar = 256</text>
+  <rect x="400" y="120" width="352" height="72" rx="9" fill="#fff" stroke="#d8b78c"/>
+  <text x="417" y="148" class="body">共享通道的多个型号</text>
+  <text x="417" y="177" class="code">ModelA | ModelB = 3</text>
+  <text x="48" y="224" class="body muted">每增加一个型号，就要再占一个比特位。</text>
+  <path d="M400 259v27m-8-8 8 8 8-8" fill="none" stroke="#54718b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="28" y="299" width="744" height="239" rx="14" fill="#edf6ff" stroke="#81a7cc"/>
+  <text x="48" y="334" class="label">改造后：单个型号保留编号，多个型号使用集合</text>
+  <rect x="48" y="354" width="332" height="113" rx="9" fill="#fff" stroke="#a2bed8"/>
+  <text x="65" y="383" class="code">DeviceCategory : int</text>
+  <text x="65" y="416" class="body">历史编号不变：256</text>
+  <text x="65" y="445" class="body">单设备字段仍保存 4 字节编号</text>
+  <rect x="400" y="354" width="352" height="113" rx="9" fill="#fff" stroke="#a2bed8"/>
+  <text x="417" y="383" class="code">DeviceCategorySet</text>
+  <text x="417" y="416" class="body">新配置写数组：[1, 2]</text>
+  <text x="417" y="445" class="body">Contains、Overlaps、Union</text>
+  <text x="48" y="505" class="small muted">旧通道掩码 3 → 兼容读取 → 集合 [1, 2]</text>
+  <text x="400" y="505" class="small muted">新数组 [3] → 一个独立型号</text>
+  <text x="400" y="581" text-anchor="middle" class="label">编号回答“是谁”，集合回答“有哪些”。</text>
+</svg>
