@@ -30,10 +30,10 @@ toc:
 <p><strong>老师</strong>　A 和 B 的前 24 位相同。最后一段里，A 的 <code>10</code> 是 <code>0000 1010</code>，B 的 <code>20</code> 是 <code>0001 0100</code>。A 用 <code>/24</code> 和 <code>/28</code> 时，分别会怎么判断 B？</p>
 <p><strong>学生</strong>　用 <code>/24</code> 时，A 会把 B 当作本地邻居。换成 <code>/28</code>，多看的 4 位分别是 <code>0000</code> 和 <code>0001</code>，所以 A 会判断 B 在另一个子网。</p>
 <p><strong>老师</strong>　A 继续用 <code>/28</code>，把目标换成 <code>192.168.1.14</code>，它会怎么判断？</p>
-<p><strong>学生</strong>　<code>14</code> 写成二进制是 <code>0000 1110</code>，前 4 位和 A 的 <code>10</code> 相同。从范围来看，<code>.10</code> 和 <code>.14</code> 也都在 <code>.0</code> 到 <code>.15</code> 这一组。所以 A 会把 <code>.14</code> 判为本地。</p>
+<p><strong>学生</strong>　<code>.14</code> 和 A 的 <code>.10</code> 都落在 <code>.0</code> 到 <code>.15</code> 这一组，所以 A 会把 <code>.14</code> 判为本地。</p>
 
 <h2 id="planning">规划时，选多大的子网</h2>
-<p><strong>老师</strong>　<code>/28</code> 剩下 4 个主机位。如果要给 20 台设备各分配一个地址，这个子网够用吗？</p>
+<p><strong>老师</strong>　刚才看目标是否落在这段地址里。现在要给 20 台设备各分一个地址，同一个 <code>/28</code> 留下的 4 个主机位够用吗？</p>
 <p><strong>学生</strong>　4 位只有 <code>2⁴ = 16</code> 种组合，扣掉网络地址和广播地址，只剩 14 个。至少要留 5 位。<code>2⁵ = 32</code>，扣掉两个还剩 30 个，所以最小可以用 <code>/27</code>。</p>
 <p><strong>老师</strong>　如果有两组设备，各用一个 <code>/27</code>，第一组是 <code>192.168.1.0/27</code>，占 <code>.0</code> 到 <code>.31</code>。紧接着的第二组怎么写？</p>
 <p><strong>学生</strong>　<code>192.168.1.32/27</code>。网络地址是 <code>.32</code>，广播地址是 <code>.63</code>，中间的 <code>.33</code> 到 <code>.62</code> 可以分给设备。</p>
@@ -41,21 +41,21 @@ toc:
 <h2 id="configuration">配置时，本机属于哪个子网</h2>
 <p><strong>学生</strong>　网络地址和子网有什么关系？比如我只看到电脑配置了 <code>192.168.1.45/27</code>，怎样知道它属于刚才的第二组？</p>
 <p><strong>老师</strong>　网络地址就是这组地址的起点。按 <code>/27</code> 保留前 27 位，把后 5 位清零。末段的 <code>001 01101</code>（45）就变成 <code>001 00000</code>（32）。网络地址是 <code>192.168.1.32</code>，结合 <code>/27</code> 就能确定整段范围。</p>
-<p><strong>老师</strong>　如果本机 IP 仍是 <code>192.168.1.45</code>，只把掩码改成 <code>/28</code>，算出的网络地址仍是 <code>.32</code>。那最后一个地址还是 <code>.63</code> 吗？</p>
-<p><strong>学生</strong>　<code>/28</code> 只有 16 个地址，所以最后一个是 <code>.47</code>。两个子网起点相同，范围靠掩码才能区分。</p>
 <p><strong>老师</strong>　如果配置栏要求填四段数字，<code>/27</code> 要怎么写？</p>
 <p><strong>学生</strong>　掩码前 27 位是 <code>1</code>，后 5 位是 <code>0</code>。前三段各占 8 位，都是 <code>255</code>。最后一段 <code>11100000</code> 等于 <code>128 + 64 + 32 = 224</code>，所以填 <code>255.255.255.224</code>。</p>
 <p><strong>老师</strong>　反过来，如果看到 IP 是 <code>192.168.10.70</code>，掩码是 <code>255.255.255.192</code>，那它属于哪个子网？</p>
 <p><strong>学生</strong>　末段的 <code>192</code> 是 <code>11000000</code>，加上前面 24 个 <code>1</code>，就是 <code>/26</code>。剩下 6 位，每组有 64 个地址。<code>.70</code> 落在 <code>.64</code> 到 <code>.127</code>，所以它属于 <code>192.168.10.64/26</code>。</p>
+<p><strong>老师</strong>　回到 <code>192.168.1.45/27</code>。只把掩码改成 <code>/28</code>，网络地址仍是 <code>.32</code>，那最后一个地址还是 <code>.63</code> 吗？</p>
+<p><strong>学生</strong>　<code>/28</code> 只有 16 个地址，所以最后一个是 <code>.47</code>。两个子网起点相同，范围靠掩码才能区分。</p>
 
 <h2 id="sending">两台电脑用不同的掩码，会怎么判断</h2>
-<p><strong>老师</strong>　假设两台电脑接在同一个局域网里。A 配成 <code>192.168.1.45/28</code>，B 配成 <code>192.168.1.50/27</code>。它们会把对方当作本地邻居吗？</p>
+<p><strong>老师</strong>　沿用刚才的配置，A 是 <code>192.168.1.45/28</code>，同一局域网里的 B 是 <code>192.168.1.50/27</code>。它们会把对方当作本地邻居吗？</p>
 <p><strong>学生</strong>　A 的范围是 <code>.32</code> 到 <code>.47</code>，所以它认为 <code>.50</code> 在外面。B 的范围是 <code>.32</code> 到 <code>.63</code>，所以它认为 <code>.45</code> 在本地。两台电脑各用自己的掩码，判断可以不同。</p>
 <p><strong>老师</strong>　只改 A 的掩码，要让 A 也把 B 判为本地，A 最长可以用多少位的前缀？</p>
 <p><strong>学生</strong>　<code>/27</code>。<code>.45</code> 和 <code>.50</code> 的前 27 位相同，第 28 位不同。A 改成 <code>/27</code> 后，两台电脑都会把对方判为本地。</p>
 
 <h2 id="summary">用同一个 /27 串起三个作用</h2>
-<p><strong>老师</strong>　回到 <code>192.168.1.45/27</code>。同一个掩码，在规划、配置和发送时各帮我们判断什么？</p>
+<p><strong>老师</strong>　现在 A 是 <code>192.168.1.45/27</code>。同一个掩码，在规划、配置和发送时各帮我们判断什么？</p>
 <p><strong>学生</strong>　子网掩码区分网络位与主机位。三个场景用的都是这条分界。</p>
 <ol>
   <li><strong>规划时定容量。</strong> <code>/27</code> 留 5 个主机位，提供 32 个地址，其中 30 个可分配给设备。</li>
