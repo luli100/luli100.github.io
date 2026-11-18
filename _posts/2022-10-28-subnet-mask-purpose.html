@@ -2,24 +2,64 @@
 layout: post
 title: 子网掩码有什么用？从 192.168.1.45/27 说起
 enable: true
-description: 用同一个 IPv4 地址和子网掩码，串起子网容量规划、本机子网配置和发送时的本地判断。
+description: 从“前三段相同就是同一子网”的直觉出发，用反例和计算理解子网掩码在规划、配置和发送时的作用。
 toc:
+  - title: IP 地址相似，就在同一个子网吗
+    anchor: intuition
+  - title: 换个掩码，为什么发送判断会变
+    anchor: local-delivery
   - title: 规划时，选多大的子网
     anchor: planning
   - title: 配置时，本机属于哪个子网
     anchor: configuration
-  - title: 发送时，目标在本地吗
+  - title: 两台电脑用不同的掩码，会怎么判断
     anchor: sending
+  - title: 用同一个 /27 串起三个作用
+    anchor: summary
 ---
-<p>给一台电脑配置 <code>192.168.1.45/27</code> 时，<code>/27</code> 表示 IPv4 地址的前 27 位是网络位，剩下的 5 位是主机位，对应的子网掩码是 <code>255.255.255.224</code>。这条分界线在规划、配置和发送时分别回答三个问题。</p>
+<p>看到两个 IPv4 地址的前三段一样，我会猜它们在同一个子网。老师保留这两个地址，只换一种子网划分，我的判断就变了。</p>
+
+<h2 id="intuition">IP 地址相似，就在同一个子网吗</h2>
+<p><strong>老师</strong>　A 是 <code>192.168.1.10</code>，B 是 <code>192.168.1.20</code>，C 是 <code>192.168.2.20</code>。只看地址，你猜哪一台和 A 在同一个子网？</p>
+<p><strong>学生</strong>　我猜是 B，因为 A 和 B 的前三段都是 <code>192.168.1</code>。</p>
+<p><strong>老师</strong>　如果把 <code>192.168.1.0</code> 到 <code>192.168.1.15</code> 划为一组，把 <code>192.168.1.16</code> 到 <code>192.168.1.31</code> 划为另一组呢？</p>
+<p><strong>学生</strong>　A 的末尾是 <code>.10</code>，在第一组。B 的末尾是 <code>.20</code>，在第二组。除了 IP，还需要知道子网怎么划分。</p>
+<p><strong>老师</strong>　这就是子网掩码提供的信息。IPv4 地址有 32 位。<code>/24</code> 取前 24 位作为网络位，也就是前三段。<code>/28</code> 取前 28 位，还要看最后一段的前 4 位。剩下的是主机位，用来区分同一子网里的地址。</p>
+
+<h2 id="local-delivery">换个掩码，为什么发送判断会变</h2>
+<p><strong>老师</strong>　A 和 B 的前 24 位相同。最后一段里，A 的 <code>10</code> 是 <code>0000 1010</code>，B 的 <code>20</code> 是 <code>0001 0100</code>。A 用 <code>/24</code> 和 <code>/28</code> 时，分别会怎么判断 B？</p>
+<p><strong>学生</strong>　用 <code>/24</code> 时，A 会把 B 当作本地邻居。换成 <code>/28</code>，多看的 4 位分别是 <code>0000</code> 和 <code>0001</code>，所以 A 会判断 B 在另一个子网。</p>
+<p><strong>学生</strong>　用 <code>/28</code> 时，如果 A 走默认网关，我知道要先把数据交给网关。那用 <code>/24</code> 时，A 怎么直接发给 B？</p>
+<p><strong>老师</strong>　A 把 B 判为本地时，需要知道 B 的 MAC 地址才能在以太网上直接发给它。需要查询时，A 用 ARP 问「<code>192.168.1.20</code> 对应的 MAC 地址是多少？」如果 B 实际在路由器另一侧，A 的查询留在本地，等不到 B 的回复。</p>
+<p><strong>学生</strong>　所以 ARP 请求里的 IP 已经知道了，查的是 MAC。用 <code>/28</code> 时，如果先把数据交给网关，就查网关 IP 对应的 MAC，IP 数据包的目的地址仍是 B。掩码先帮助 A 判断目标是否在本地，这才影响它要查哪个 IP。</p>
 
 <h2 id="planning">规划时，选多大的子网</h2>
-<p>假设要给 20 台设备各分配一个 IPv4 地址。选 <code>/27</code> 时，5 个主机位共有 <code>2⁵ = 32</code> 种组合。首尾两个地址分别是网络地址和广播地址，余下 30 个可以分给设备。<code>/28</code> 只能分配 14 个地址，因此 <code>/27</code> 是满足这个需求的最小子网。</p>
+<p><strong>老师</strong>　<code>/28</code> 剩下 4 个主机位。如果要给 20 台设备各分配一个地址，这个子网够用吗？</p>
+<p><strong>学生</strong>　4 位只有 <code>2⁴ = 16</code> 种组合，扣掉网络地址和广播地址，只剩 14 个。至少要留 5 位。<code>2⁵ = 32</code>，扣掉两个还剩 30 个，所以最小可以用 <code>/27</code>。</p>
+<p><strong>老师</strong>　如果有两组设备，各用一个 <code>/27</code>，第一组是 <code>192.168.1.0/27</code>，占 <code>.0</code> 到 <code>.31</code>。紧接着的第二组怎么写？</p>
+<p><strong>学生</strong>　<code>192.168.1.32/27</code>。网络地址是 <code>.32</code>，广播地址是 <code>.63</code>，中间的 <code>.33</code> 到 <code>.62</code> 可以分给设备。</p>
 
 <h2 id="configuration">配置时，本机属于哪个子网</h2>
-<p>把 <code>192.168.1.45/27</code> 配给本机，就能从 IP 和掩码一起算出本机所属的子网。保留 IP 的前 27 位，把最后 5 位清零，得到网络地址 <code>192.168.1.32</code>。把这 5 位全部置为 1，则得到广播地址 <code>192.168.1.63</code>。因此本机在 <code>192.168.1.32/27</code> 子网里，可分配给设备的地址是 <code>192.168.1.33</code> 到 <code>192.168.1.62</code>。</p>
+<p><strong>学生</strong>　网络地址和子网有什么关系？比如我只看到电脑配置了 <code>192.168.1.45/27</code>，怎样知道它属于刚才的第二组？</p>
+<p><strong>老师</strong>　网络地址就是这组地址的起点。按 <code>/27</code> 保留前 27 位，把后 5 位清零。末段的 <code>001 01101</code>（45）就变成 <code>001 00000</code>（32）。网络地址是 <code>192.168.1.32</code>，结合 <code>/27</code> 就能确定整段范围。</p>
+<p><strong>老师</strong>　如果本机 IP 仍是 <code>192.168.1.45</code>，只把掩码改成 <code>/28</code>，算出的网络地址仍是 <code>.32</code>。那最后一个地址还是 <code>.63</code> 吗？</p>
+<p><strong>学生</strong>　<code>/28</code> 只有 16 个地址，所以最后一个是 <code>.47</code>。两个子网起点相同，范围靠掩码才能区分。</p>
+<p><strong>老师</strong>　如果配置栏要求填四段数字，<code>/27</code> 要怎么写？</p>
+<p><strong>学生</strong>　掩码前 27 位是 <code>1</code>，后 5 位是 <code>0</code>。前三段各占 8 位，都是 <code>255</code>。最后一段 <code>11100000</code> 等于 <code>128 + 64 + 32 = 224</code>，所以填 <code>255.255.255.224</code>。</p>
+<p><strong>老师</strong>　反过来，如果看到 IP 是 <code>192.168.10.70</code>，掩码是 <code>255.255.255.192</code>，那它属于哪个子网？</p>
+<p><strong>学生</strong>　末段的 <code>192</code> 是 <code>11000000</code>，加上前面 24 个 <code>1</code>，就是 <code>/26</code>。剩下 6 位，每组有 64 个地址。<code>.70</code> 落在 <code>.64</code> 到 <code>.127</code>，所以它属于 <code>192.168.10.64/26</code>。</p>
 
-<h2 id="sending">发送时，目标在本地吗</h2>
-<p>发送前，本机用自己的 <code>/27</code> 取出目标 IP 的网络部分，再和自己的网络地址 <code>192.168.1.32</code> 比较。目标是 <code>192.168.1.50</code> 时，按这个掩码也得到 <code>192.168.1.32</code>，所以目标在本地子网。目标换成 <code>192.168.1.70</code> 时，算得的是 <code>192.168.1.64</code>，所以目标在本地子网之外。</p>
+<h2 id="sending">两台电脑用不同的掩码，会怎么判断</h2>
+<p><strong>老师</strong>　假设两台电脑接在同一个局域网里。A 配成 <code>192.168.1.45/28</code>，B 配成 <code>192.168.1.50/27</code>。它们会把对方当作本地邻居吗？</p>
+<p><strong>学生</strong>　A 的范围是 <code>.32</code> 到 <code>.47</code>，所以它认为 <code>.50</code> 在外面。B 的范围是 <code>.32</code> 到 <code>.63</code>，所以它认为 <code>.45</code> 在本地。两台电脑各用自己的掩码，判断可以不同。</p>
+<p><strong>老师</strong>　所以 B 的 ping 请求可以直接送到 A。A 如果只有自己的直连子网路由，就无法把回复送回 <code>.50</code>，B 会等到超时。把 A 改成 <code>/27</code> 后，两台电脑都把对方判为本地，请求和回复都可以直接交付。</p>
+
+<h2 id="summary">用同一个 /27 串起三个作用</h2>
+<p>子网掩码区分网络位与主机位。以 <code>192.168.1.45/27</code> 为例，这条分界线贯穿三个场景。</p>
+<ol>
+  <li><strong>规划时定容量。</strong> <code>/27</code> 留 5 个主机位，提供 32 个地址，其中 30 个可分配给设备。</li>
+  <li><strong>配置时定范围。</strong> 把 <code>192.168.1.45</code> 和 <code>/27</code> 配在一起，就能确定本机属于 <code>192.168.1.32/27</code>，地址范围是 <code>.32</code> 到 <code>.63</code>。</li>
+  <li><strong>发送时判断目标是否在本地。</strong> 用本机的 <code>/27</code> 判断，<code>192.168.1.50</code> 在这个范围内，<code>192.168.1.70</code> 在范围外。</li>
+</ol>
 
 <p>前篇 <a href="{% post_url 2022-10-29-ip-subnet-gateway-dialogue %}" rel="prev">从“有网口就要有 IP 吗”开始：一场关于子网与默认网关的对话</a>。</p>
