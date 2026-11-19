@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="366" viewBox="0 0 720 366" role="img" aria-labelledby="title desc">
+  <title id="title">同一次扫频中的发射信号和回波</title>
+  <desc id="desc">回波比发射信号晚 τ，两条线斜率相同。在同一时刻，发射频率比回波频率高 Sτ。</desc>
+  <style>
+    svg{--paper:#f5f8fc;--ink:#182b43;--axis:#566a80;--tx:#2462a8;--rx:#9a4e13}
+    @media (prefers-color-scheme:dark){svg{--paper:#182435;--ink:#e6eef8;--axis:#b0bfd0;--tx:#8bbcff;--rx:#ffc18a}}
+    text{font-family:"Segoe UI","Microsoft YaHei",sans-serif;fill:var(--ink);font-size:21px}
+    .axis,.measure{fill:none;stroke:var(--axis);stroke-width:2}
+    .label{font-size:23px;font-weight:600}
+    .tx,.rx{fill:none;stroke-width:4;stroke-linecap:round}
+    .tx{stroke:var(--tx)} .rx{stroke:var(--rx);stroke-dasharray:10 7}
+  </style>
+  <rect width="720" height="366" rx="16" fill="var(--paper)"/>
+  <path class="axis" d="M77 64 V304 H671 M71 72 L77 64 L83 72 M663 298 L671 304 L663 310"/>
+  <text x="77" y="50" class="label" text-anchor="middle">频率</text>
+  <text x="668" y="339" class="label" text-anchor="end">时间</text>
+  <path class="tx" d="M105 286 L545 74 M224 43 H270"/>
+  <text x="284" y="50">发射 chirp</text>
+  <path class="rx" d="M217 286 L657 74 M425 43 H471"/>
+  <text x="485" y="50">延迟回波</text>
+  <path class="measure" d="M230 226 H342 M237 221 L230 226 L237 231 M335 221 L342 226 L335 231
+    M457 116 V170 M452 123 L457 116 L462 123 M452 163 L457 170 L462 163"/>
+  <text x="286" y="214" class="label" text-anchor="middle">τ</text>
+  <text x="472" y="150" class="label">Sτ</text>
+</svg>

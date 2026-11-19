@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="350" viewBox="0 0 720 350" role="img" aria-labelledby="title desc">
+  <title id="title">两个静止目标的距离 FFT 谱峰</title>
+  <desc id="desc">扫频斜率为 20 MHz/µs 时，差频 2 MHz 的峰位对应 15 m，4 MHz 的峰位对应 30 m。峰形和幅度仅为示意。</desc>
+  <style>
+    svg{--paper:#f5f8fc;--ink:#182b43;--axis:#566a80;--grid:#b5c5d6;--trace:#2462a8}
+    @media (prefers-color-scheme:dark){svg{--paper:#182435;--ink:#e6eef8;--axis:#b0bfd0;--grid:#607892;--trace:#8bbcff}}
+    text{font-family:"Segoe UI","Microsoft YaHei",sans-serif;fill:var(--ink);font-size:22px}
+    .axis{fill:none;stroke:var(--axis);stroke-width:2}
+    .guide{stroke:var(--grid);stroke-width:2;stroke-dasharray:4 6}
+    .spectrum{fill:none;stroke:var(--trace);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+    .peak{font-size:24px;font-weight:700;fill:var(--trace)}
+  </style>
+  <rect width="720" height="350" rx="16" fill="var(--paper)"/>
+  <text x="128" y="43" text-anchor="middle">幅度</text>
+  <path class="axis" d="M128 59 V224 H663 M122 67 L128 59 L134 67 M655 218 L663 224 L655 230
+    M228 224 V231 M328 224 V231 M428 224 V231 M528 224 V231 M628 224 V231"/>
+  <path class="guide" d="M328 86 V218 M528 118 V218"/>
+  <path class="spectrum" d="M129 212 C223 212 253 209 282 202 C308 197 308 85 328 85
+    C348 85 349 197 377 204 C405 211 453 211 484 201 C507 193 508 117 528 117
+    C548 117 550 193 574 203 C592 209 619 211 645 212"/>
+  <text x="328" y="69" class="peak" text-anchor="middle">15 m</text>
+  <text x="528" y="101" class="peak" text-anchor="middle">30 m</text>
+  <path d="M28 274 H663" stroke="var(--grid)" stroke-width="1"/>
+  <text x="28" y="257">差频</text>
+  <text y="257" text-anchor="middle"><tspan x="128">0</tspan><tspan x="228">1</tspan><tspan x="328">2</tspan><tspan x="428">3</tspan><tspan x="528">4</tspan><tspan x="628">5 MHz</tspan></text>
+  <text x="28" y="306">距离</text>
+  <text y="306" text-anchor="middle"><tspan x="128">0</tspan><tspan x="228">7.5</tspan><tspan x="328">15</tspan><tspan x="428">22.5</tspan><tspan x="528">30</tspan><tspan x="628">37.5 m</tspan></text>
+</svg>
